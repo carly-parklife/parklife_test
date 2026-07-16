@@ -1,0 +1,276 @@
+<div class="cpg-gallery" id="cpg-gallery">
+  <style>
+    #cpg-gallery { max-width: 1100px; margin: 0 auto; }
+    #cpg-gallery .cpg-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    #cpg-gallery .cpg-thumb-link { display: block; overflow: hidden; border-radius: 6px; }
+    #cpg-gallery .cpg-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.2s ease;
+      cursor: zoom-in;
+    }
+    #cpg-gallery .cpg-thumb-link:hover .cpg-thumb { transform: scale(1.06); }
+    #cpg-gallery .cpg-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    #cpg-gallery .cpg-overlay:target { display: flex; }
+    #cpg-gallery .cpg-overlay-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+    }
+    #cpg-gallery .cpg-overlay-inner {
+      position: relative;
+      max-width: 92vw;
+      max-height: 92vh;
+      z-index: 1;
+    }
+    #cpg-gallery .cpg-overlay-img {
+      max-width: 92vw;
+      max-height: 92vh;
+      display: block;
+      border-radius: 4px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    #cpg-gallery .cpg-close-btn {
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      color: #111;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    @media (max-width: 900px) {
+      #cpg-gallery .cpg-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 600px) {
+      #cpg-gallery .cpg-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      #cpg-gallery .cpg-thumb { height: 120px; }
+      #cpg-gallery .cpg-close-btn { top: 8px; right: 8px; }
+    }
+  </style>
+
+  <div class="cpg-grid">
+      <a href="#cpg-photo-1" class="cpg-thumb-link" aria-label="Enlarge photo 1">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-1.jpg" alt="Gallery photo 1" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-2" class="cpg-thumb-link" aria-label="Enlarge photo 2">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-2.jpg" alt="Gallery photo 2" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-3" class="cpg-thumb-link" aria-label="Enlarge photo 3">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-3.jpg" alt="Gallery photo 3" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-4" class="cpg-thumb-link" aria-label="Enlarge photo 4">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-4.jpg" alt="Gallery photo 4" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-5" class="cpg-thumb-link" aria-label="Enlarge photo 5">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-5.jpg" alt="Gallery photo 5" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-6" class="cpg-thumb-link" aria-label="Enlarge photo 6">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-6.jpg" alt="Gallery photo 6" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-7" class="cpg-thumb-link" aria-label="Enlarge photo 7">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-7.jpg" alt="Gallery photo 7" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-8" class="cpg-thumb-link" aria-label="Enlarge photo 8">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-8.jpg" alt="Gallery photo 8" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-9" class="cpg-thumb-link" aria-label="Enlarge photo 9">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-9.jpg" alt="Gallery photo 9" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-10" class="cpg-thumb-link" aria-label="Enlarge photo 10">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-10.jpg" alt="Gallery photo 10" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-11" class="cpg-thumb-link" aria-label="Enlarge photo 11">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-11.jpg" alt="Gallery photo 11" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-12" class="cpg-thumb-link" aria-label="Enlarge photo 12">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-12.jpg" alt="Gallery photo 12" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-13" class="cpg-thumb-link" aria-label="Enlarge photo 13">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-13.jpg" alt="Gallery photo 13" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-14" class="cpg-thumb-link" aria-label="Enlarge photo 14">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-14.jpg" alt="Gallery photo 14" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-15" class="cpg-thumb-link" aria-label="Enlarge photo 15">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-15.jpg" alt="Gallery photo 15" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-16" class="cpg-thumb-link" aria-label="Enlarge photo 16">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-16.jpg" alt="Gallery photo 16" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-17" class="cpg-thumb-link" aria-label="Enlarge photo 17">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-17.jpg" alt="Gallery photo 17" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-18" class="cpg-thumb-link" aria-label="Enlarge photo 18">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-18.jpg" alt="Gallery photo 18" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-19" class="cpg-thumb-link" aria-label="Enlarge photo 19">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-19.jpg" alt="Gallery photo 19" class="cpg-thumb" loading="lazy">
+      </a>
+      <a href="#cpg-photo-20" class="cpg-thumb-link" aria-label="Enlarge photo 20">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-20.jpg" alt="Gallery photo 20" class="cpg-thumb" loading="lazy">
+      </a>
+  </div>
+
+    <div class="cpg-overlay" id="cpg-photo-1">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-1.jpg" alt="Enlarged gallery photo 1" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-2">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-2.jpg" alt="Enlarged gallery photo 2" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-3">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-3.jpg" alt="Enlarged gallery photo 3" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-4">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-4.jpg" alt="Enlarged gallery photo 4" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-5">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-5.jpg" alt="Enlarged gallery photo 5" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-6">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-6.jpg" alt="Enlarged gallery photo 6" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-7">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-7.jpg" alt="Enlarged gallery photo 7" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-8">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-8.jpg" alt="Enlarged gallery photo 8" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-9">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-9.jpg" alt="Enlarged gallery photo 9" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-10">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-10.jpg" alt="Enlarged gallery photo 10" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-11">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-11.jpg" alt="Enlarged gallery photo 11" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-12">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-12.jpg" alt="Enlarged gallery photo 12" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-13">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-13.jpg" alt="Enlarged gallery photo 13" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-14">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-14.jpg" alt="Enlarged gallery photo 14" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-15">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-15.jpg" alt="Enlarged gallery photo 15" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-16">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-16.jpg" alt="Enlarged gallery photo 16" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-17">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-17.jpg" alt="Enlarged gallery photo 17" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-18">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-18.jpg" alt="Enlarged gallery photo 18" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-19">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-19.jpg" alt="Enlarged gallery photo 19" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+    <div class="cpg-overlay" id="cpg-photo-20">
+      <a href="#cpg-close" class="cpg-overlay-bg" aria-label="Close enlarged photo"></a>
+      <div class="cpg-overlay-inner">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-20.jpg" alt="Enlarged gallery photo 20" class="cpg-overlay-img">
+        <a href="#cpg-close" class="cpg-close-btn" aria-label="Close">&times;</a>
+      </div>
+    </div>
+</div>
