@@ -1,0 +1,491 @@
+<div class="dit-interactive-timeline" id="dit-interactive-timeline">
+  <style>
+    #dit-interactive-timeline { max-width: 1100px; margin: 0 auto; }
+    #dit-interactive-timeline .dit-toggle {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    #dit-interactive-timeline .dit-timeline {
+      position: relative;
+    }
+    #dit-interactive-timeline .dit-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #3AA5B9;
+      transform: translateX(-50%);
+    }
+    #dit-interactive-timeline .dit-entry {
+      position: relative;
+    }
+    #dit-interactive-timeline .dit-entry-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 28px 0;
+    }
+    #dit-interactive-timeline .dit-col {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    #dit-interactive-timeline .dit-col-label { text-align: right; padding-right: 32px; }
+    #dit-interactive-timeline .dit-entry-label-right .dit-col-label { text-align: left; padding-right: 0; padding-left: 32px; }
+    #dit-interactive-timeline .dit-col-card { padding-left: 32px; }
+    #dit-interactive-timeline .dit-entry-label-right .dit-col-card { padding-left: 0; padding-right: 32px; }
+    #dit-interactive-timeline .dit-node-col {
+      flex: 0 0 auto;
+      width: 35px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    #dit-interactive-timeline .dit-node {
+      display: block;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #F7EFDE;
+      border: 4px solid #3AA5B9;
+      box-sizing: border-box;
+    }
+    #dit-interactive-timeline .dit-year {
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: #7BB31E;
+      margin-bottom: 4px;
+    }
+    #dit-interactive-timeline .dit-era {
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: #3AA5B9;
+    }
+    #dit-interactive-timeline .dit-card {
+      position: relative;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: #0F3357;
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+    }
+    #dit-interactive-timeline .dit-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+    }
+    #dit-interactive-timeline .dit-col-card .dit-card::after {
+      left: -14px;
+      border-right: 14px solid #0F3357;
+    }
+    #dit-interactive-timeline .dit-entry-label-right .dit-col-card .dit-card::after {
+      left: auto;
+      right: -14px;
+      border-right: 0;
+      border-left: 14px solid #0F3357;
+    }
+    #dit-interactive-timeline .dit-card-photo {
+      flex: 0 0 121px;
+      width: 121px;
+      height: 134px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #d9d9d9;
+      display: block;
+    }
+    #dit-interactive-timeline .dit-card-text { flex: 1; min-width: 0; }
+    #dit-interactive-timeline .dit-card-desc {
+      margin: 0 0 12px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 20px;
+      color: #ffffff;
+    }
+    #dit-interactive-timeline .dit-card-link {
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      color: #B7D854;
+    }
+    #dit-interactive-timeline .dit-card:hover .dit-card-link { text-decoration: underline; }
+    #dit-interactive-timeline .dit-hit {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      cursor: pointer;
+    }
+    #dit-interactive-timeline .dit-hit-close { display: none; }
+    #dit-interactive-timeline .dit-toggle:checked ~ .dit-hit-open { display: none; }
+    #dit-interactive-timeline .dit-toggle:checked ~ .dit-hit-close { display: block; }
+    #dit-interactive-timeline .dit-detail {
+      display: none;
+      position: relative;
+      background: #F7EFDE;
+      border-radius: 10px;
+      box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.25);
+      padding: 40px;
+      box-sizing: border-box;
+      margin: 0 0 20px;
+    }
+    #dit-interactive-timeline:has(#dit-entry-1:checked) .dit-detail-1,
+    #dit-interactive-timeline:has(#dit-entry-2:checked) .dit-detail-2,
+    #dit-interactive-timeline:has(#dit-entry-3:checked) .dit-detail-3,
+    #dit-interactive-timeline:has(#dit-entry-4:checked) .dit-detail-4,
+    #dit-interactive-timeline:has(#dit-entry-5:checked) .dit-detail-5,
+    #dit-interactive-timeline:has(#dit-entry-6:checked) .dit-detail-6,
+    #dit-interactive-timeline:has(#dit-entry-7:checked) .dit-detail-7 {
+      display: block;
+    }
+    #dit-interactive-timeline .dit-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      color: #0F3357;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    #dit-interactive-timeline .dit-popup-name {
+      margin: 0 0 20px;
+      padding-right: 40px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: #3AA5B9;
+    }
+    #dit-interactive-timeline .dit-popup-body {
+      display: flex;
+      gap: 30px;
+    }
+    #dit-interactive-timeline .dit-popup-photos {
+      flex: 0 0 193px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    #dit-interactive-timeline .dit-popup-photo {
+      width: 193px;
+      height: 193px;
+      object-fit: cover;
+      background: #d9d9d9;
+      display: block;
+      border-radius: 4px;
+    }
+    #dit-interactive-timeline .dit-popup-photo-coin { border-radius: 50%; }
+    #dit-interactive-timeline .dit-popup-text {
+      flex: 1;
+      min-width: 0;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 20px;
+      color: #0F3357;
+    }
+    #dit-interactive-timeline .dit-popup-text p { margin: 0 0 16px; }
+    #dit-interactive-timeline .dit-popup-text p:last-child { margin-bottom: 0; }
+    @media (max-width: 800px) {
+      #dit-interactive-timeline .dit-timeline::before { display: none; }
+      #dit-interactive-timeline .dit-node-col { display: none; }
+      #dit-interactive-timeline .dit-entry-row { flex-direction: column; align-items: stretch; gap: 12px; padding: 16px 0; }
+      #dit-interactive-timeline .dit-col-label,
+      #dit-interactive-timeline .dit-entry-label-right .dit-col-label { text-align: left; padding: 0; }
+      #dit-interactive-timeline .dit-col-card,
+      #dit-interactive-timeline .dit-entry-label-right .dit-col-card { padding: 0; }
+      #dit-interactive-timeline .dit-card::after { display: none; }
+    }
+    @media (max-width: 600px) {
+      #dit-interactive-timeline .dit-card { flex-direction: column; }
+      #dit-interactive-timeline .dit-card-photo { width: 100%; height: 160px; }
+      #dit-interactive-timeline .dit-detail { padding: 24px; }
+      #dit-interactive-timeline .dit-popup-body { flex-direction: column; }
+      #dit-interactive-timeline .dit-popup-photos { flex-direction: row; }
+      #dit-interactive-timeline .dit-popup-photo { width: 45%; height: 140px; }
+    }
+  </style>
+
+  <div class="dit-timeline">
+
+    <div class="dit-entry dit-entry-label-left">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-1" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">1876</div>
+          <div class="dit-era">FOUNDING ERA</div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">Creation of City Park and early system development.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label for="dit-entry-1" class="dit-hit dit-hit-open" aria-label="Learn more: Founding Era, 1876"></label>
+      <label for="dit-entry-1-close" class="dit-hit dit-hit-close" aria-label="Close: Founding Era, 1876"></label>
+    </div>
+    <div class="dit-detail dit-detail-1">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-1-close" class="dit-toggle">
+      <label for="dit-entry-1-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">Creation of City Park and Early System Development</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dit-entry dit-entry-label-right">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-2" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">Urban planning, child-focused programs, and early 20th-century growth.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">EARLY 1900&rsquo;S</div>
+          <div class="dit-era">CITY BEAUTIFUL MOVEMENT</div>
+        </div>
+      </div>
+      <label for="dit-entry-2" class="dit-hit dit-hit-open" aria-label="Learn more: City Beautiful Movement, early 1900's"></label>
+      <label for="dit-entry-2-close" class="dit-hit dit-hit-close" aria-label="Close: City Beautiful Movement, early 1900's"></label>
+    </div>
+    <div class="dit-detail dit-detail-2">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-2-close" class="dit-toggle">
+      <label for="dit-entry-2-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">Urban Planning, Child-Focused Programs, and Early 20th-Century Growth</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dit-entry dit-entry-label-left">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-3" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">1929-1939</div>
+          <div class="dit-era">WPA PARKS</div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">Impact of the New Deal, CCC, and WPA improvements.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label for="dit-entry-3" class="dit-hit dit-hit-open" aria-label="Learn more: WPA Parks, 1929-1939"></label>
+      <label for="dit-entry-3-close" class="dit-hit dit-hit-close" aria-label="Close: WPA Parks, 1929-1939"></label>
+    </div>
+    <div class="dit-detail dit-detail-3">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-3-close" class="dit-toggle">
+      <label for="dit-entry-3-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">Impact of the New Deal, CCC, and WPA Improvements</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dit-entry dit-entry-label-right">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-4" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">World&rsquo;s Fair at Fair Park and its lasting infrastructure.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">1936</div>
+          <div class="dit-era">TEXAS CENTENNIAL</div>
+        </div>
+      </div>
+      <label for="dit-entry-4" class="dit-hit dit-hit-open" aria-label="Learn more: Texas Centennial, 1936"></label>
+      <label for="dit-entry-4-close" class="dit-hit dit-hit-close" aria-label="Close: Texas Centennial, 1936"></label>
+    </div>
+    <div class="dit-detail dit-detail-4">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-4-close" class="dit-toggle">
+      <label for="dit-entry-4-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">World&rsquo;s Fair at Fair Park and Its Lasting Infrastructure</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dit-entry dit-entry-label-left">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-5" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">1945</div>
+          <div class="dit-era">WWII &amp; POST WAR</div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">Post-war expansion and the Bartholomew Plan.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label for="dit-entry-5" class="dit-hit dit-hit-open" aria-label="Learn more: WWII and Post War, 1945"></label>
+      <label for="dit-entry-5-close" class="dit-hit dit-hit-close" aria-label="Close: WWII and Post War, 1945"></label>
+    </div>
+    <div class="dit-detail dit-detail-5">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-5-close" class="dit-toggle">
+      <label for="dit-entry-5-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">Post-War Expansion and the Bartholomew Plan</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dit-entry dit-entry-label-right">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-6" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">Evolution from segregated facilities to integration and equity.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">YEAR</div>
+          <div class="dit-era">CIVIL RIGHTS ERA</div>
+        </div>
+      </div>
+      <label for="dit-entry-6" class="dit-hit dit-hit-open" aria-label="Learn more: Civil Rights Era"></label>
+      <label for="dit-entry-6-close" class="dit-hit dit-hit-close" aria-label="Close: Civil Rights Era"></label>
+    </div>
+    <div class="dit-detail dit-detail-6">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-6-close" class="dit-toggle">
+      <label for="dit-entry-6-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">Evolution from Segregated Facilities to Integration and Equity</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dit-entry dit-entry-label-left">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-7" class="dit-toggle">
+      <div class="dit-entry-row">
+        <div class="dit-col dit-col-label">
+          <div class="dit-year">2026 FORWARD</div>
+          <div class="dit-era">MODERN ERA</div>
+        </div>
+        <div class="dit-node-col"><span class="dit-node"></span></div>
+        <div class="dit-col dit-col-card">
+          <div class="dit-card">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7.jpg" alt="" class="dit-card-photo" loading="lazy">
+            <div class="dit-card-text">
+              <p class="dit-card-desc">Looking to the future, management partners, and diverse community interests.</p>
+              <span class="dit-card-link">Learn More &gt;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <label for="dit-entry-7" class="dit-hit dit-hit-open" aria-label="Learn more: Modern Era, 2026 forward"></label>
+      <label for="dit-entry-7-close" class="dit-hit dit-hit-close" aria-label="Close: Modern Era, 2026 forward"></label>
+    </div>
+    <div class="dit-detail dit-detail-7">
+      <input type="radio" name="dit-toggle-group" id="dit-entry-7-close" class="dit-toggle">
+      <label for="dit-entry-7-close" class="dit-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dit-popup-name">Looking to the Future, Management Partners, and Diverse Community Interests</h2>
+      <div class="dit-popup-body">
+        <div class="dit-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7.jpg" alt="" class="dit-popup-photo">
+        </div>
+        <div class="dit-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
