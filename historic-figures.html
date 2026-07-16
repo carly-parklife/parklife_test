@@ -1,0 +1,491 @@
+<div class="dhf-historic-figures" id="dhf-historic-figures">
+  <style>
+    #dhf-historic-figures { max-width: 1100px; margin: 0 auto; }
+    #dhf-historic-figures .dhf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    #dhf-historic-figures .dhf-card {
+      position: relative;
+      display: block;
+      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      padding: 20px;
+      min-height: 220px;
+      text-decoration: none;
+      isolation: isolate;
+    }
+    #dhf-historic-figures .dhf-card-navy { background: #0F3357; }
+    #dhf-historic-figures .dhf-card-green { background: #3AA5B9; }
+    #dhf-historic-figures .dhf-card-photo {
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      filter: grayscale(100%);
+      z-index: 0;
+    }
+    #dhf-historic-figures .dhf-card-content { position: relative; z-index: 1; max-width: 65%; }
+    #dhf-historic-figures .dhf-card-name {
+      margin: 0 0 10px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: #F7EFDE;
+    }
+    #dhf-historic-figures .dhf-card-desc {
+      margin: 0 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      color: #F7EFDE;
+      opacity: 0.85;
+    }
+    #dhf-historic-figures .dhf-card-link {
+      display: inline-block;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      color: #F7EFDE;
+    }
+    #dhf-historic-figures .dhf-card:hover .dhf-card-link { text-decoration: underline; }
+    #dhf-historic-figures .dhf-toggle {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    #dhf-historic-figures .dhf-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #dhf-historic-figures:has(#dhf-figure-1:checked) .dhf-overlay-1,
+    #dhf-historic-figures:has(#dhf-figure-2:checked) .dhf-overlay-2,
+    #dhf-historic-figures:has(#dhf-figure-3:checked) .dhf-overlay-3,
+    #dhf-historic-figures:has(#dhf-figure-4:checked) .dhf-overlay-4,
+    #dhf-historic-figures:has(#dhf-figure-5:checked) .dhf-overlay-5,
+    #dhf-historic-figures:has(#dhf-figure-6:checked) .dhf-overlay-6,
+    #dhf-historic-figures:has(#dhf-figure-7:checked) .dhf-overlay-7,
+    #dhf-historic-figures:has(#dhf-figure-8:checked) .dhf-overlay-8,
+    #dhf-historic-figures:has(#dhf-figure-9:checked) .dhf-overlay-9,
+    #dhf-historic-figures:has(#dhf-figure-10:checked) .dhf-overlay-10,
+    #dhf-historic-figures:has(#dhf-figure-11:checked) .dhf-overlay-11,
+    #dhf-historic-figures:has(#dhf-figure-12:checked) .dhf-overlay-12 {
+      display: flex;
+    }
+    #dhf-historic-figures .dhf-overlay-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 51, 87, 0.85);
+      cursor: pointer;
+    }
+    #dhf-historic-figures .dhf-overlay-inner {
+      position: relative;
+      z-index: 1;
+      background: #F7EFDE;
+      border-radius: 10px;
+      box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.25);
+      max-width: 800px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+    #dhf-historic-figures .dhf-close-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      color: #0F3357;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    #dhf-historic-figures .dhf-popup-name {
+      margin: 0 0 20px;
+      padding-right: 40px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      color: #3AA5B9;
+    }
+    #dhf-historic-figures .dhf-popup-body {
+      display: flex;
+      gap: 30px;
+    }
+    #dhf-historic-figures .dhf-popup-photos {
+      flex: 0 0 193px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    #dhf-historic-figures .dhf-popup-photo {
+      width: 100%;
+      height: 262px;
+      object-fit: cover;
+      background: #d9d9d9;
+      display: block;
+      border-radius: 4px;
+    }
+    #dhf-historic-figures .dhf-popup-text {
+      flex: 1;
+      min-width: 0;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 20px;
+      color: #0F3357;
+    }
+    #dhf-historic-figures .dhf-popup-text p { margin: 0 0 16px; }
+    #dhf-historic-figures .dhf-popup-text p:last-child { margin-bottom: 0; }
+    @media (max-width: 900px) {
+      #dhf-historic-figures .dhf-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      #dhf-historic-figures .dhf-popup-body { flex-direction: column; }
+      #dhf-historic-figures .dhf-popup-photos { flex-direction: row; flex: 0 0 auto; }
+      #dhf-historic-figures .dhf-popup-photo { height: 180px; }
+    }
+    @media (max-width: 600px) {
+      #dhf-historic-figures .dhf-grid { grid-template-columns: 1fr; gap: 12px; }
+      #dhf-historic-figures .dhf-card-content { max-width: 75%; }
+      #dhf-historic-figures .dhf-overlay-inner { padding: 24px; }
+      #dhf-historic-figures .dhf-popup-photos { flex-direction: column; }
+    }
+  </style>
+
+  <div class="dhf-grid">
+    <label for="dhf-figure-1" class="dhf-card dhf-card-navy" aria-label="Learn more about Adella K. Turner">
+      <input type="checkbox" id="dhf-figure-1" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-1.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Adella K. Turner</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-2" class="dhf-card dhf-card-green" aria-label="Learn more about Anderson Bonner">
+      <input type="checkbox" id="dhf-figure-2" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Anderson Bonner</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-3" class="dhf-card dhf-card-navy" aria-label="Learn more about Anita Martinez">
+      <input type="checkbox" id="dhf-figure-3" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Anita Martinez</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-4" class="dhf-card dhf-card-green" aria-label="Learn more about Edwin J. Kiest">
+      <input type="checkbox" id="dhf-figure-4" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Edwin J. Kiest</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-5" class="dhf-card dhf-card-navy" aria-label="Learn more about George Kessler">
+      <input type="checkbox" id="dhf-figure-5" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">George Kessler</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-6" class="dhf-card dhf-card-green" aria-label="Learn more about Juanita J. Craft">
+      <input type="checkbox" id="dhf-figure-6" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Juanita J. Craft</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-7" class="dhf-card dhf-card-navy" aria-label="Learn more about Julien Reverchon">
+      <input type="checkbox" id="dhf-figure-7" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Julien Reverchon</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-8" class="dhf-card dhf-card-green" aria-label="Learn more about Mildred Dunn">
+      <input type="checkbox" id="dhf-figure-8" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Mildred Dunn</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-9" class="dhf-card dhf-card-navy" aria-label="Learn more about Park Board Members">
+      <input type="checkbox" id="dhf-figure-9" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Park Board Members</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-10" class="dhf-card dhf-card-green" aria-label="Learn more about Department Directors">
+      <input type="checkbox" id="dhf-figure-10" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Department Directors</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-11" class="dhf-card dhf-card-navy" aria-label="Learn more about W. W. Samuell">
+      <input type="checkbox" id="dhf-figure-11" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">W. W. Samuell</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <label for="dhf-figure-12" class="dhf-card dhf-card-green" aria-label="Learn more about William R. Tietze">
+      <input type="checkbox" id="dhf-figure-12" class="dhf-toggle">
+      <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">William R. Tietze</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+  </div>
+
+  <div class="dhf-overlay dhf-overlay-1">
+    <label for="dhf-figure-1" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-1" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Adella K. Turner</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-1.jpg" alt="Adella K. Turner" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-1b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-2">
+    <label for="dhf-figure-2" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-2" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Anderson Bonner</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2.jpg" alt="Anderson Bonner" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-3">
+    <label for="dhf-figure-3" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-3" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Anita Martinez</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3.jpg" alt="Anita Martinez" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-4">
+    <label for="dhf-figure-4" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-4" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Edwin J. Kiest</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4.jpg" alt="Edwin J. Kiest" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-5">
+    <label for="dhf-figure-5" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-5" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">George Kessler</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5.jpg" alt="George Kessler" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-6">
+    <label for="dhf-figure-6" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-6" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Juanita J. Craft</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6.jpg" alt="Juanita J. Craft" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-7">
+    <label for="dhf-figure-7" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-7" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Julien Reverchon</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7.jpg" alt="Julien Reverchon" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-8">
+    <label for="dhf-figure-8" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-8" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Mildred Dunn</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="Mildred Dunn" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-9">
+    <label for="dhf-figure-9" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-9" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Park Board Members</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="Park Board Members" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-10">
+    <label for="dhf-figure-10" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-10" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">Department Directors</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="Department Directors" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-11">
+    <label for="dhf-figure-11" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-11" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">W. W. Samuell</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11.jpg" alt="W. W. Samuell" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dhf-overlay dhf-overlay-12">
+    <label for="dhf-figure-12" class="dhf-overlay-bg" aria-label="Close"></label>
+    <div class="dhf-overlay-inner">
+      <label for="dhf-figure-12" class="dhf-close-btn" aria-label="Close">&times;</label>
+      <h2 class="dhf-popup-name">William R. Tietze</h2>
+      <div class="dhf-popup-body">
+        <div class="dhf-popup-photos">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12.jpg" alt="William R. Tietze" class="dhf-popup-photo">
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12b.jpg" alt="" class="dhf-popup-photo">
+        </div>
+        <div class="dhf-popup-text">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in. Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
+          <p>Proin aliquet, ligula sit amet varius lobortis, est nunc varius urna, eu cursus enim justo sed est. Fusce faucibus sapien a venenatis aliquet. Pellentesque eu lorem viverra, vulputate massa ut, blandit nibh.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
