@@ -52,6 +52,12 @@
       color: #45D3CD;
     }
     #dhf-historic-figures .dhf-card:hover .dhf-card-link { text-decoration: underline; }
+    #dhf-historic-figures .dhf-anchor {
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      overflow: hidden;
+    }
     #dhf-historic-figures .dhf-overlay {
       display: none;
       position: fixed;
@@ -62,7 +68,20 @@
       padding: 20px;
       box-sizing: border-box;
     }
-    #dhf-historic-figures .dhf-overlay:target { display: flex; }
+    #dhf-historic-figures:has(#dhf-figure-1:target) .dhf-overlay-1,
+    #dhf-historic-figures:has(#dhf-figure-2:target) .dhf-overlay-2,
+    #dhf-historic-figures:has(#dhf-figure-3:target) .dhf-overlay-3,
+    #dhf-historic-figures:has(#dhf-figure-4:target) .dhf-overlay-4,
+    #dhf-historic-figures:has(#dhf-figure-5:target) .dhf-overlay-5,
+    #dhf-historic-figures:has(#dhf-figure-6:target) .dhf-overlay-6,
+    #dhf-historic-figures:has(#dhf-figure-7:target) .dhf-overlay-7,
+    #dhf-historic-figures:has(#dhf-figure-8:target) .dhf-overlay-8,
+    #dhf-historic-figures:has(#dhf-figure-9:target) .dhf-overlay-9,
+    #dhf-historic-figures:has(#dhf-figure-10:target) .dhf-overlay-10,
+    #dhf-historic-figures:has(#dhf-figure-11:target) .dhf-overlay-11,
+    #dhf-historic-figures:has(#dhf-figure-12:target) .dhf-overlay-12 {
+      display: flex;
+    }
     #dhf-historic-figures .dhf-overlay-bg {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -149,6 +168,7 @@
 
   <div class="dhf-grid">
     <a href="#dhf-figure-1" class="dhf-card dhf-card-navy" aria-label="Learn more about Adella K. Turner">
+      <span id="dhf-figure-1" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-1.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Adella K. Turner</h3>
@@ -157,6 +177,7 @@
       </div>
     </a>
     <a href="#dhf-figure-2" class="dhf-card dhf-card-green" aria-label="Learn more about Anderson Bonner">
+      <span id="dhf-figure-2" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Anderson Bonner</h3>
@@ -165,6 +186,7 @@
       </div>
     </a>
     <a href="#dhf-figure-3" class="dhf-card dhf-card-navy" aria-label="Learn more about Anita Martinez">
+      <span id="dhf-figure-3" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Anita Martinez</h3>
@@ -173,6 +195,7 @@
       </div>
     </a>
     <a href="#dhf-figure-4" class="dhf-card dhf-card-green" aria-label="Learn more about Edwin J. Kiest">
+      <span id="dhf-figure-4" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Edwin J. Kiest</h3>
@@ -181,6 +204,7 @@
       </div>
     </a>
     <a href="#dhf-figure-5" class="dhf-card dhf-card-navy" aria-label="Learn more about George Kessler">
+      <span id="dhf-figure-5" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">George Kessler</h3>
@@ -189,6 +213,7 @@
       </div>
     </a>
     <a href="#dhf-figure-6" class="dhf-card dhf-card-green" aria-label="Learn more about Juanita J. Craft">
+      <span id="dhf-figure-6" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Juanita J. Craft</h3>
@@ -197,6 +222,7 @@
       </div>
     </a>
     <a href="#dhf-figure-7" class="dhf-card dhf-card-navy" aria-label="Learn more about Julien Reverchon">
+      <span id="dhf-figure-7" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Julien Reverchon</h3>
@@ -205,6 +231,7 @@
       </div>
     </a>
     <a href="#dhf-figure-8" class="dhf-card dhf-card-green" aria-label="Learn more about Mildred Dunn">
+      <span id="dhf-figure-8" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Mildred Dunn</h3>
@@ -213,6 +240,7 @@
       </div>
     </a>
     <a href="#dhf-figure-9" class="dhf-card dhf-card-navy" aria-label="Learn more about Park Board Members">
+      <span id="dhf-figure-9" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Park Board Members</h3>
@@ -221,6 +249,7 @@
       </div>
     </a>
     <a href="#dhf-figure-10" class="dhf-card dhf-card-green" aria-label="Learn more about Department Directors">
+      <span id="dhf-figure-10" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">Department Directors</h3>
@@ -229,6 +258,7 @@
       </div>
     </a>
     <a href="#dhf-figure-11" class="dhf-card dhf-card-navy" aria-label="Learn more about W. W. Samuell">
+      <span id="dhf-figure-11" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">W. W. Samuell</h3>
@@ -237,6 +267,7 @@
       </div>
     </a>
     <a href="#dhf-figure-12" class="dhf-card dhf-card-green" aria-label="Learn more about William R. Tietze">
+      <span id="dhf-figure-12" class="dhf-anchor" aria-hidden="true"></span>
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
         <h3 class="dhf-card-name">William R. Tietze</h3>
@@ -246,7 +277,7 @@
     </a>
   </div>
 
-  <div class="dhf-overlay" id="dhf-figure-1">
+  <div class="dhf-overlay dhf-overlay-1">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -263,7 +294,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-2">
+  <div class="dhf-overlay dhf-overlay-2">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -280,7 +311,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-3">
+  <div class="dhf-overlay dhf-overlay-3">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -297,7 +328,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-4">
+  <div class="dhf-overlay dhf-overlay-4">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -314,7 +345,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-5">
+  <div class="dhf-overlay dhf-overlay-5">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -331,7 +362,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-6">
+  <div class="dhf-overlay dhf-overlay-6">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -348,7 +379,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-7">
+  <div class="dhf-overlay dhf-overlay-7">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -365,7 +396,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-8">
+  <div class="dhf-overlay dhf-overlay-8">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -382,7 +413,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-9">
+  <div class="dhf-overlay dhf-overlay-9">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -399,7 +430,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-10">
+  <div class="dhf-overlay dhf-overlay-10">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -416,7 +447,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-11">
+  <div class="dhf-overlay dhf-overlay-11">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
@@ -433,7 +464,7 @@
       </div>
     </div>
   </div>
-  <div class="dhf-overlay" id="dhf-figure-12">
+  <div class="dhf-overlay dhf-overlay-12">
     <a href="#dhf-close" class="dhf-overlay-bg" aria-label="Close"></a>
     <div class="dhf-overlay-inner">
       <a href="#dhf-close" class="dhf-close-btn" aria-label="Close">&times;</a>
