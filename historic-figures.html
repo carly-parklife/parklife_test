@@ -54,6 +54,15 @@
       color: #F7EFDE;
     }
     #dhf-historic-figures .dhf-card:hover .dhf-card-link { text-decoration: underline; }
+    #dhf-historic-figures .dhf-card-hit {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      cursor: pointer;
+    }
+    #dhf-historic-figures .dhf-card-hit-close { display: none; }
+    #dhf-historic-figures .dhf-toggle:checked ~ .dhf-card-hit-open { display: none; }
+    #dhf-historic-figures .dhf-toggle:checked ~ .dhf-card-hit-close { display: block; }
     #dhf-historic-figures .dhf-toggle {
       position: absolute;
       top: 0; left: 0;
@@ -156,7 +165,7 @@
   </style>
 
   <div class="dhf-grid">
-    <label for="dhf-figure-1" class="dhf-card dhf-card-navy" aria-label="Learn more about Adella K. Turner">
+    <div class="dhf-card dhf-card-navy">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-1" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-1.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -164,7 +173,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-1" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Adella K. Turner"></label>
+      <label for="dhf-figure-1-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Adella K. Turner"></label>
+    </div>
     <div class="dhf-detail dhf-detail-1">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-1-close" class="dhf-toggle">
       <label for="dhf-figure-1-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -180,7 +191,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-2" class="dhf-card dhf-card-green" aria-label="Learn more about Anderson Bonner">
+    <div class="dhf-card dhf-card-green">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-2" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -188,7 +199,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-2" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Anderson Bonner"></label>
+      <label for="dhf-figure-2-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Anderson Bonner"></label>
+    </div>
     <div class="dhf-detail dhf-detail-2">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-2-close" class="dhf-toggle">
       <label for="dhf-figure-2-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -204,7 +217,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-3" class="dhf-card dhf-card-navy" aria-label="Learn more about Anita Martinez">
+    <div class="dhf-card dhf-card-navy">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-3" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -212,7 +225,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-3" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Anita Martinez"></label>
+      <label for="dhf-figure-3-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Anita Martinez"></label>
+    </div>
     <div class="dhf-detail dhf-detail-3">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-3-close" class="dhf-toggle">
       <label for="dhf-figure-3-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -228,7 +243,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-4" class="dhf-card dhf-card-green" aria-label="Learn more about Edwin J. Kiest">
+    <div class="dhf-card dhf-card-green">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-4" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -236,7 +251,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-4" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Edwin J. Kiest"></label>
+      <label for="dhf-figure-4-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Edwin J. Kiest"></label>
+    </div>
     <div class="dhf-detail dhf-detail-4">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-4-close" class="dhf-toggle">
       <label for="dhf-figure-4-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -252,7 +269,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-5" class="dhf-card dhf-card-navy" aria-label="Learn more about George Kessler">
+    <div class="dhf-card dhf-card-navy">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-5" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -260,7 +277,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-5" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about George Kessler"></label>
+      <label for="dhf-figure-5-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for George Kessler"></label>
+    </div>
     <div class="dhf-detail dhf-detail-5">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-5-close" class="dhf-toggle">
       <label for="dhf-figure-5-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -276,7 +295,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-6" class="dhf-card dhf-card-green" aria-label="Learn more about Juanita J. Craft">
+    <div class="dhf-card dhf-card-green">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-6" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -284,7 +303,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-6" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Juanita J. Craft"></label>
+      <label for="dhf-figure-6-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Juanita J. Craft"></label>
+    </div>
     <div class="dhf-detail dhf-detail-6">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-6-close" class="dhf-toggle">
       <label for="dhf-figure-6-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -300,7 +321,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-7" class="dhf-card dhf-card-navy" aria-label="Learn more about Julien Reverchon">
+    <div class="dhf-card dhf-card-navy">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-7" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -308,7 +329,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-7" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Julien Reverchon"></label>
+      <label for="dhf-figure-7-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Julien Reverchon"></label>
+    </div>
     <div class="dhf-detail dhf-detail-7">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-7-close" class="dhf-toggle">
       <label for="dhf-figure-7-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -324,7 +347,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-8" class="dhf-card dhf-card-green" aria-label="Learn more about Mildred Dunn">
+    <div class="dhf-card dhf-card-green">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-8" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -332,7 +355,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-8" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Mildred Dunn"></label>
+      <label for="dhf-figure-8-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Mildred Dunn"></label>
+    </div>
     <div class="dhf-detail dhf-detail-8">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-8-close" class="dhf-toggle">
       <label for="dhf-figure-8-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -348,7 +373,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-9" class="dhf-card dhf-card-navy" aria-label="Learn more about Park Board Members">
+    <div class="dhf-card dhf-card-navy">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-9" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -356,7 +381,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-9" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Park Board Members"></label>
+      <label for="dhf-figure-9-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Park Board Members"></label>
+    </div>
     <div class="dhf-detail dhf-detail-9">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-9-close" class="dhf-toggle">
       <label for="dhf-figure-9-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -372,7 +399,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-10" class="dhf-card dhf-card-green" aria-label="Learn more about Department Directors">
+    <div class="dhf-card dhf-card-green">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-10" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -380,7 +407,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-10" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about Department Directors"></label>
+      <label for="dhf-figure-10-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for Department Directors"></label>
+    </div>
     <div class="dhf-detail dhf-detail-10">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-10-close" class="dhf-toggle">
       <label for="dhf-figure-10-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -396,7 +425,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-11" class="dhf-card dhf-card-navy" aria-label="Learn more about W. W. Samuell">
+    <div class="dhf-card dhf-card-navy">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-11" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -404,7 +433,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-11" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about W. W. Samuell"></label>
+      <label for="dhf-figure-11-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for W. W. Samuell"></label>
+    </div>
     <div class="dhf-detail dhf-detail-11">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-11-close" class="dhf-toggle">
       <label for="dhf-figure-11-close" class="dhf-close-btn" aria-label="Close">&times;</label>
@@ -420,7 +451,7 @@
         </div>
       </div>
     </div>
-    <label for="dhf-figure-12" class="dhf-card dhf-card-green" aria-label="Learn more about William R. Tietze">
+    <div class="dhf-card dhf-card-green">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-12" class="dhf-toggle">
       <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12.jpg" alt="" class="dhf-card-photo" loading="lazy">
       <div class="dhf-card-content">
@@ -428,7 +459,9 @@
         <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
-    </label>
+      <label for="dhf-figure-12" class="dhf-card-hit dhf-card-hit-open" aria-label="Learn more about William R. Tietze"></label>
+      <label for="dhf-figure-12-close" class="dhf-card-hit dhf-card-hit-close" aria-label="Close details for William R. Tietze"></label>
+    </div>
     <div class="dhf-detail dhf-detail-12">
       <input type="radio" name="dhf-toggle-group" id="dhf-figure-12-close" class="dhf-toggle">
       <label for="dhf-figure-12-close" class="dhf-close-btn" aria-label="Close">&times;</label>
