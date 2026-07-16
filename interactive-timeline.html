@@ -207,16 +207,43 @@
     #dit-interactive-timeline .dit-popup-text p { margin: 0 0 16px; }
     #dit-interactive-timeline .dit-popup-text p:last-child { margin-bottom: 0; }
     @media (max-width: 800px) {
-      #dit-interactive-timeline .dit-timeline::before { display: none; }
-      #dit-interactive-timeline .dit-node-col { display: none; }
-      #dit-interactive-timeline .dit-entry-row { flex-direction: column; align-items: stretch; gap: 12px; padding: 16px 0; }
+      #dit-interactive-timeline .dit-timeline::before {
+        left: 19px;
+        transform: none;
+      }
+      #dit-interactive-timeline .dit-entry-row {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        grid-template-areas: "node label" "node card";
+        column-gap: 14px;
+        row-gap: 10px;
+        padding: 20px 0;
+      }
       #dit-interactive-timeline .dit-col-label,
-      #dit-interactive-timeline .dit-entry-label-right .dit-col-label { text-align: left; padding: 0; }
+      #dit-interactive-timeline .dit-entry-label-right .dit-col-label {
+        grid-area: label;
+        text-align: left;
+        padding: 0;
+      }
       #dit-interactive-timeline .dit-col-card,
-      #dit-interactive-timeline .dit-entry-label-right .dit-col-card { padding: 0; }
+      #dit-interactive-timeline .dit-entry-label-right .dit-col-card {
+        grid-area: card;
+        padding: 0;
+      }
+      #dit-interactive-timeline .dit-node-col {
+        grid-area: node;
+        width: auto;
+        padding-top: 4px;
+      }
+      #dit-interactive-timeline .dit-node { width: 26px; height: 26px; border-width: 3px; }
+      #dit-interactive-timeline .dit-year { font-size: 20px; }
+      #dit-interactive-timeline .dit-era { font-size: 16px; }
       #dit-interactive-timeline .dit-card::after { display: none; }
     }
     @media (max-width: 600px) {
+      #dit-interactive-timeline .dit-timeline::before { left: 15px; }
+      #dit-interactive-timeline .dit-entry-row { grid-template-columns: 32px 1fr; }
+      #dit-interactive-timeline .dit-node { width: 20px; height: 20px; border-width: 2px; }
       #dit-interactive-timeline .dit-card { flex-direction: column; }
       #dit-interactive-timeline .dit-card-photo { width: 100%; height: 160px; }
       #dit-interactive-timeline .dit-detail { padding: 24px; }
