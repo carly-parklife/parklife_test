@@ -561,4 +561,19 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var toggles = document.querySelectorAll('#dhf-historic-figures .dhf-toggle');
+      toggles.forEach(function (toggle) {
+        toggle.addEventListener('change', function () {
+          if (toggle.checked) {
+            toggles.forEach(function (other) {
+              if (other !== toggle) other.checked = false;
+            });
+          }
+        });
+      });
+    })();
+  </script>
 </div>
