@@ -5,6 +5,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+      grid-auto-flow: row dense;
     }
     #dhf-historic-figures .dhf-card {
       position: relative;
@@ -54,9 +55,10 @@
       font-size: 20px;
       color: #F7EFDE;
     }
-    #dhf-historic-figures .dhf-card-green .dhf-card-name { color: #CDDC39; }
     #dhf-historic-figures .dhf-card-navy:hover .dhf-card-name,
     #dhf-historic-figures .dhf-card-navy:focus-within .dhf-card-name { color: #3AA5B9; }
+    #dhf-historic-figures .dhf-card-green:hover .dhf-card-name,
+    #dhf-historic-figures .dhf-card-green:focus-within .dhf-card-name { color: #0F3357; }
     #dhf-historic-figures .dhf-card-desc {
       margin: 0 0 16px;
       font-family: Arial, sans-serif;
@@ -83,48 +85,29 @@
       white-space: nowrap;
       border: 0;
     }
-    #dhf-historic-figures .dhf-overlay {
+    #dhf-historic-figures .dhf-detail {
       display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    #dhf-historic-figures:has(#dhf-figure-1:checked) .dhf-overlay-1,
-    #dhf-historic-figures:has(#dhf-figure-2:checked) .dhf-overlay-2,
-    #dhf-historic-figures:has(#dhf-figure-3:checked) .dhf-overlay-3,
-    #dhf-historic-figures:has(#dhf-figure-4:checked) .dhf-overlay-4,
-    #dhf-historic-figures:has(#dhf-figure-5:checked) .dhf-overlay-5,
-    #dhf-historic-figures:has(#dhf-figure-6:checked) .dhf-overlay-6,
-    #dhf-historic-figures:has(#dhf-figure-7:checked) .dhf-overlay-7,
-    #dhf-historic-figures:has(#dhf-figure-8:checked) .dhf-overlay-8,
-    #dhf-historic-figures:has(#dhf-figure-9:checked) .dhf-overlay-9,
-    #dhf-historic-figures:has(#dhf-figure-10:checked) .dhf-overlay-10,
-    #dhf-historic-figures:has(#dhf-figure-11:checked) .dhf-overlay-11,
-    #dhf-historic-figures:has(#dhf-figure-12:checked) .dhf-overlay-12 {
-      display: flex;
-    }
-    #dhf-historic-figures .dhf-overlay-bg {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 51, 87, 0.85);
-      cursor: pointer;
-    }
-    #dhf-historic-figures .dhf-overlay-inner {
       position: relative;
-      z-index: 1;
       background: #F7EFDE;
       border-radius: 10px;
       box-shadow: 4px 4px 4px 0 rgba(0,0,0,0.25);
-      max-width: 860px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
       padding: 40px;
       box-sizing: border-box;
+    }
+    #dhf-historic-figures:has(#dhf-figure-1:checked) .dhf-detail-1,
+    #dhf-historic-figures:has(#dhf-figure-2:checked) .dhf-detail-2,
+    #dhf-historic-figures:has(#dhf-figure-3:checked) .dhf-detail-3,
+    #dhf-historic-figures:has(#dhf-figure-4:checked) .dhf-detail-4,
+    #dhf-historic-figures:has(#dhf-figure-5:checked) .dhf-detail-5,
+    #dhf-historic-figures:has(#dhf-figure-6:checked) .dhf-detail-6,
+    #dhf-historic-figures:has(#dhf-figure-7:checked) .dhf-detail-7,
+    #dhf-historic-figures:has(#dhf-figure-8:checked) .dhf-detail-8,
+    #dhf-historic-figures:has(#dhf-figure-9:checked) .dhf-detail-9,
+    #dhf-historic-figures:has(#dhf-figure-10:checked) .dhf-detail-10,
+    #dhf-historic-figures:has(#dhf-figure-11:checked) .dhf-detail-11,
+    #dhf-historic-figures:has(#dhf-figure-12:checked) .dhf-detail-12 {
+      display: block;
+      grid-column: 1 / -1;
     }
     #dhf-historic-figures .dhf-close-btn {
       position: absolute;
@@ -208,7 +191,7 @@
     @media (max-width: 600px) {
       #dhf-historic-figures .dhf-grid { grid-template-columns: 1fr; gap: 12px; }
       #dhf-historic-figures .dhf-card-photo-wrap { flex-basis: 38%; }
-      #dhf-historic-figures .dhf-overlay-inner { padding: 24px; }
+      #dhf-historic-figures .dhf-detail { padding: 24px; }
     }
   </style>
 
@@ -224,132 +207,7 @@
         <span class="dhf-card-link">Learn More &gt;</span>
       </div>
     </label>
-    <label for="dhf-figure-2" class="dhf-card dhf-card-green" aria-label="Learn more about Anderson Bonner">
-      <input type="checkbox" id="dhf-figure-2" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Anderson Bonner</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-3" class="dhf-card dhf-card-navy" aria-label="Learn more about Anita Martinez">
-      <input type="checkbox" id="dhf-figure-3" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Anita Martinez</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-4" class="dhf-card dhf-card-green" aria-label="Learn more about Edwin J. Kiest">
-      <input type="checkbox" id="dhf-figure-4" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Edwin J. Kiest</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-5" class="dhf-card dhf-card-navy" aria-label="Learn more about George Kessler">
-      <input type="checkbox" id="dhf-figure-5" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">George Kessler</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-6" class="dhf-card dhf-card-green" aria-label="Learn more about Juanita J. Craft">
-      <input type="checkbox" id="dhf-figure-6" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Juanita J. Craft</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-7" class="dhf-card dhf-card-navy" aria-label="Learn more about Julien Reverchon">
-      <input type="checkbox" id="dhf-figure-7" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Julien Reverchon</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-8" class="dhf-card dhf-card-green" aria-label="Learn more about Mildred Dunn">
-      <input type="checkbox" id="dhf-figure-8" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Mildred Dunn</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-9" class="dhf-card dhf-card-navy" aria-label="Learn more about Park Board Members">
-      <input type="checkbox" id="dhf-figure-9" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Park Board Members</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-10" class="dhf-card dhf-card-green" aria-label="Learn more about Department Directors">
-      <input type="checkbox" id="dhf-figure-10" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">Department Directors</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-11" class="dhf-card dhf-card-navy" aria-label="Learn more about W. W. Samuell">
-      <input type="checkbox" id="dhf-figure-11" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">W. W. Samuell</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-    <label for="dhf-figure-12" class="dhf-card dhf-card-green" aria-label="Learn more about William R. Tietze">
-      <input type="checkbox" id="dhf-figure-12" class="dhf-toggle">
-      <div class="dhf-card-photo-wrap">
-        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12.jpg" alt="" class="dhf-card-photo" loading="lazy">
-      </div>
-      <div class="dhf-card-content">
-        <h3 class="dhf-card-name">William R. Tietze</h3>
-        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
-        <span class="dhf-card-link">Learn More &gt;</span>
-      </div>
-    </label>
-  </div>
-
-  <div class="dhf-overlay dhf-overlay-1">
-    <label for="dhf-figure-1" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+    <div class="dhf-detail dhf-detail-1">
       <label for="dhf-figure-1" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Adella K. Turner</h2>
       <p class="dhf-popup-dates">January 13, 1856 &ndash; June 6, 1938</p>
@@ -372,10 +230,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-2">
-    <label for="dhf-figure-2" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-2" class="dhf-card dhf-card-green" aria-label="Learn more about Anderson Bonner">
+      <input type="checkbox" id="dhf-figure-2" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-2.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Anderson Bonner</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-2">
       <label for="dhf-figure-2" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Anderson Bonner</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-2</p>
@@ -393,10 +260,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-3">
-    <label for="dhf-figure-3" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-3" class="dhf-card dhf-card-navy" aria-label="Learn more about Anita Martinez">
+      <input type="checkbox" id="dhf-figure-3" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-3.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Anita Martinez</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-3">
       <label for="dhf-figure-3" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Anita Martinez</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-3</p>
@@ -414,10 +290,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-4">
-    <label for="dhf-figure-4" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-4" class="dhf-card dhf-card-green" aria-label="Learn more about Edwin J. Kiest">
+      <input type="checkbox" id="dhf-figure-4" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-4.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Edwin J. Kiest</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-4">
       <label for="dhf-figure-4" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Edwin J. Kiest</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-4</p>
@@ -435,10 +320,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-5">
-    <label for="dhf-figure-5" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-5" class="dhf-card dhf-card-navy" aria-label="Learn more about George Kessler">
+      <input type="checkbox" id="dhf-figure-5" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-5.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">George Kessler</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-5">
       <label for="dhf-figure-5" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">George Kessler</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-5</p>
@@ -456,10 +350,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-6">
-    <label for="dhf-figure-6" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-6" class="dhf-card dhf-card-green" aria-label="Learn more about Juanita J. Craft">
+      <input type="checkbox" id="dhf-figure-6" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-6.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Juanita J. Craft</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-6">
       <label for="dhf-figure-6" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Juanita J. Craft</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-6</p>
@@ -477,10 +380,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-7">
-    <label for="dhf-figure-7" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-7" class="dhf-card dhf-card-navy" aria-label="Learn more about Julien Reverchon">
+      <input type="checkbox" id="dhf-figure-7" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-7.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Julien Reverchon</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-7">
       <label for="dhf-figure-7" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Julien Reverchon</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-7</p>
@@ -498,10 +410,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-8">
-    <label for="dhf-figure-8" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-8" class="dhf-card dhf-card-green" aria-label="Learn more about Mildred Dunn">
+      <input type="checkbox" id="dhf-figure-8" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Mildred Dunn</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-8">
       <label for="dhf-figure-8" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Mildred Dunn</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-8</p>
@@ -519,10 +440,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-9">
-    <label for="dhf-figure-9" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-9" class="dhf-card dhf-card-navy" aria-label="Learn more about Park Board Members">
+      <input type="checkbox" id="dhf-figure-9" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Park Board Members</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-9">
       <label for="dhf-figure-9" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Park Board Members</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-9</p>
@@ -540,10 +470,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-10">
-    <label for="dhf-figure-10" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-10" class="dhf-card dhf-card-green" aria-label="Learn more about Department Directors">
+      <input type="checkbox" id="dhf-figure-10" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">Department Directors</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-10">
       <label for="dhf-figure-10" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">Department Directors</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-10</p>
@@ -561,10 +500,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-11">
-    <label for="dhf-figure-11" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-11" class="dhf-card dhf-card-navy" aria-label="Learn more about W. W. Samuell">
+      <input type="checkbox" id="dhf-figure-11" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-11.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">W. W. Samuell</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-11">
       <label for="dhf-figure-11" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">W. W. Samuell</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-11</p>
@@ -582,10 +530,19 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="dhf-overlay dhf-overlay-12">
-    <label for="dhf-figure-12" class="dhf-overlay-bg" aria-label="Close"></label>
-    <div class="dhf-overlay-inner">
+
+    <label for="dhf-figure-12" class="dhf-card dhf-card-green" aria-label="Learn more about William R. Tietze">
+      <input type="checkbox" id="dhf-figure-12" class="dhf-toggle">
+      <div class="dhf-card-photo-wrap">
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-12.jpg" alt="" class="dhf-card-photo" loading="lazy">
+      </div>
+      <div class="dhf-card-content">
+        <h3 class="dhf-card-name">William R. Tietze</h3>
+        <p class="dhf-card-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec.</p>
+        <span class="dhf-card-link">Learn More &gt;</span>
+      </div>
+    </label>
+    <div class="dhf-detail dhf-detail-12">
       <label for="dhf-figure-12" class="dhf-close-btn" aria-label="Close">&times;</label>
       <h2 class="dhf-popup-name">William R. Tietze</h2>
       <p class="dhf-popup-dates">REPLACE-WITH-DATES-12</p>
