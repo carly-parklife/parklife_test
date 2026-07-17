@@ -39,15 +39,38 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
     (function () {
-      // SAMPLE DATA — replace this array with the full DPARD parks list.
-      // Each entry: name (required), lat/lng (required), address (optional),
-      // url (optional — link is only shown in the popup once a real page URL is set).
+      // Featured Dallas 150 Parks.
+      // NOTE: lat/lng below are ESTIMATED from street/neighborhood knowledge,
+      // not run through a geocoding service — verify pin placement (e.g. via
+      // Google My Maps CSV import) before publishing, especially for the
+      // less prominent parks lower in this list.
+      // url is optional — the popup link only appears once a real page URL is set.
       var DP_PARKS = [
-        { name: "Klyde Warren Park", lat: 32.7889, lng: -96.8025, address: "2012 Woodall Rodgers Fwy, Dallas, TX 75201", url: "" },
-        { name: "White Rock Lake Park", lat: 32.8343, lng: -96.7208, address: "8300 E Lawther Dr, Dallas, TX 75218", url: "" },
-        { name: "Fair Park", lat: 32.7815, lng: -96.7649, address: "3809 Grand Ave, Dallas, TX 75210", url: "" },
+        { name: "Lake Cliff Park", lat: 32.7458, lng: -96.8144, address: "300 E Colorado Blvd, Dallas, TX 75201", url: "" },
+        { name: "Samuell Grand Park", lat: 32.7889, lng: -96.7461, address: "6200 E Grand Ave, Dallas, TX 75223", url: "" },
         { name: "Reverchon Park", lat: 32.8058, lng: -96.8114, address: "3505 Maple Ave, Dallas, TX 75219", url: "" },
-        { name: "Kidd Springs Park", lat: 32.7460, lng: -96.8280, address: "700 W Canty St, Dallas, TX 75208", url: "" }
+        { name: "City Park", lat: 32.7684, lng: -96.7889, address: "1515 S. Harwood St, Dallas, TX 75215", url: "" },
+        { name: "Pike Park", lat: 32.7942, lng: -96.8206, address: "2807 Harry Hines Blvd, Dallas, TX 75201", url: "" },
+        { name: "Thurgood Marshall Park", lat: 32.6789, lng: -96.8264, address: "5150 Mark Trail Way, Dallas, TX 75232", url: "" },
+        { name: "Dallas Zoo", lat: 32.7411, lng: -96.8153, address: "650 S R.L. Thornton Fwy, Dallas, TX 75203", url: "" },
+        { name: "Cedar Crest Golf Course", lat: 32.7423, lng: -96.7856, address: "1800 Southerland Ave, Dallas, TX 75203", url: "" },
+        { name: "Eloise Lundy Park", lat: 32.7723, lng: -96.8283, address: "1200 Sabine St, Dallas, TX 75203", url: "" },
+        { name: "Crawford Park", lat: 32.7398, lng: -96.6822, address: "8700 Elam Rd, Dallas, TX 75217", url: "" },
+        { name: "Bachman Lake Park", lat: 32.8496, lng: -96.8613, address: "3500 W Northwest Hwy, Dallas, TX 75220", url: "" },
+        { name: "Hattie R. Moore Park", lat: 32.7684, lng: -96.8556, address: "3212 N. Winnetka, Dallas, TX 75212", url: "" },
+        { name: "Fair Park", lat: 32.7815, lng: -96.7649, address: "3809 Grand Ave, Dallas, TX 75210", url: "" },
+        { name: "Juanita J. Craft Park", lat: 32.7614, lng: -96.7719, address: "4352 Spring Ave, Dallas, TX 75210", url: "" },
+        { name: "Singing Hills Park", lat: 32.6934, lng: -96.7997, address: "1919 Crouch Rd, Dallas, TX 75241", url: "" },
+        { name: "Kleberg Park", lat: 32.6858, lng: -96.6386, address: "1575 Edd Rd, Dallas, TX 75253", url: "" },
+        { name: "Miller Family Park", lat: 32.6975, lng: -96.7930, address: "2814 Persimmon Rd, Dallas, TX 75241", url: "" },
+        { name: "White Rock Lake Park", lat: 32.8343, lng: -96.7208, address: "E Lawther Dr, Dallas, TX 75218", url: "" },
+        { name: "Hamilton Park", lat: 32.9013, lng: -96.7683, address: "12225 Willowdell Dr, Dallas, TX 75243", url: "" },
+        { name: "Fretz Park", lat: 32.9394, lng: -96.7994, address: "6994 Belt Line Rd, Dallas, TX 75254", url: "" },
+        { name: "Campbell Green Park", lat: 32.9884, lng: -96.8022, address: "16600 Hillcrest Rd, Dallas, TX 75248", url: "" },
+        { name: "Marcus Park", lat: 32.8664, lng: -96.8697, address: "3000 Modella Ave, Dallas, TX 75229", url: "" },
+        { name: "Tietze Park", lat: 32.8078, lng: -96.7625, address: "2700 Skillman St, Dallas, TX 75214", url: "" },
+        { name: "Freedman’s Cemetery", lat: 32.8028, lng: -96.7961, address: "2521 N Central Expy, Dallas, TX 75204", url: "" },
+        { name: "Klyde Warren Park", lat: 32.7889, lng: -96.8025, address: "2012 Woodall Rodgers Fwy, Dallas, TX 75201", url: "" }
       ];
 
       var map = L.map("dp-parks-map", { scrollWheelZoom: false });
