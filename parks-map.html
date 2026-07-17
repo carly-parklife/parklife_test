@@ -1,0 +1,85 @@
+<div class="dp-parks-map-wrap" id="dp-parks-map-wrap">
+  <style>
+    #dp-parks-map-wrap { max-width: 1100px; margin: 0 auto; }
+    #dp-parks-map-wrap #dp-parks-map {
+      width: 100%;
+      height: 550px;
+      border-radius: 6px;
+      z-index: 0;
+    }
+    #dp-parks-map-wrap .leaflet-popup-content-wrapper { border-radius: 6px; }
+    #dp-parks-map-wrap .dp-parks-popup-title {
+      font-weight: 700;
+      color: #347743;
+      margin: 0 0 4px;
+      font-size: 1em;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-address {
+      margin: 0 0 6px;
+      color: #333;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-link {
+      display: inline-block;
+      color: #347743;
+      font-weight: 600;
+      font-size: 0.9em;
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      #dp-parks-map-wrap #dp-parks-map { height: 420px; }
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+  <div id="dp-parks-map" role="application" aria-label="Interactive map of Dallas Park and Recreation Department parks"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    (function () {
+      // SAMPLE DATA — replace this array with the full DPARD parks list.
+      // Each entry: name (required), lat/lng (required), address (optional),
+      // url (optional — link is only shown in the popup once a real page URL is set).
+      var DP_PARKS = [
+        { name: "Klyde Warren Park", lat: 32.7889, lng: -96.8025, address: "2012 Woodall Rodgers Fwy, Dallas, TX 75201", url: "" },
+        { name: "White Rock Lake Park", lat: 32.8343, lng: -96.7208, address: "8300 E Lawther Dr, Dallas, TX 75218", url: "" },
+        { name: "Fair Park", lat: 32.7815, lng: -96.7649, address: "3809 Grand Ave, Dallas, TX 75210", url: "" },
+        { name: "Reverchon Park", lat: 32.8058, lng: -96.8114, address: "3505 Maple Ave, Dallas, TX 75219", url: "" },
+        { name: "Kidd Springs Park", lat: 32.7460, lng: -96.8280, address: "700 W Canty St, Dallas, TX 75208", url: "" }
+      ];
+
+      var map = L.map("dp-parks-map", { scrollWheelZoom: false });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      var markers = [];
+      DP_PARKS.forEach(function (park) {
+        var popupHtml = '<div class="dp-parks-popup-title">' + park.name + '</div>';
+        if (park.address) {
+          popupHtml += '<p class="dp-parks-popup-address">' + park.address + '</p>';
+        }
+        if (park.url) {
+          popupHtml += '<a class="dp-parks-popup-link" href="' + park.url + '">View park page</a>';
+        }
+        var marker = L.marker([park.lat, park.lng]).bindPopup(popupHtml);
+        marker.addTo(map);
+        markers.push(marker);
+      });
+
+      if (markers.length) {
+        var group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.15));
+      } else {
+        map.setView([32.7767, -96.7970], 11);
+      }
+
+      map.on("focus", function () { map.scrollWheelZoom.enable(); });
+      map.on("blur", function () { map.scrollWheelZoom.disable(); });
+    })();
+  </script>
+</div>
