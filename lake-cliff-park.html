@@ -1,0 +1,429 @@
+<!--
+  DPARD 150 Individual Park Page — TEMPLATE
+  This file is fully built out for Lake Cliff Park. To reuse for the other
+  24 Featured Locations parks, duplicate this file and update:
+    1. Every "REPLACE-WITH-..." image/audio placeholder (before/after
+       comparison photos, audio cover image, audio tour MP3, 3 historical
+       images) — search for "REPLACE-WITH" to find them all.
+    2. The two ids "dp150-ba-slider" and anywhere "Lake Cliff Park" appears
+       as visible text (tags line, audio widget title) or in alt text.
+    3. The dp150-park-tags list (amenity tags for that park).
+    4. The body content sections/headings/paragraphs under
+       .dp150-park-body — replace with that park's own history text.
+  The CSS and JS do not need to change between parks.
+
+  Assumption: the blue "Lake Cliff Park" H1 seen in the design matches
+  the CivicPlus auto-generated page title (breadcrumb's last segment ==
+  H1 text), so it is NOT included here — CivicPlus should render it
+  automatically from the page name. Flag this if that's wrong.
+-->
+<div class="dp150-park" id="dp150-park">
+  <style>
+    #dp150-park { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+    #dp150-park *, #dp150-park *::before, #dp150-park *::after { box-sizing: inherit; }
+
+    #dp150-park .dp150-park-tags {
+      text-align: right;
+      color: #AEAEAE;
+      font-size: 0.9em;
+      margin: 0 0 16px;
+    }
+
+    #dp150-park .dp150-park-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      grid-template-areas: "body sidebar";
+      gap: 40px;
+      align-items: start;
+    }
+    #dp150-park .dp150-park-body { grid-area: body; }
+    #dp150-park .dp150-park-sidebar { grid-area: sidebar; }
+    @media (max-width: 900px) {
+      #dp150-park .dp150-park-layout { grid-template-columns: 1fr; grid-template-areas: "sidebar" "body"; }
+      #dp150-park .dp150-park-tags { text-align: left; }
+    }
+
+    #dp150-park .dp150-park-body h2 {
+      margin: 28px 0 12px;
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 700;
+      color: #2B8247;
+      font-size: 1.3em;
+    }
+    #dp150-park .dp150-park-body h2:first-child { margin-top: 0; }
+    #dp150-park .dp150-park-body p {
+      margin: 0 0 16px;
+      line-height: 1.6;
+    }
+
+    /* Before / after comparison slider */
+    #dp150-park .dp150-ba-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      height: 460px;
+      touch-action: none;
+      cursor: ew-resize;
+      margin: 0 0 20px;
+    }
+    #dp150-park .dp150-ba-slider img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    #dp150-park .dp150-ba-after { z-index: 1; }
+    #dp150-park .dp150-ba-before { z-index: 2; clip-path: inset(0 50% 0 0); }
+    #dp150-park .dp150-ba-label {
+      position: absolute;
+      bottom: 10px;
+      z-index: 3;
+      background: rgba(15,51,87,0.75);
+      color: #fff;
+      font-size: 0.75em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    #dp150-park .dp150-ba-label-before { left: 10px; }
+    #dp150-park .dp150-ba-label-after { right: 10px; }
+    #dp150-park .dp150-ba-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: #fff;
+      transform: translateX(-50%);
+      z-index: 4;
+      pointer-events: none;
+    }
+    #dp150-park .dp150-ba-handle-grip {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #0F3357;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0F3357;
+    }
+    #dp150-park .dp150-ba-handle-grip svg { width: 18px; height: 18px; }
+
+    /* Audio tour widget */
+    #dp150-park .dp150-audio {
+      display: flex;
+      gap: 16px;
+      background: #F7EFDE;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 0 0 20px;
+    }
+    #dp150-park .dp150-audio-cover {
+      flex: none;
+      width: 110px;
+      height: 110px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #3AA5B9;
+    }
+    #dp150-park .dp150-audio-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    #dp150-park .dp150-audio-info { flex: 1; min-width: 0; }
+    #dp150-park .dp150-audio-title {
+      color: #0F3357;
+      font-weight: 700;
+      font-size: 1.15em;
+      margin: 0 0 2px;
+    }
+    #dp150-park .dp150-audio-subtitle {
+      color: #0F3357;
+      font-size: 0.95em;
+      margin: 0 0 12px;
+    }
+    #dp150-park .dp150-audio-times {
+      display: flex;
+      justify-content: space-between;
+      color: #999;
+      font-size: 0.8em;
+      margin: 0 0 4px;
+    }
+    #dp150-park .dp150-audio-progress {
+      position: relative;
+      height: 6px;
+      border-radius: 3px;
+      background: #ccc;
+      cursor: pointer;
+    }
+    #dp150-park .dp150-audio-progress-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 0%;
+      background: #7BB31E;
+      border-radius: 3px;
+    }
+    #dp150-park .dp150-audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    #dp150-park .dp150-audio-btn {
+      background: none;
+      border: none;
+      padding: 4px;
+      color: #0F3357;
+      cursor: pointer;
+    }
+    #dp150-park .dp150-audio-btn svg { width: 20px; height: 20px; }
+    #dp150-park .dp150-audio-playpause svg { width: 24px; height: 24px; }
+
+    /* Historical images */
+    #dp150-park .dp150-historical-item {
+      position: relative;
+      margin: 0 0 20px;
+    }
+    #dp150-park .dp150-historical-item img {
+      display: block;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    #dp150-park .dp150-historical-icons {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 6px;
+    }
+    #dp150-park .dp150-historical-icons span {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.85);
+      color: #0F3357;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #dp150-park .dp150-historical-icons svg { width: 16px; height: 16px; }
+  </style>
+
+  <p class="dp150-park-tags">Tags: Dog Friendly, Child Friendly, Wheelchair Accessible</p>
+
+  <div class="dp150-park-layout">
+    <div class="dp150-park-body">
+      <h2>A Historic Destination of Recreation, Beauty, and Community</h2>
+      <p>Located in the heart of the Lake Cliff Historic District, Lake Cliff Park has been a beloved gathering place for Dallas residents for more than a century. Originally opened in 1906 by Charles Mangold as a private park, the destination was promoted as the &ldquo;Southwest&rsquo;s Greatest Playground.&rdquo; Designed as a place for recreation, relaxation, and community connection, the park quickly became an important part of life in Oak Cliff.</p>
+      <p>After financial difficulties threatened the park&rsquo;s future, the City of Dallas purchased the property in 1914, preserving the space for generations to come. Today, Lake Cliff Park spans approximately 44.5 acres and continues to serve as a treasured example of Dallas&rsquo;s commitment to creating vibrant public spaces.</p>
+
+      <h2>A Park Designed for Recreation and Community</h2>
+      <p>Throughout its history, Lake Cliff Park has evolved to meet the recreational needs of the Dallas community. Early improvements included expanded landscaping and the addition of tennis courts, creating more opportunities for outdoor activities. In 1921, the park added a track for athletic events and a swimming pool, further establishing its reputation as a premier recreation destination.</p>
+      <p>Over the years, the park became home to a wide variety of amenities, including a swimming pool and bathhouse, concession stands, baseball and softball diamonds, football and soccer fields, a cinder track, tennis courts, playground equipment, boating facilities, and picnic areas. According to the 1940 WPA Dallas Guide and History, Lake Cliff Park hosted annual municipal tennis, track, and swimming meets, as well as city open tennis tournaments.</p>
+      <p>The park&rsquo;s swimming facilities became an especially popular attraction until 1959, when the pool was closed during a citywide response to a polio outbreak that resulted in the closure of all public swimming pools.</p>
+
+      <h2>Visionary Planning and Lasting Landscape Design</h2>
+      <p>Lake Cliff Park&rsquo;s unique character is rooted in thoughtful planning and landscape design. In 1919, renowned landscape architect George Kessler created a master plan for the park that envisioned a baseball diamond, football field, adult and children&rsquo;s swimming pools, a boathouse, and formal gardens. While it remains unclear how much of Kessler&rsquo;s original garden plan was completed, his vision helped guide the park&rsquo;s development as a carefully designed urban landscape.</p>
+      <p>In 1934, local landscape architect Wynne B. Woodruff designed a formal rose garden, and the Oak Cliff Society planted the garden&rsquo;s first 2,000 rose bushes. Later, landscape architects Hare &amp; Hare designed a Beaux Arts style stone pergola in 1944 to surround and enhance the rose garden. Much of the construction for these improvements was completed by the Works Progress Administration (WPA), which played a significant role in developing public spaces throughout Dallas during the Great Depression.</p>
+      <p>WPA workers also built additional features throughout the park, including a roque court, picnic areas, walkways, a bridge, a fountain, and a retaining wall. Extensive landscaping improvements and the reinvention of the formal rose garden in 1940&ndash;1941 further strengthened Lake Cliff Park&rsquo;s reputation as one of Dallas&rsquo;s most scenic public spaces.</p>
+
+      <h2>Preserving a Historic Dallas Landmark</h2>
+      <p>The natural beauty of Lake Cliff Park remains one of its defining features. Built around a sunken lake, the park&rsquo;s landscape is surrounded by bald cypress, eastern red cedar, pecan trees, and cottonwoods. The lake offers picturesque views, including reflections of the downtown Dallas skyline to the northeast, creating a unique connection between nature and the city.</p>
+      <p>At the park&rsquo;s northwest entrance, visitors are welcomed by the iconic pergola and multi-tiered rose garden. The pergola&rsquo;s sandy yellow and burnt orange stonework reflects the natural colors of the Texas landscape, while its Beaux Arts design creates a striking architectural focal point. The cruciform layout surrounds a rectangular pool and sculptural fountain featuring a rosebud motif, with a grand staircase leading visitors from the street toward the lake.</p>
+      <p>In the late 2000s, community organizations and Dallas Park and Recreation worked together to restore these historic features. Friends of Oak Cliff Parks restored the rose gardens between 2007 and 2008, while the Parks and Recreation Department completed restoration of the pergola from 2009 to 2010.</p>
+      <p>Today, Lake Cliff Park stands as a testament to the power of thoughtful urban design, community stewardship, and historic preservation. From its early days as the &ldquo;Southwest&rsquo;s Greatest Playground&rdquo; to its role as a cherished Dallas landmark, the park continues to bring people together through recreation, natural beauty, and shared history.</p>
+    </div>
+
+    <div class="dp150-park-sidebar">
+      <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0"
+           aria-label="Drag to compare a historical and present-day photo of Lake Cliff Park"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <img class="dp150-ba-after" src="REPLACE-WITH-AFTER-IMAGE-URL-lake-cliff-park.jpg" alt="Lake Cliff Park today">
+        <img class="dp150-ba-before" src="REPLACE-WITH-BEFORE-IMAGE-URL-lake-cliff-park.jpg" alt="Lake Cliff Park historically">
+        <span class="dp150-ba-label dp150-ba-label-before">BEFORE</span>
+        <span class="dp150-ba-label dp150-ba-label-after">AFTER</span>
+        <div class="dp150-ba-handle">
+          <span class="dp150-ba-handle-grip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="9 6 3 12 9 18"/>
+              <polyline points="15 6 21 12 15 18"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="dp150-audio">
+        <div class="dp150-audio-cover">
+          <img src="REPLACE-WITH-AUDIO-COVER-IMAGE-URL-lake-cliff-park.jpg" alt="">
+        </div>
+        <div class="dp150-audio-info">
+          <div class="dp150-audio-title">Lake Cliff Park</div>
+          <div class="dp150-audio-subtitle">Audio Tour</div>
+          <div class="dp150-audio-times">
+            <span class="dp150-audio-current">0:00</span>
+            <span class="dp150-audio-duration">0:00</span>
+          </div>
+          <div class="dp150-audio-progress" id="dp150-audio-progress" role="slider" tabindex="0"
+               aria-label="Audio Tour progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="dp150-audio-progress-fill" id="dp150-audio-progress-fill"></div>
+          </div>
+          <div class="dp150-audio-controls">
+            <button type="button" class="dp150-audio-btn" data-action="back" aria-label="Rewind 10 seconds">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 6V2L5 8l6 6v-4c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H3c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+            </button>
+            <button type="button" class="dp150-audio-btn dp150-audio-playpause" id="dp150-audio-playpause" data-action="playpause" aria-label="Play">
+              <svg class="dp150-audio-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              <svg class="dp150-audio-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            </button>
+            <button type="button" class="dp150-audio-btn" data-action="forward" aria-label="Forward 10 seconds">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 6V2l6 6-6 6v-4c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/></svg>
+            </button>
+          </div>
+          <audio class="dp150-audio-el" id="dp150-audio-el" preload="metadata" src="REPLACE-WITH-AUDIO-TOUR-URL-lake-cliff-park.mp3"></audio>
+        </div>
+      </div>
+
+      <div class="dp150-historical-item">
+        <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-1.jpg" alt="Historical photo of Lake Cliff Park">
+        <span class="dp150-historical-icons">
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span>
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+        </span>
+      </div>
+      <div class="dp150-historical-item">
+        <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-2.jpg" alt="Historical photo of Lake Cliff Park">
+        <span class="dp150-historical-icons">
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span>
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+        </span>
+      </div>
+      <div class="dp150-historical-item">
+        <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-3.jpg" alt="Historical photo of Lake Cliff Park">
+        <span class="dp150-historical-icons">
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"/><path d="M16 8a5 5 0 0 1 0 8"/></svg></span>
+          <span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Before/after slider
+      var slider = document.getElementById("dp150-ba-slider");
+      var beforeImg = slider.querySelector(".dp150-ba-before");
+      var handle = slider.querySelector(".dp150-ba-handle");
+      var dragging = false;
+
+      function setSliderPosition(pct) {
+        pct = Math.max(0, Math.min(100, pct));
+        beforeImg.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
+        handle.style.left = pct + "%";
+        slider.setAttribute("aria-valuenow", Math.round(pct));
+      }
+
+      function updateFromEvent(e) {
+        var rect = slider.getBoundingClientRect();
+        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        setSliderPosition((x / rect.width) * 100);
+      }
+
+      slider.addEventListener("pointerdown", function (e) {
+        dragging = true;
+        slider.setPointerCapture(e.pointerId);
+        updateFromEvent(e);
+      });
+      slider.addEventListener("pointermove", function (e) {
+        if (dragging) { updateFromEvent(e); }
+      });
+      slider.addEventListener("pointerup", function () { dragging = false; });
+      slider.addEventListener("pointercancel", function () { dragging = false; });
+      slider.addEventListener("keydown", function (e) {
+        var current = parseFloat(slider.getAttribute("aria-valuenow")) || 50;
+        if (e.key === "ArrowLeft") { setSliderPosition(current - 5); e.preventDefault(); }
+        if (e.key === "ArrowRight") { setSliderPosition(current + 5); e.preventDefault(); }
+      });
+
+      // Audio Tour player
+      var audio = document.getElementById("dp150-audio-el");
+      var playBtn = document.getElementById("dp150-audio-playpause");
+      var iconPlay = playBtn.querySelector(".dp150-audio-icon-play");
+      var iconPause = playBtn.querySelector(".dp150-audio-icon-pause");
+      var progress = document.getElementById("dp150-audio-progress");
+      var progressFill = document.getElementById("dp150-audio-progress-fill");
+      var currentEl = slider.parentElement.querySelector(".dp150-audio-current");
+      var durationEl = slider.parentElement.querySelector(".dp150-audio-duration");
+
+      function formatTime(seconds) {
+        if (!isFinite(seconds) || isNaN(seconds)) { return "0:00"; }
+        var m = Math.floor(seconds / 60);
+        var s = Math.floor(seconds % 60);
+        return m + ":" + (s < 10 ? "0" : "") + s;
+      }
+
+      function updateProgressUI() {
+        var pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+        progressFill.style.width = pct + "%";
+        progress.setAttribute("aria-valuenow", Math.round(pct));
+        currentEl.textContent = formatTime(audio.currentTime);
+        durationEl.textContent = formatTime(audio.duration);
+      }
+
+      playBtn.addEventListener("click", function () {
+        if (audio.paused) {
+          var playPromise = audio.play();
+          if (playPromise && playPromise.catch) { playPromise.catch(function () {}); }
+        } else {
+          audio.pause();
+        }
+      });
+      audio.addEventListener("play", function () {
+        iconPlay.style.display = "none";
+        iconPause.style.display = "";
+        playBtn.setAttribute("aria-label", "Pause");
+      });
+      audio.addEventListener("pause", function () {
+        iconPlay.style.display = "";
+        iconPause.style.display = "none";
+        playBtn.setAttribute("aria-label", "Play");
+      });
+      audio.addEventListener("timeupdate", updateProgressUI);
+      audio.addEventListener("loadedmetadata", updateProgressUI);
+
+      document.querySelectorAll('.dp150-audio-btn[data-action="back"]').forEach(function (btn) {
+        btn.addEventListener("click", function () { audio.currentTime = Math.max(0, audio.currentTime - 10); });
+      });
+      document.querySelectorAll('.dp150-audio-btn[data-action="forward"]').forEach(function (btn) {
+        btn.addEventListener("click", function () { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10); });
+      });
+
+      function seekFromEvent(e) {
+        if (!audio.duration) { return; }
+        var rect = progress.getBoundingClientRect();
+        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        var pct = Math.max(0, Math.min(1, x / rect.width));
+        audio.currentTime = pct * audio.duration;
+      }
+      progress.addEventListener("click", seekFromEvent);
+      progress.addEventListener("keydown", function (e) {
+        if (!audio.duration) { return; }
+        if (e.key === "ArrowLeft") { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+        if (e.key === "ArrowRight") { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+      });
+    })();
+  </script>
+</div>
