@@ -62,10 +62,13 @@
       position: relative;
       overflow: hidden;
       border-radius: 4px;
-      height: 460px;
+      height: 480px;
       touch-action: none;
       cursor: ew-resize;
-      margin: 0 0 20px;
+      margin: 0 0 32px;
+    }
+    @media (max-width: 700px) {
+      #dp150-park .dp150-ba-slider { height: 300px; }
     }
     #dp150-park .dp150-ba-slider img {
       position: absolute;
@@ -196,6 +199,21 @@
 
   <p class="dp150-park-tags">Tags: Dog Friendly, Child Friendly, Wheelchair Accessible</p>
 
+  <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0"
+       aria-label="Drag to compare a historical and present-day photo of Lake Cliff Park"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+    <img class="dp150-ba-after" src="REPLACE-WITH-AFTER-IMAGE-URL-lake-cliff-park.jpg" alt="Lake Cliff Park today">
+    <img class="dp150-ba-before" src="REPLACE-WITH-BEFORE-IMAGE-URL-lake-cliff-park.jpg" alt="Lake Cliff Park historically">
+    <div class="dp150-ba-handle">
+      <span class="dp150-ba-handle-grip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 6 3 12 9 18"/>
+          <polyline points="15 6 21 12 15 18"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
   <div class="dp150-park-layout">
     <div class="dp150-park-body">
       <h2>A Historic Destination of Recreation, Beauty, and Community</h2>
@@ -220,21 +238,6 @@
     </div>
 
     <div class="dp150-park-sidebar">
-      <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0"
-           aria-label="Drag to compare a historical and present-day photo of Lake Cliff Park"
-           aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-        <img class="dp150-ba-after" src="REPLACE-WITH-AFTER-IMAGE-URL-lake-cliff-park.jpg" alt="Lake Cliff Park today">
-        <img class="dp150-ba-before" src="REPLACE-WITH-BEFORE-IMAGE-URL-lake-cliff-park.jpg" alt="Lake Cliff Park historically">
-        <div class="dp150-ba-handle">
-          <span class="dp150-ba-handle-grip">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="9 6 3 12 9 18"/>
-              <polyline points="15 6 21 12 15 18"/>
-            </svg>
-          </span>
-        </div>
-      </div>
-
       <div class="dp150-audio">
         <div class="dp150-audio-cover">
           <img src="REPLACE-WITH-AUDIO-COVER-IMAGE-URL-lake-cliff-park.jpg" alt="">
@@ -331,8 +334,8 @@
       var iconPause = playBtn.querySelector(".dp150-audio-icon-pause");
       var progress = document.getElementById("dp150-audio-progress");
       var progressFill = document.getElementById("dp150-audio-progress-fill");
-      var currentEl = slider.parentElement.querySelector(".dp150-audio-current");
-      var durationEl = slider.parentElement.querySelector(".dp150-audio-duration");
+      var currentEl = document.querySelector("#dp150-park .dp150-audio-current");
+      var durationEl = document.querySelector("#dp150-park .dp150-audio-duration");
 
       function formatTime(seconds) {
         if (!isFinite(seconds) || isNaN(seconds)) { return "0:00"; }
