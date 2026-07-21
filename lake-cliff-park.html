@@ -6,9 +6,8 @@
        comparison photos, audio cover image, audio tour MP3, 3 historical
        images) — search for "REPLACE-WITH" to find them all.
     2. The two ids "dp150-ba-slider" and anywhere "Lake Cliff Park" appears
-       as visible text (tags line, audio widget title) or in alt text.
-    3. The dp150-park-tags list (amenity tags for that park).
-    4. The body content sections/headings/paragraphs under
+       as visible text (audio widget title) or in alt text.
+    3. The body content sections/headings/paragraphs under
        .dp150-park-body — replace with that park's own history text.
   The CSS and JS do not need to change between parks.
 
@@ -22,13 +21,6 @@
     #dp150-park { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
     #dp150-park *, #dp150-park *::before, #dp150-park *::after { box-sizing: inherit; }
 
-    #dp150-park .dp150-park-tags {
-      text-align: right;
-      color: #AEAEAE;
-      font-size: 0.9em;
-      margin: 0 0 16px;
-    }
-
     #dp150-park .dp150-park-layout {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
@@ -40,7 +32,6 @@
     #dp150-park .dp150-park-sidebar { grid-area: sidebar; }
     @media (max-width: 900px) {
       #dp150-park .dp150-park-layout { grid-template-columns: 1fr; grid-template-areas: "body" "sidebar"; }
-      #dp150-park .dp150-park-tags { text-align: left; }
     }
 
     #dp150-park .dp150-park-body h2 {
@@ -196,8 +187,6 @@
       border-radius: 4px;
     }
   </style>
-
-  <p class="dp150-park-tags">Tags: Dog Friendly, Child Friendly, Wheelchair Accessible</p>
 
   <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0"
        aria-label="Drag to compare a historical and present-day photo of Lake Cliff Park"
