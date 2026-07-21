@@ -179,13 +179,57 @@
 
     /* Historical images */
     #dp150-park .dp150-historical-item { margin: 0 0 20px; }
-    #dp150-park .dp150-historical-item img {
+    #dp150-park .dp150-historical-trigger {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: zoom-in;
+    }
+    #dp150-park .dp150-historical-trigger img {
       display: block;
       width: 100%;
       height: 320px;
       object-fit: cover;
       border-radius: 4px;
     }
+
+    /* Lightbox */
+    #dp150-park .dp150-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(15,51,87,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    #dp150-park .dp150-lightbox.dp150-lightbox-open { display: flex; }
+    #dp150-park .dp150-lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 4px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    #dp150-park .dp150-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.9);
+      color: #0F3357;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #dp150-park .dp150-lightbox-close svg { width: 20px; height: 20px; }
   </style>
 
   <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0"
@@ -268,15 +312,28 @@
       </div>
 
       <div class="dp150-historical-item">
-        <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-1.jpg" alt="Historical photo of Lake Cliff Park">
+        <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
+          <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-1.jpg" alt="Historical photo of Lake Cliff Park">
+        </button>
       </div>
       <div class="dp150-historical-item">
-        <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-2.jpg" alt="Historical photo of Lake Cliff Park">
+        <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
+          <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-2.jpg" alt="Historical photo of Lake Cliff Park">
+        </button>
       </div>
       <div class="dp150-historical-item">
-        <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-3.jpg" alt="Historical photo of Lake Cliff Park">
+        <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
+          <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-lake-cliff-park-3.jpg" alt="Historical photo of Lake Cliff Park">
+        </button>
       </div>
     </div>
+  </div>
+
+  <div class="dp150-lightbox" id="dp150-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo">
+    <button type="button" class="dp150-lightbox-close" id="dp150-lightbox-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img id="dp150-lightbox-img" src="" alt="">
   </div>
 
   <script>
@@ -403,6 +460,41 @@
           shareBtn.setAttribute("aria-label", "Link copied");
           setTimeout(function () { shareBtn.setAttribute("aria-label", original); }, 2000);
         }).catch(function () {});
+      });
+
+      // Historical image lightbox
+      var lightbox = document.getElementById("dp150-lightbox");
+      var lightboxImg = document.getElementById("dp150-lightbox-img");
+      var lightboxClose = document.getElementById("dp150-lightbox-close");
+      var lastTrigger = null;
+
+      function openLightbox(trigger) {
+        var img = trigger.querySelector("img");
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lastTrigger = trigger;
+        lightbox.classList.add("dp150-lightbox-open");
+        lightboxClose.focus();
+        document.addEventListener("keydown", onLightboxKeydown);
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("dp150-lightbox-open");
+        lightboxImg.src = "";
+        document.removeEventListener("keydown", onLightboxKeydown);
+        if (lastTrigger) { lastTrigger.focus(); }
+      }
+
+      function onLightboxKeydown(e) {
+        if (e.key === "Escape") { closeLightbox(); }
+      }
+
+      document.querySelectorAll("#dp150-park .dp150-historical-trigger").forEach(function (trigger) {
+        trigger.addEventListener("click", function () { openLightbox(trigger); });
+      });
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", function (e) {
+        if (e.target === lightbox) { closeLightbox(); }
       });
     })();
   </script>
