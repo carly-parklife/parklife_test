@@ -1,0 +1,297 @@
+<div class="dhb-home-body" id="dhb-home-body">
+  <style>
+    #dhb-home-body { max-width: 1100px; margin: 0 auto; }
+    #dhb-home-body .dhb-section { margin: 0 0 56px; }
+    #dhb-home-body .dhb-section:last-child { margin-bottom: 0; }
+    #dhb-home-body .dhb-heading {
+      margin-top: .167em;
+      margin-bottom: 16px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      color: #347743;
+      font-size: 1.3em;
+    }
+    #dhb-home-body .dhb-lead {
+      margin: 0 0 8px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      color: #0F3357;
+      font-size: 1.1em;
+    }
+    #dhb-home-body p {
+      margin: 0 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dhb-home-body p:last-child { margin-bottom: 0; }
+    #dhb-home-body .dhb-placeholder-img {
+      width: 100%;
+      height: 260px;
+      background: #d9d9d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #666666;
+      text-align: center;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    /* Section 1: intro two-column */
+    #dhb-home-body .dhb-intro-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    #dhb-home-body .dhb-intro-columns .dhb-placeholder-img { margin-top: 16px; }
+
+    /* Section 2: archivist message */
+    #dhb-home-body .dhb-media-row {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+    }
+    #dhb-home-body .dhb-media-row .dhb-placeholder-img {
+      flex: 0 0 200px;
+      width: 200px;
+      height: 200px;
+    }
+    #dhb-home-body .dhb-media-row .dhb-media-text { flex: 1; min-width: 0; }
+    #dhb-home-body .dhb-media-row-reverse { flex-direction: row-reverse; }
+
+    /* Section 3: stats grid */
+    #dhb-home-body .dhb-stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      margin: 32px 0;
+      text-align: center;
+    }
+    #dhb-home-body .dhb-stat-number {
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 2em;
+      color: #3AA5B9;
+      line-height: 1.1;
+    }
+    #dhb-home-body .dhb-stat-label {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #333333;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 800px) {
+      #dhb-home-body .dhb-intro-columns { grid-template-columns: 1fr; gap: 28px; }
+      #dhb-home-body .dhb-media-row,
+      #dhb-home-body .dhb-media-row-reverse { flex-direction: column; }
+      #dhb-home-body .dhb-media-row .dhb-placeholder-img { width: 100%; flex: none; height: 220px; }
+      #dhb-home-body .dhb-stats { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 500px) {
+      #dhb-home-body .dhb-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+
+  <div class="dhb-section">
+    <h2 class="dhb-heading">150 Years of Setting the Standard for Parks and Recreation in America</h2>
+    <div class="dhb-intro-columns">
+      <div class="dhb-column">
+        <p>For 150 years, the Dallas Park and Recreation Department (DPARD) has been creating spaces, experiences, and opportunities that bring people together. From beloved parks and recreation centers to historic landmarks and community programs, DPARD&rsquo;s legacy is built on a commitment to enriching lives, strengthening neighborhoods, and connecting generations.</p>
+        <h3 class="dhb-lead">Explore the People, Places, and Stories of DPARD</h3>
+        <p>The DPARD 150 celebration honors this incredible milestone by inviting the community to explore the people, places, and stories that have shaped Dallas.</p>
+        <p>Through interactive digital experiences, featured locations, historic figures, audio tours, commemorative merchandise, and community storytelling, residents and visitors can discover the history behind the parks and programs that make Dallas unique.</p>
+      </div>
+      <div class="dhb-column">
+        <h3 class="dhb-lead">Celebrating Our History &amp; Building Our Future</h3>
+        <p>This anniversary is more than a look back in time. It&rsquo;s a celebration of what we&rsquo;ve accomplished together and a vision for our future. DPARD continues to set the standard for urban parks and recreation by embracing progress, innovation, sustainability, accessibility, and equity.</p>
+        <p>Join us as we celebrate 150 years of memories made, communities strengthened, and a future built on creating even greater experiences for all.</p>
+        <div class="dhb-placeholder-img">HISTORICAL IMAGE</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dhb-section">
+    <div class="dhb-media-row">
+      <div class="dhb-placeholder-img">JOHN H SLATE<br>HEADSHOT</div>
+      <div class="dhb-media-text">
+        <h2 class="dhb-heading">A Message From John H. Slate, City Archivist</h2>
+        <p>The Dallas Park and Recreation Department (DPARD) celebrates its sesquicentennial in 2026, commemorating the acquisition of the first public park in Dallas in 1876, City Park. In its 150-year history, DPARD has grown from humble origins to become one of the most respected and admired metropolitan park systems in the United States. It has won awards over many years for both its leadership and its 1,600+ dedicated, hard-working staff members. Like many things, DPARD is much more than the sum of its parts.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dhb-section">
+    <h2 class="dhb-heading">Parks Are LIFE</h2>
+    <p>The City of Dallas encompasses a total area of nearly 400 square miles. Over 400 parks and green spaces make up DPARD. It provides leisure, recreational, and cultural activities for the citizens of Dallas and the general public and maintains more than 21,000 park acres across the DPARD system, which includes:</p>
+    <div class="dhb-stats">
+      <div class="dhb-stat"><div class="dhb-stat-number">17</div><div class="dhb-stat-label">water sites</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">180+</div><div class="dhb-stat-label">miles of developed trails</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">43</div><div class="dhb-stat-label">recreation complexes</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">250</div><div class="dhb-stat-label">sports complexes</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">~200</div><div class="dhb-stat-label">playgrounds</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">18</div><div class="dhb-stat-label">community pools</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">6</div><div class="dhb-stat-label">18-hole golf courses</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">4</div><div class="dhb-stat-label">driving ranges</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">106-acre</div><div class="dhb-stat-label">Dallas Zoo</div></div>
+    </div>
+    <p>All of this is a part of your life, of your lives.</p>
+  </div>
+
+  <div class="dhb-section">
+    <div class="dhb-media-row">
+      <div class="dhb-placeholder-img">HISTORICAL IMAGE</div>
+      <div class="dhb-media-text">
+        <h2 class="dhb-heading">Parks Are HISTORY</h2>
+        <p>What&rsquo;s your favorite memory of a Dallas park? Did you have a birthday at a park? Did you have your first kiss in a park? Did you play a game or attend an event at a park that remains in your memory? Hopefully, most of your experiences at parks are good ones&mdash;the kind of memories you&rsquo;ll want to pass down to your own family and future generations of Dallasites.</p>
+        <p>Dallas parks are both personal history and public history. Our city&rsquo;s history is tied up with parks. From the exuberance of Juneteenth celebrations and the State Fair of Texas to the tragic assassination of President John F. Kennedy, many important episodes in our park system have figured in local, state, and national history. Some of our park history, such as the era of segregated facilities, serves to remind us that we can overcome obstacles to become an oasis of fairness and equality in public institutions.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dhb-section">
+    <div class="dhb-media-row dhb-media-row-reverse">
+      <div class="dhb-placeholder-img">IMAGE OF PEOPLE</div>
+      <div class="dhb-media-text">
+        <h2 class="dhb-heading">Parks Are YOU</h2>
+        <p>Every citizen of Dallas, through municipal taxes, contributes to the design, construction, use, and maintenance of Dallas parks. We use Dallas parks for exercise and fitness, mental well-being, and observing wildlife and plant life. Parks provide peace and a place for reflection. We go to parks to watch the sun rise, and we go to parks to watch the sun set. Dallas parks imbue Dallasites with the good feelings of ownership&mdash;that we, collectively, own and enjoy parks as a part of our lives as residents of Dallas.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="dhb-section">
+    <div class="dp150-app" id="dp150-app">
+      <style>
+        #dp150-app { max-width: 1100px; margin: 0 auto; box-sizing: border-box; }
+        #dp150-app *, #dp150-app *::before, #dp150-app *::after { box-sizing: inherit; }
+        #dp150-app .dp150-app-box {
+          background: #0F3357;
+          border-radius: 6px;
+          padding: 40px;
+          display: grid;
+          grid-template-columns: 1.3fr 1fr 1.1fr;
+          gap: 32px;
+          align-items: center;
+        }
+        #dp150-app .dp150-app-heading {
+          margin: 0 0 20px;
+          font-family: 'Open Sans';
+          font-style: normal;
+          font-weight: 700;
+          color: #B7D854;
+          font-size: 1.6em;
+          line-height: 1.25;
+        }
+        #dp150-app .dp150-app-text p {
+          margin: 0 0 16px;
+          color: #F7EFDE;
+          line-height: 1.6;
+        }
+        #dp150-app .dp150-app-text p:last-child { margin-bottom: 0; }
+        #dp150-app .dp150-app-features {
+          list-style: none;
+          margin: 0 0 24px;
+          padding: 0;
+        }
+        #dp150-app .dp150-app-features li {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin: 0 0 16px;
+          color: #F7EFDE;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+        }
+        #dp150-app .dp150-app-features li:last-child { margin-bottom: 0; }
+        #dp150-app .dp150-app-icon {
+          flex: none;
+          width: 20px;
+          height: 20px;
+          color: #45D3CD;
+        }
+        #dp150-app .dp150-app-badges {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        #dp150-app .dp150-app-badges img {
+          display: block;
+          height: 44px;
+          width: auto;
+        }
+        #dp150-app .dp150-app-photo img {
+          display: block;
+          width: 100%;
+          height: auto;
+          border-radius: 4px;
+        }
+        @media (max-width: 900px) {
+          #dp150-app .dp150-app-box { grid-template-columns: 1fr 1fr; }
+          #dp150-app .dp150-app-text { grid-column: 1 / -1; }
+        }
+        @media (max-width: 600px) {
+          #dp150-app .dp150-app-box { grid-template-columns: 1fr; padding: 28px; }
+          #dp150-app .dp150-app-text { grid-column: auto; }
+          #dp150-app .dp150-app-photo { order: -1; }
+        }
+      </style>
+
+      <div class="dp150-app-box">
+        <div class="dp150-app-text">
+          <h2 class="dp150-app-heading">Download Our App to Take DPARD 150 With You</h2>
+          <p>Get even more out of your parks experience with the DPARD 150 app. Download the app today to access interactive resources, explore maps, uncover local history, and discover more ways to connect with DPARD&rsquo;s parks.</p>
+          <p>Whether you are planning your next visit or exploring while on the go, the DPARD 150 app puts 150 years of stories and experiences right at your fingertips.</p>
+        </div>
+
+        <div class="dp150-app-links">
+          <ul class="dp150-app-features">
+            <li>
+              <svg class="dp150-app-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+                <path d="M16 8a5 5 0 0 1 0 8"></path>
+                <path d="M19 5a9 9 0 0 1 0 14"></path>
+              </svg>
+              EXPLORE THE PARKS
+            </li>
+            <li>
+              <svg class="dp150-app-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+                <path d="M16 8a5 5 0 0 1 0 8"></path>
+                <path d="M19 5a9 9 0 0 1 0 14"></path>
+              </svg>
+              LEARN THE HISTORY
+            </li>
+            <li>
+              <svg class="dp150-app-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+                <path d="M16 8a5 5 0 0 1 0 8"></path>
+                <path d="M19 5a9 9 0 0 1 0 14"></path>
+              </svg>
+              BUILD COMMUNITY
+            </li>
+          </ul>
+
+          <div class="dp150-app-badges">
+            <a href="REPLACE-WITH-APP-STORE-URL" aria-label="Download on the App Store">
+              <img src="REPLACE-WITH-APP-STORE-BADGE-IMAGE-URL.png" alt="Download on the App Store">
+            </a>
+            <a href="REPLACE-WITH-GOOGLE-PLAY-URL" aria-label="Get it on Google Play">
+              <img src="REPLACE-WITH-GOOGLE-PLAY-BADGE-IMAGE-URL.png" alt="Get it on Google Play">
+            </a>
+          </div>
+        </div>
+
+        <div class="dp150-app-photo">
+          <img src="REPLACE-WITH-APP-PHONE-PHOTO-IMAGE-URL.jpg" alt="Hand holding a phone displaying the DPARD 150 app">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
