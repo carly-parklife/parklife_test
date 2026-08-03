@@ -67,12 +67,14 @@
 
     /* Section 3: stats grid */
     #dhb-home-body .dhb-stats {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px 24px;
       margin: 32px 0;
       text-align: center;
     }
+    #dhb-home-body .dhb-stat { flex: 0 1 150px; }
     #dhb-home-body .dhb-stat-number {
       font-family: 'Open Sans', Arial, sans-serif;
       font-weight: 800;
@@ -92,10 +94,10 @@
       #dhb-home-body .dhb-media-row,
       #dhb-home-body .dhb-media-row-reverse { flex-direction: column; }
       #dhb-home-body .dhb-media-row .dhb-placeholder-img { width: 100%; flex: none; height: 220px; }
-      #dhb-home-body .dhb-stats { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 500px) {
-      #dhb-home-body .dhb-stats { grid-template-columns: repeat(2, 1fr); }
+      #dhb-home-body .dhb-stats { gap: 24px 20px; }
+      #dhb-home-body .dhb-stat { flex-basis: 40%; }
     }
   </style>
 
@@ -131,18 +133,67 @@
     <h2 class="dhb-heading">Parks Are LIFE</h2>
     <p>The City of Dallas encompasses a total area of nearly 400 square miles. Over 400 parks and green spaces make up DPARD. It provides leisure, recreational, and cultural activities for the citizens of Dallas and the general public and maintains more than 21,000 park acres across the DPARD system, which includes:</p>
     <div class="dhb-stats">
-      <div class="dhb-stat"><div class="dhb-stat-number">17</div><div class="dhb-stat-label">water sites</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">180+</div><div class="dhb-stat-label">miles of developed trails</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">43</div><div class="dhb-stat-label">recreation complexes</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">250</div><div class="dhb-stat-label">sports complexes</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">~200</div><div class="dhb-stat-label">playgrounds</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">18</div><div class="dhb-stat-label">community pools</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">6</div><div class="dhb-stat-label">18-hole golf courses</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">4</div><div class="dhb-stat-label">driving ranges</div></div>
-      <div class="dhb-stat"><div class="dhb-stat-number">106-acre</div><div class="dhb-stat-label">Dallas Zoo</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="17">0</span></div><div class="dhb-stat-label">water sites</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="180">0</span>+</div><div class="dhb-stat-label">miles of developed trails</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="43">0</span></div><div class="dhb-stat-label">recreation complexes</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="250">0</span></div><div class="dhb-stat-label">sports complexes</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number">~<span class="dhb-stat-count" data-target="200">0</span></div><div class="dhb-stat-label">playgrounds</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="18">0</span></div><div class="dhb-stat-label">community pools</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="6">0</span></div><div class="dhb-stat-label">18-hole golf courses</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="4">0</span></div><div class="dhb-stat-label">driving ranges</div></div>
+      <div class="dhb-stat"><div class="dhb-stat-number"><span class="dhb-stat-count" data-target="106">0</span>-acre</div><div class="dhb-stat-label">Dallas Zoo</div></div>
     </div>
     <p>All of this is a part of your life, of your lives.</p>
   </div>
+  <script>
+  (function () {
+    var root = document.getElementById('dhb-home-body');
+    if (!root) return;
+    var counts = root.querySelectorAll('.dhb-stat-count[data-target]');
+    if (!counts.length) return;
+
+    var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function showFinal(el) {
+      el.textContent = el.getAttribute('data-target');
+    }
+
+    function animateCount(el) {
+      var target = parseInt(el.getAttribute('data-target'), 10);
+      if (isNaN(target)) return;
+      var duration = 1200;
+      var start = null;
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          el.textContent = target;
+        }
+      }
+      window.requestAnimationFrame(step);
+    }
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window) || !('requestAnimationFrame' in window)) {
+      for (var i = 0; i < counts.length; i++) { showFinal(counts[i]); }
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    counts.forEach(function (el) { observer.observe(el); });
+  })();
+  </script>
 
   <div class="dhb-section">
     <div class="dhb-media-row">
