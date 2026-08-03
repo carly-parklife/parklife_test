@@ -1,0 +1,961 @@
+<div class="dal-audio-library" id="dal-audio-library">
+  <style>
+    #dal-audio-library { max-width: 1100px; margin: 0 auto; }
+    #dal-audio-library * , #dal-audio-library *::before, #dal-audio-library *::after { box-sizing: border-box; }
+    #dal-audio-library .dal-title {
+      margin-top: .167em;
+      margin-bottom: 16px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      color: #3AA5B9;
+      font-size: 1.5em;
+    }
+    #dal-audio-library .dal-intro p {
+      margin: 0 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dal-audio-library .dal-intro p:last-child { margin-bottom: 0; }
+
+    #dal-audio-library .dal-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 32px 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #d9d9d9;
+    }
+    #dal-audio-library .dal-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333333;
+    }
+    #dal-audio-library .dal-filters-label { color: #666666; margin-right: 4px; }
+    #dal-audio-library .dal-filter-btn {
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #0F3357;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    #dal-audio-library .dal-filter-btn:hover { background: #F7EFDE; }
+    #dal-audio-library .dal-filter-btn[aria-pressed="true"] {
+      font-weight: bold;
+      color: #3AA5B9;
+      text-decoration: underline;
+    }
+    #dal-audio-library .dal-search-wrap {
+      position: relative;
+      flex: 0 0 auto;
+    }
+    #dal-audio-library .dal-search-input {
+      width: 220px;
+      max-width: 100%;
+      padding: 8px 12px 8px 36px;
+      border: 1px solid #999999;
+      border-radius: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333333;
+    }
+    #dal-audio-library .dal-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: #666666;
+      pointer-events: none;
+    }
+
+    #dal-audio-library .dal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    #dal-audio-library .dal-empty {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 24px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #666666;
+    }
+    #dal-audio-library .dal-track {
+      position: relative;
+      background: #F7EFDE;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      overflow: hidden;
+    }
+    #dal-audio-library .dal-track[hidden] { display: none; }
+    #dal-audio-library .dal-cover {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 64px;
+      background: #3AA5B9;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      font-weight: bold;
+      line-height: 1.3;
+      border-radius: 4px;
+    }
+    #dal-audio-library .dal-info { flex: 1; min-width: 0; }
+    #dal-audio-library .dal-track-title {
+      margin: 0 0 4px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #0F3357;
+    }
+    #dal-audio-library .dal-track-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #666666;
+    }
+    #dal-audio-library .dal-track-meta .dal-icon { width: 14px; height: 14px; flex: none; }
+    #dal-audio-library .dal-link-btn {
+      background: none;
+      border: none;
+      padding: 2px;
+      margin: 0 0 0 2px;
+      cursor: pointer;
+      color: #666666;
+      display: inline-flex;
+    }
+    #dal-audio-library .dal-link-btn .dal-icon { width: 14px; height: 14px; }
+    #dal-audio-library .dal-link-btn:hover { color: #0F3357; }
+    #dal-audio-library .dal-duration {
+      flex: 0 0 auto;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #666666;
+    }
+    #dal-audio-library .dal-play-btn {
+      flex: 0 0 auto;
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: #0F3357;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #dal-audio-library .dal-play-btn .dal-icon { width: 26px; height: 26px; }
+    #dal-audio-library .dal-progress {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: #d9d9d9;
+    }
+    #dal-audio-library .dal-track-active .dal-progress { display: block; }
+    #dal-audio-library .dal-progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #7BB31E;
+    }
+
+    @media (max-width: 700px) {
+      #dal-audio-library .dal-grid { grid-template-columns: 1fr; }
+      #dal-audio-library .dal-toolbar { flex-direction: column; align-items: stretch; }
+      #dal-audio-library .dal-search-input { width: 100%; }
+    }
+  </style>
+
+  <h1 class="dal-title">Explore the Stories Behind DPARD&rsquo;s Key People, Places, and Eras</h1>
+  <div class="dal-intro">
+    <p>Step into 150 years of history with the DPARD 150 Audio Library. Browse our collection of free audio walking tours designed to guide you through featured parks while sharing the stories of the people, places, and moments that helped shape our community.</p>
+    <p>Listen as you explore in person or enjoy the tours from wherever you are. Choose a tour, press play, and experience DPARD&rsquo;s parks from a new perspective&mdash;one story, one stop, and one step at a time.</p>
+  </div>
+
+  <div class="dal-toolbar">
+    <div class="dal-filters" role="group" aria-label="Sort audio tours">
+      <span class="dal-filters-label">Filter:</span>
+      <button type="button" class="dal-filter-btn" data-sort="az" aria-pressed="false">A-Z</button>
+      <button type="button" class="dal-filter-btn" data-sort="year" aria-pressed="false">Founding Year</button>
+    </div>
+    <div class="dal-search-wrap">
+      <svg class="dal-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="dal-search-input" id="dal-search" placeholder="Search..." aria-label="Search audio tours">
+    </div>
+  </div>
+
+  <div class="dal-grid" id="dal-grid">
+    <div class="dal-track dal-track-active" id="dal-track-1" data-title="Park Title Here" data-year="1876">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-1" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="true">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-1.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-2" data-title="Park Title Here" data-year="1888">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-2" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-2.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-3" data-title="Park Title Here" data-year="1901">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-3" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-3.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-4" data-title="Park Title Here" data-year="1909">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-4" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-4.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-5" data-title="Park Title Here" data-year="1915">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-5" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-5.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-6" data-title="Park Title Here" data-year="1922">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-6" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-6.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-7" data-title="Park Title Here" data-year="1930">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-7" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-7.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-8" data-title="Park Title Here" data-year="1936">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-8" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-8.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-9" data-title="Park Title Here" data-year="1941">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-9" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-9.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-10" data-title="Park Title Here" data-year="1945">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-10" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-10.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-11" data-title="Park Title Here" data-year="1952">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-11" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-11.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-12" data-title="Park Title Here" data-year="1958">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-12" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-12.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-13" data-title="Park Title Here" data-year="1963">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-13" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-13.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-14" data-title="Park Title Here" data-year="1968">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-14" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-14.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-15" data-title="Park Title Here" data-year="1974">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-15" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-15.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-16" data-title="Park Title Here" data-year="1979">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-16" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-16.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-17" data-title="Park Title Here" data-year="1985">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-17" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-17.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-18" data-title="Park Title Here" data-year="1991">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-18" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-18.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-19" data-title="Park Title Here" data-year="1998">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-19" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-19.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-20" data-title="Park Title Here" data-year="2004">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-20" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-20.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-21" data-title="Park Title Here" data-year="2011">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-21" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-21.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-22" data-title="Park Title Here" data-year="2018">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-22" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-22.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+    <div class="dal-track" id="dal-track-23" data-title="Park Title Here" data-year="2024">
+      <div class="dal-cover">COVER<br>IMAGE</div>
+      <div class="dal-info">
+        <h3 class="dal-track-title">Park Title Here</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn" data-copy-target="dal-track-23" aria-label="Copy link to this audio tour">
+            <svg class="dal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="dal-duration">10:20</div>
+      <button type="button" class="dal-play-btn" aria-label="Play Park Title Here audio tour" aria-pressed="false">
+        <svg class="dal-icon dal-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:inline-flex"><polygon points="6,4 20,12 6,20"></polygon></svg>
+        <svg class="dal-icon dal-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="4" width="5" height="16"></rect><rect x="14" y="4" width="5" height="16"></rect></svg>
+      </button>
+      <audio class="dal-audio" preload="none" src="REPLACE-WITH-YOUR-AUDIO-URL-23.mp3"></audio>
+      <div class="dal-progress"><div class="dal-progress-fill"></div></div>
+    </div>
+
+    <div class="dal-empty" id="dal-empty">No audio tours match your search.</div>
+  </div>
+
+  <script>
+  (function () {
+    var root = document.getElementById('dal-audio-library');
+    if (!root) return;
+
+    var grid = root.querySelector('#dal-grid');
+    var emptyMsg = root.querySelector('#dal-empty');
+    var tracks = Array.prototype.slice.call(root.querySelectorAll('.dal-track'));
+    var searchInput = root.querySelector('#dal-search');
+    var sortBtns = Array.prototype.slice.call(root.querySelectorAll('.dal-filter-btn'));
+    var currentAudio = null;
+
+    function formatTime(seconds) {
+      if (!isFinite(seconds)) return null;
+      var m = Math.floor(seconds / 60);
+      var s = Math.floor(seconds % 60);
+      return m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function setPlayingState(track, isPlaying) {
+      var playIcon = track.querySelector('.dal-icon-play');
+      var pauseIcon = track.querySelector('.dal-icon-pause');
+      var playBtn = track.querySelector('.dal-play-btn');
+      playIcon.style.display = isPlaying ? 'none' : 'inline-flex';
+      pauseIcon.style.display = isPlaying ? 'inline-flex' : 'none';
+      playBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+      track.classList.toggle('dal-track-active', isPlaying);
+    }
+
+    function stopAllExcept(exceptTrack) {
+      tracks.forEach(function (t) {
+        if (t === exceptTrack) return;
+        var a = t.querySelector('.dal-audio');
+        if (a && !a.paused) a.pause();
+        setPlayingState(t, false);
+        var fill = t.querySelector('.dal-progress-fill');
+        if (fill) fill.style.width = '0%';
+      });
+    }
+
+    tracks.forEach(function (track) {
+      var audio = track.querySelector('.dal-audio');
+      var playBtn = track.querySelector('.dal-play-btn');
+      var fill = track.querySelector('.dal-progress-fill');
+      var durationEl = track.querySelector('.dal-duration');
+      var linkBtn = track.querySelector('.dal-link-btn');
+
+      playBtn.addEventListener('click', function () {
+        if (audio.paused) {
+          stopAllExcept(track);
+          currentAudio = audio;
+          var playPromise = audio.play();
+          if (playPromise && playPromise.catch) {
+            playPromise.catch(function () { /* no audio source yet */ });
+          }
+          setPlayingState(track, true);
+        } else {
+          audio.pause();
+          setPlayingState(track, false);
+        }
+      });
+
+      audio.addEventListener('ended', function () {
+        setPlayingState(track, false);
+        if (fill) fill.style.width = '0%';
+      });
+
+      audio.addEventListener('timeupdate', function () {
+        if (fill && audio.duration) {
+          fill.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+        }
+      });
+
+      audio.addEventListener('loadedmetadata', function () {
+        var formatted = formatTime(audio.duration);
+        if (formatted) durationEl.textContent = formatted;
+      });
+
+      if (linkBtn) {
+        linkBtn.addEventListener('click', function () {
+          var url = window.location.href.split('#')[0] + '#' + track.id;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).catch(function () {});
+          }
+        });
+      }
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        var query = searchInput.value.trim().toLowerCase();
+        var anyVisible = false;
+        tracks.forEach(function (t) {
+          var title = (t.getAttribute('data-title') || '').toLowerCase();
+          var match = query === '' || title.indexOf(query) !== -1;
+          if (match) { t.removeAttribute('hidden'); anyVisible = true; }
+          else { t.setAttribute('hidden', ''); }
+        });
+        if (emptyMsg) emptyMsg.style.display = anyVisible ? 'none' : 'block';
+      });
+    }
+
+    sortBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var mode = btn.getAttribute('data-sort');
+        var sorted = tracks.slice();
+        if (mode === 'az') {
+          sorted.sort(function (a, b) {
+            return (a.getAttribute('data-title') || '').localeCompare(b.getAttribute('data-title') || '');
+          });
+        } else if (mode === 'year') {
+          sorted.sort(function (a, b) {
+            return (parseInt(a.getAttribute('data-year'), 10) || 0) - (parseInt(b.getAttribute('data-year'), 10) || 0);
+          });
+        }
+        sorted.forEach(function (t) { grid.insertBefore(t, emptyMsg); });
+        sortBtns.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      });
+    });
+  })();
+  </script>
+</div>
