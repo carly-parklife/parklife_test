@@ -1,0 +1,537 @@
+<!--
+  DPARD 150 Individual Park Page — Marcus Park
+  Generated from the DPARD 150 Individual Park Page template using the DPARD 150
+  Website Copy doc. Before publishing, replace the placeholder asset URLs (search
+  for "REPLACE-WITH"):
+    1. Before/after comparison photos for the slider at the top of the page.
+    2. The audio tour cover image and MP3 file in the sidebar.
+    3. The three historical images in the sidebar.
+  Body copy, address, phone number, and the "View Park Page" link are already
+  populated from the source doc. The CSS and JS are unchanged from the template.
+-->
+
+<div class="dp150-park" id="dp150-park">
+  <style>
+    #dp150-park { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+    #dp150-park *, #dp150-park *::before, #dp150-park *::after { box-sizing: inherit; }
+
+    #dp150-park .dp150-park-layout {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      grid-template-areas: "body sidebar";
+      gap: 40px;
+      align-items: start;
+    }
+    #dp150-park .dp150-park-body { grid-area: body; }
+    #dp150-park .dp150-park-sidebar { grid-area: sidebar; }
+    @media (max-width: 900px) {
+      #dp150-park .dp150-park-layout { grid-template-columns: 1fr; grid-template-areas: "body" "sidebar"; }
+    }
+
+    #dp150-park .dp150-park-body h2 {
+      margin: 28px 0 12px;
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 700;
+      color: #2B8247;
+      font-size: 1.3em;
+    }
+    #dp150-park .dp150-park-body h2:first-child { margin-top: 0; }
+    #dp150-park .dp150-park-body p {
+      margin: 0 0 16px;
+      line-height: 1.6;
+    }
+
+    /* Before / after comparison slider */
+    #dp150-park .dp150-ba-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      height: 480px;
+      touch-action: none;
+      cursor: ew-resize;
+      margin: 0 0 32px;
+    }
+    @media (max-width: 700px) {
+      #dp150-park .dp150-ba-slider { height: 300px; }
+    }
+    #dp150-park .dp150-ba-slider img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    #dp150-park .dp150-ba-after { z-index: 1; }
+    #dp150-park .dp150-ba-before { z-index: 2; clip-path: inset(0 50% 0 0); }
+    #dp150-park .dp150-ba-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: #fff;
+      transform: translateX(-50%);
+      z-index: 4;
+      pointer-events: none;
+    }
+    #dp150-park .dp150-ba-handle-grip {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid #0F3357;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0F3357;
+    }
+    #dp150-park .dp150-ba-handle-grip svg { width: 18px; height: 18px; }
+
+    /* Audio tour widget */
+    #dp150-park .dp150-audio {
+      display: flex;
+      gap: 16px;
+      background: #F7EFDE;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 0 0 20px;
+    }
+    #dp150-park .dp150-audio-cover {
+      flex: none;
+      width: 110px;
+      height: 110px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #3AA5B9;
+    }
+    #dp150-park .dp150-audio-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    #dp150-park .dp150-audio-info { flex: 1; min-width: 0; }
+    #dp150-park .dp150-audio-title {
+      color: #0F3357;
+      font-weight: 700;
+      font-size: 1.15em;
+      margin: 0 0 2px;
+    }
+    #dp150-park .dp150-audio-subtitle {
+      color: #0F3357;
+      font-size: 0.95em;
+      margin: 0 0 12px;
+    }
+    #dp150-park .dp150-audio-times {
+      display: flex;
+      justify-content: space-between;
+      color: #999;
+      font-size: 0.8em;
+      margin: 0 0 4px;
+    }
+    #dp150-park .dp150-audio-progress {
+      position: relative;
+      height: 6px;
+      border-radius: 3px;
+      background: #ccc;
+      cursor: pointer;
+    }
+    #dp150-park .dp150-audio-progress-fill {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 0%;
+      background: #7BB31E;
+      border-radius: 3px;
+    }
+    #dp150-park .dp150-audio-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    #dp150-park .dp150-audio-controls-end {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+    #dp150-park .dp150-audio-btn {
+      background: none;
+      border: none;
+      padding: 4px;
+      color: #0F3357;
+      cursor: pointer;
+    }
+    #dp150-park .dp150-audio-btn svg { width: 20px; height: 20px; }
+    #dp150-park .dp150-audio-playpause svg { width: 24px; height: 24px; }
+    #dp150-park .dp150-audio-btn-end svg { width: 17px; height: 17px; }
+
+    /* Park info card */
+    #dp150-park .dp150-info {
+      background: #0F3357;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 0 0 20px;
+    }
+    #dp150-park .dp150-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 0 0 12px;
+      color: #F7EFDE;
+      line-height: 1.4;
+    }
+    #dp150-park .dp150-info-row svg {
+      flex: none;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: #3AA5B9;
+    }
+    #dp150-park .dp150-info-row a { color: #F7EFDE; text-decoration: underline; }
+    #dp150-park .dp150-info-btn {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background: #3AA5B9;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95em;
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    #dp150-park .dp150-info-btn:hover { background: #2E8598; }
+
+    /* Historical images */
+    #dp150-park .dp150-historical-item { margin: 0 0 20px; }
+    #dp150-park .dp150-historical-trigger {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: zoom-in;
+    }
+    #dp150-park .dp150-historical-trigger img {
+      display: block;
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* Lightbox */
+    #dp150-park .dp150-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(15,51,87,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    #dp150-park .dp150-lightbox.dp150-lightbox-open { display: flex; }
+    #dp150-park .dp150-lightbox img {
+      display: block;
+      max-width: 100%;
+      max-height: 85vh;
+      border-radius: 4px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    #dp150-park .dp150-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.9);
+      color: #0F3357;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #dp150-park .dp150-lightbox-close svg { width: 20px; height: 20px; }
+  </style>
+
+  <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0" aria-label="Drag to compare a historical and present-day photo of Marcus Park" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+    <img class="dp150-ba-after" src="REPLACE-WITH-AFTER-PHOTO-URL-marcus-park.jpg" alt="Marcus Park today">
+    <img class="dp150-ba-before" src="REPLACE-WITH-BEFORE-PHOTO-URL-marcus-park.jpg" alt="Marcus Park historically">
+    <div class="dp150-ba-handle">
+      <span class="dp150-ba-handle-grip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 6 3 12 9 18"></polyline>
+          <polyline points="15 6 21 12 15 18"></polyline>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="dp150-park-layout">
+    <div class="dp150-park-body">
+      <h2>A Park Built to Serve the Neighborhood</h2>
+      <p>Established in 1963, Marcus Park is a 17.1-acre community park that has provided recreational opportunities, gathering spaces, and neighborhood services for generations of North Dallas residents. The park&rsquo;s history dates back even further, when the City of Dallas purchased the property in 1951 with the vision of creating a public space that would serve the growing surrounding community.</p>
+      <p>Located in the North Dallas area, Marcus Park has remained an important neighborhood destination for more than six decades. Its combination of open green space, athletic facilities, and community buildings reflects the City of Dallas&rsquo; commitment to providing accessible recreational spaces where residents of all ages can connect, stay active, and build lasting relationships.</p>
+      <p>Over the years, Marcus Park has evolved alongside the neighborhood it serves. Today, it continues to function as a welcoming gathering place, offering both traditional park amenities and dedicated facilities that support recreation, fitness, and community programming.</p>
+      <h2>Recreation and Outdoor Amenities</h2>
+      <p>Marcus Park provides a variety of outdoor amenities designed to encourage active lifestyles and community engagement. The park features a cricket field, softball field, outdoor basketball court, playground, picnic areas, and walking trails that provide opportunities for sports, exercise, and leisure activities.</p>
+      <p>The cricket field serves as a unique recreational asset, reflecting the diverse interests and backgrounds of the surrounding community. Alongside the softball field and basketball courts, it offers residents spaces to participate in organized sports, informal games, and outdoor activities. Families and visitors can also enjoy the park&rsquo;s playground and picnic areas, making Marcus Park a destination for gatherings, celebrations, and everyday recreation.</p>
+      <p>The park&rsquo;s open spaces and trails provide opportunities for residents to enjoy the outdoors, whether taking a walk, watching a game, or spending time with friends and family. These amenities help create a balance between active recreation and peaceful neighborhood enjoyment.</p>
+      <h2>A Hub for Recreation and Senior Services</h2>
+      <p>The Marcus Recreation Center serves as a central hub for community activities and provides resources for residents of all ages. The facility includes a fitness center, gymnasium, and meeting spaces that support a variety of programs, classes, and events.</p>
+      <p>The gymnasium provides space for indoor sports and activities, while meeting areas allow for community gatherings, educational opportunities, and neighborhood programming. Through its diverse offerings, the recreation center extends the park&rsquo;s role as more than just an outdoor space&mdash;it serves as a place where residents can connect, learn, and participate in activities throughout the year.</p>
+      <p>Marcus Park is also home to a senior center that provides dedicated programming and services for older adults in the community. The center creates opportunities for social engagement, recreation, and wellness, ensuring that the park serves residents across generations. The combination of youth-focused and senior-focused facilities highlights Marcus Park&rsquo;s role as an inclusive community resource.</p>
+      <h2>A Lasting Neighborhood Legacy</h2>
+      <p>For more than 60 years, Marcus Park has been an important part of North Dallas, offering recreational opportunities and community resources that reflect the needs of its residents. From athletic fields and outdoor gathering spaces to its recreation center and senior services, the park provides a place where people of all ages can come together.</p>
+      <p>As the surrounding neighborhood continues to grow and change, Marcus Park remains a reliable community anchor. Its combination of recreation, wellness, and social programming ensures that it will continue to serve as a valued public space for future generations of Dallas residents.</p>
+    </div>
+
+    <div class="dp150-park-sidebar">
+      <div class="dp150-info">
+        <p class="dp150-info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=3000%20Modella%20Ave%2C%20Dallas%2C%20TX%2075229" target="_blank" rel="noopener">3000 Modella Ave, Dallas, TX 75229</a>
+        </p>
+        <p class="dp150-info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          <a href="tel:2146706599">(214) 670-6599</a>
+        </p>
+        <a class="dp150-info-btn" href="https://www.dallasparks.org/facilities/facility/details/Marcus-Park-575">View Park Page</a>
+      </div>
+
+      <div class="dp150-audio">
+        <div class="dp150-audio-cover">
+          <img src="REPLACE-WITH-AUDIO-COVER-IMAGE-URL-marcus-park.jpg" alt="">
+        </div>
+        <div class="dp150-audio-info">
+          <div class="dp150-audio-title">Marcus Park</div>
+          <div class="dp150-audio-subtitle">Audio Tour</div>
+          <div class="dp150-audio-times">
+            <span class="dp150-audio-current">0:00</span>
+            <span class="dp150-audio-duration">0:00</span>
+          </div>
+          <div class="dp150-audio-progress" id="dp150-audio-progress" role="slider" tabindex="0" aria-label="Audio Tour progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="dp150-audio-progress-fill" id="dp150-audio-progress-fill"></div>
+          </div>
+          <div class="dp150-audio-controls">
+            <button type="button" class="dp150-audio-btn" data-action="back" aria-label="Rewind 10 seconds">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 6V2L5 8l6 6v-4c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H3c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg>
+            </button>
+            <button type="button" class="dp150-audio-btn dp150-audio-playpause" id="dp150-audio-playpause" data-action="playpause" aria-label="Play">
+              <svg class="dp150-audio-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+              <svg class="dp150-audio-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
+            </button>
+            <button type="button" class="dp150-audio-btn" data-action="forward" aria-label="Forward 10 seconds">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 6V2l6 6-6 6v-4c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"></path></svg>
+            </button>
+            <span class="dp150-audio-controls-end">
+              <button type="button" class="dp150-audio-btn dp150-audio-btn-end" id="dp150-audio-mute" data-action="mute" aria-label="Mute">
+                <svg class="dp150-audio-icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>
+                <svg class="dp150-audio-icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path><line x1="17" y1="9" x2="23" y2="15"></line><line x1="23" y1="9" x2="17" y2="15"></line></svg>
+              </button>
+              <button type="button" class="dp150-audio-btn dp150-audio-btn-end" id="dp150-audio-share" data-action="share" aria-label="Copy link to this audio tour">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              </button>
+            </span>
+          </div>
+          <audio class="dp150-audio-el" id="dp150-audio-el" preload="metadata" src="REPLACE-WITH-AUDIO-TOUR-URL-marcus-park.mp3"></audio>
+        </div>
+      </div>
+
+      <div class="dp150-historical-item">
+        <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
+          <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-marcus-park-1.jpg" alt="Historical photo of Marcus Park">
+        </button>
+      </div>
+      <div class="dp150-historical-item">
+        <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
+          <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-marcus-park-2.jpg" alt="Historical photo of Marcus Park">
+        </button>
+      </div>
+      <div class="dp150-historical-item">
+        <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
+          <img src="REPLACE-WITH-HISTORICAL-IMAGE-URL-marcus-park-3.jpg" alt="Historical photo of Marcus Park">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="dp150-lightbox" id="dp150-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo">
+    <button type="button" class="dp150-lightbox-close" id="dp150-lightbox-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <img id="dp150-lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    (function () {
+      // Before/after slider
+      var slider = document.getElementById("dp150-ba-slider");
+      var beforeImg = slider.querySelector(".dp150-ba-before");
+      var handle = slider.querySelector(".dp150-ba-handle");
+      var dragging = false;
+
+      function setSliderPosition(pct) {
+        pct = Math.max(0, Math.min(100, pct));
+        beforeImg.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
+        handle.style.left = pct + "%";
+        slider.setAttribute("aria-valuenow", Math.round(pct));
+      }
+
+      function updateFromEvent(e) {
+        var rect = slider.getBoundingClientRect();
+        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        setSliderPosition((x / rect.width) * 100);
+      }
+
+      slider.addEventListener("pointerdown", function (e) {
+        dragging = true;
+        slider.setPointerCapture(e.pointerId);
+        updateFromEvent(e);
+      });
+      slider.addEventListener("pointermove", function (e) {
+        if (dragging) { updateFromEvent(e); }
+      });
+      slider.addEventListener("pointerup", function () { dragging = false; });
+      slider.addEventListener("pointercancel", function () { dragging = false; });
+      slider.addEventListener("keydown", function (e) {
+        var current = parseFloat(slider.getAttribute("aria-valuenow")) || 50;
+        if (e.key === "ArrowLeft") { setSliderPosition(current - 5); e.preventDefault(); }
+        if (e.key === "ArrowRight") { setSliderPosition(current + 5); e.preventDefault(); }
+      });
+
+      // Audio Tour player
+      var audio = document.getElementById("dp150-audio-el");
+      var playBtn = document.getElementById("dp150-audio-playpause");
+      var iconPlay = playBtn.querySelector(".dp150-audio-icon-play");
+      var iconPause = playBtn.querySelector(".dp150-audio-icon-pause");
+      var progress = document.getElementById("dp150-audio-progress");
+      var progressFill = document.getElementById("dp150-audio-progress-fill");
+      var currentEl = document.querySelector("#dp150-park .dp150-audio-current");
+      var durationEl = document.querySelector("#dp150-park .dp150-audio-duration");
+
+      function formatTime(seconds) {
+        if (!isFinite(seconds) || isNaN(seconds)) { return "0:00"; }
+        var m = Math.floor(seconds / 60);
+        var s = Math.floor(seconds % 60);
+        return m + ":" + (s < 10 ? "0" : "") + s;
+      }
+
+      function updateProgressUI() {
+        var pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+        progressFill.style.width = pct + "%";
+        progress.setAttribute("aria-valuenow", Math.round(pct));
+        currentEl.textContent = formatTime(audio.currentTime);
+        durationEl.textContent = formatTime(audio.duration);
+      }
+
+      playBtn.addEventListener("click", function () {
+        if (audio.paused) {
+          var playPromise = audio.play();
+          if (playPromise && playPromise.catch) { playPromise.catch(function () {}); }
+        } else {
+          audio.pause();
+        }
+      });
+      audio.addEventListener("play", function () {
+        iconPlay.style.display = "none";
+        iconPause.style.display = "";
+        playBtn.setAttribute("aria-label", "Pause");
+      });
+      audio.addEventListener("pause", function () {
+        iconPlay.style.display = "";
+        iconPause.style.display = "none";
+        playBtn.setAttribute("aria-label", "Play");
+      });
+      audio.addEventListener("timeupdate", updateProgressUI);
+      audio.addEventListener("loadedmetadata", updateProgressUI);
+
+      document.querySelectorAll('.dp150-audio-btn[data-action="back"]').forEach(function (btn) {
+        btn.addEventListener("click", function () { audio.currentTime = Math.max(0, audio.currentTime - 10); });
+      });
+      document.querySelectorAll('.dp150-audio-btn[data-action="forward"]').forEach(function (btn) {
+        btn.addEventListener("click", function () { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10); });
+      });
+
+      function seekFromEvent(e) {
+        if (!audio.duration) { return; }
+        var rect = progress.getBoundingClientRect();
+        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+        var pct = Math.max(0, Math.min(1, x / rect.width));
+        audio.currentTime = pct * audio.duration;
+      }
+      progress.addEventListener("click", seekFromEvent);
+      progress.addEventListener("keydown", function (e) {
+        if (!audio.duration) { return; }
+        if (e.key === "ArrowLeft") { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+        if (e.key === "ArrowRight") { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+      });
+
+      // Mute toggle
+      var muteBtn = document.getElementById("dp150-audio-mute");
+      var iconSoundOn = muteBtn.querySelector(".dp150-audio-icon-sound-on");
+      var iconSoundOff = muteBtn.querySelector(".dp150-audio-icon-sound-off");
+      muteBtn.addEventListener("click", function () {
+        audio.muted = !audio.muted;
+        iconSoundOn.style.display = audio.muted ? "none" : "";
+        iconSoundOff.style.display = audio.muted ? "" : "none";
+        muteBtn.setAttribute("aria-label", audio.muted ? "Unmute" : "Mute");
+      });
+
+      // Share (copy link)
+      var shareBtn = document.getElementById("dp150-audio-share");
+      shareBtn.addEventListener("click", function () {
+        if (!navigator.clipboard) { return; }
+        navigator.clipboard.writeText(window.location.href).then(function () {
+          var original = shareBtn.getAttribute("aria-label");
+          shareBtn.setAttribute("aria-label", "Link copied");
+          setTimeout(function () { shareBtn.setAttribute("aria-label", original); }, 2000);
+        }).catch(function () {});
+      });
+
+      // Historical image lightbox
+      var lightbox = document.getElementById("dp150-lightbox");
+      var lightboxImg = document.getElementById("dp150-lightbox-img");
+      var lightboxClose = document.getElementById("dp150-lightbox-close");
+      var lastTrigger = null;
+
+      function openLightbox(trigger) {
+        var img = trigger.querySelector("img");
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lastTrigger = trigger;
+        lightbox.classList.add("dp150-lightbox-open");
+        lightboxClose.focus();
+        document.addEventListener("keydown", onLightboxKeydown);
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("dp150-lightbox-open");
+        lightboxImg.src = "";
+        document.removeEventListener("keydown", onLightboxKeydown);
+        if (lastTrigger) { lastTrigger.focus(); }
+      }
+
+      function onLightboxKeydown(e) {
+        if (e.key === "Escape") { closeLightbox(); }
+      }
+
+      document.querySelectorAll("#dp150-park .dp150-historical-trigger").forEach(function (trigger) {
+        trigger.addEventListener("click", function () { openLightbox(trigger); });
+      });
+      lightboxClose.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", function (e) {
+        if (e.target === lightbox) { closeLightbox(); }
+      });
+    })();
+  </script>
+</div>
