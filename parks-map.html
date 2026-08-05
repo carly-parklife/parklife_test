@@ -1,0 +1,312 @@
+<div class="dp-parks-map-wrap" id="dp-parks-map-wrap">
+  <style>
+    #dp-parks-map-wrap { max-width: 1100px; margin: 0 auto; }
+    #dp-parks-map-wrap .dp-parks-search {
+      position: relative;
+      margin: 0 0 12px;
+    }
+    #dp-parks-map-wrap .dp-parks-search-input {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 1em;
+      border: 1px solid #999;
+      border-radius: 4px;
+    }
+    #dp-parks-map-wrap .dp-parks-search-input:focus {
+      outline: 2px solid #347743;
+      outline-offset: 1px;
+    }
+    #dp-parks-map-wrap .dp-parks-search-results {
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 4px 0;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      max-height: 260px;
+      overflow-y: auto;
+      z-index: 500;
+    }
+    #dp-parks-map-wrap .dp-parks-search-results[hidden] { display: none; }
+    #dp-parks-map-wrap .dp-parks-search-results li {
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 0.95em;
+      color: #222;
+    }
+    #dp-parks-map-wrap .dp-parks-search-results li:hover,
+    #dp-parks-map-wrap .dp-parks-search-results li:focus {
+      background: #347743;
+      color: #fff;
+      outline: none;
+    }
+    #dp-parks-map-wrap .dp-parks-search-results li.dp-parks-search-empty {
+      color: #666;
+      cursor: default;
+    }
+    #dp-parks-map-wrap .dp-parks-search-results li.dp-parks-search-empty:hover { background: none; color: #666; }
+    #dp-parks-map-wrap #dp-parks-map {
+      width: 100%;
+      height: 700px;
+      border-radius: 6px;
+      z-index: 0;
+    }
+    #dp-parks-map-wrap .leaflet-popup-content-wrapper { border-radius: 6px; }
+    #dp-parks-map-wrap .leaflet-popup-content { margin: 12px; }
+    #dp-parks-map-wrap .dp-parks-popup-image {
+      display: block;
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin: 0 0 8px;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-title {
+      font-weight: 700;
+      color: #347743;
+      margin: 0 0 4px;
+      font-size: 1em;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-address {
+      margin: 0 0 8px;
+      color: #333;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-directions {
+      display: flex;
+      gap: 6px;
+      margin: 0 0 8px;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-dir-btn {
+      flex: 1;
+      text-align: center;
+      padding: 6px 8px;
+      border: 1px solid #347743;
+      border-radius: 4px;
+      color: #347743;
+      font-size: 0.8em;
+      font-weight: 600;
+      text-decoration: none;
+      line-height: 1.3;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-dir-btn:hover { background: #347743; color: #fff; }
+    #dp-parks-map-wrap .dp-parks-popup-link {
+      display: block;
+      text-align: center;
+      padding: 8px 10px;
+      background: #3AA5B9;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9em;
+      text-decoration: none;
+    }
+    #dp-parks-map-wrap .dp-parks-popup-link:hover { background: #2E8598; }
+    @media (max-width: 600px) {
+      #dp-parks-map-wrap #dp-parks-map { height: 500px; }
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+  <div class="dp-parks-search">
+    <input
+      type="text"
+      class="dp-parks-search-input"
+      id="dp-parks-search-input"
+      placeholder="Search for a park by name&hellip;"
+      autocomplete="off"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dp-parks-search-results"
+      aria-label="Search for a park">
+    <ul class="dp-parks-search-results" id="dp-parks-search-results" role="listbox" hidden></ul>
+  </div>
+
+  <div id="dp-parks-map" role="application" aria-label="Interactive map of Dallas Park and Recreation Department parks"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    (function () {
+      // Featured Dallas 150 Parks.
+      // NOTE: lat/lng below have been re-geocoded against each park's real
+      // street address (verified against Google Maps / OpenStreetMap data).
+      // Kleberg Park and Miller Family Park could only be resolved to
+      // street/neighborhood-level precision — spot-check those two pins
+      // before publishing.
+      // url and image are optional — the popup only shows a "View park page"
+      // link or a photo once a real URL is set for that park.
+      var DP_PARKS = [
+        { name: "Lake Cliff Park", lat: 32.756466, lng: -96.819313, address: "300 E Colorado Blvd, Dallas, TX 75201", url: "", image: "REPLACE-WITH-PHOTO-URL-lake-cliff-park.jpg" },
+        { name: "Samuell Grand Park", lat: 32.797365, lng: -96.741688, address: "6200 E Grand Ave, Dallas, TX 75223", url: "", image: "REPLACE-WITH-PHOTO-URL-samuell-grand-park.jpg" },
+        { name: "Reverchon Park", lat: 32.800884, lng: -96.815849, address: "3505 Maple Ave, Dallas, TX 75219", url: "", image: "REPLACE-WITH-PHOTO-URL-reverchon-park.jpg" },
+        { name: "City Park", lat: 32.773611, lng: -96.787778, address: "1515 S. Harwood St, Dallas, TX 75215", url: "", image: "REPLACE-WITH-PHOTO-URL-city-park.jpg" },
+        { name: "Pike Park", lat: 32.7933, lng: -96.8097, address: "2807 Harry Hines Blvd, Dallas, TX 75201", url: "", image: "REPLACE-WITH-PHOTO-URL-pike-park.jpg" },
+        { name: "Thurgood Marshall Park", lat: 32.683314, lng: -96.854784, address: "5150 Mark Trail Way, Dallas, TX 75232", url: "", image: "REPLACE-WITH-PHOTO-URL-thurgood-marshall-park.jpg" },
+        { name: "Dallas Zoo", lat: 32.740970, lng: -96.815320, address: "650 S R.L. Thornton Fwy, Dallas, TX 75203", url: "", image: "REPLACE-WITH-PHOTO-URL-dallas-zoo.jpg" },
+        { name: "Cedar Crest Golf Course", lat: 32.7219, lng: -96.7969, address: "1800 Southerland Ave, Dallas, TX 75203", url: "", image: "REPLACE-WITH-PHOTO-URL-cedar-crest-golf-course.jpg" },
+        { name: "Eloise Lundy Park", lat: 32.75649, lng: -96.80609, address: "1200 Sabine St, Dallas, TX 75203", url: "", image: "REPLACE-WITH-PHOTO-URL-eloise-lundy-park.jpg" },
+        { name: "Crawford Park", lat: 32.7134, lng: -96.6697, address: "8700 Elam Rd, Dallas, TX 75217", url: "", image: "REPLACE-WITH-PHOTO-URL-crawford-park.jpg" },
+        { name: "Bachman Lake Park", lat: 32.858386, lng: -96.86136, address: "3500 W Northwest Hwy, Dallas, TX 75220", url: "", image: "REPLACE-WITH-PHOTO-URL-bachman-lake-park.jpg" },
+        { name: "Hattie R. Moore Park", lat: 32.780586, lng: -96.838718, address: "3212 N. Winnetka, Dallas, TX 75212", url: "", image: "REPLACE-WITH-PHOTO-URL-hattie-r-moore-park.jpg" },
+        { name: "Fair Park", lat: 32.778218, lng: -96.759271, address: "3809 Grand Ave, Dallas, TX 75210", url: "", image: "REPLACE-WITH-PHOTO-URL-fair-park.jpg" },
+        { name: "Juanita J. Craft Park", lat: 32.772907, lng: -96.740833, address: "4352 Spring Ave, Dallas, TX 75210", url: "", image: "REPLACE-WITH-PHOTO-URL-juanita-j-craft-park.jpg" },
+        { name: "Singing Hills Park", lat: 32.6702, lng: -96.7932, address: "1919 Crouch Rd, Dallas, TX 75241", url: "", image: "REPLACE-WITH-PHOTO-URL-singing-hills-park.jpg" },
+        { name: "Kleberg Park", lat: 32.66854, lng: -96.61897, address: "1575 Edd Rd, Dallas, TX 75253", url: "", image: "REPLACE-WITH-PHOTO-URL-kleberg-park.jpg" },
+        { name: "Miller Family Park", lat: 32.6852, lng: -96.7852, address: "2814 Persimmon Rd, Dallas, TX 75241", url: "", image: "REPLACE-WITH-PHOTO-URL-miller-family-park.jpg" },
+        { name: "White Rock Lake Park", lat: 32.853182, lng: -96.728888, address: "E Lawther Dr, Dallas, TX 75218", url: "", image: "REPLACE-WITH-PHOTO-URL-white-rock-lake-park.jpg" },
+        { name: "Hamilton Park", lat: 32.9171, lng: -96.7637, address: "12225 Willowdell Dr, Dallas, TX 75243", url: "", image: "REPLACE-WITH-PHOTO-URL-hamilton-park.jpg" },
+        { name: "Fretz Park", lat: 32.9489, lng: -96.7818, address: "6994 Belt Line Rd, Dallas, TX 75254", url: "", image: "REPLACE-WITH-PHOTO-URL-fretz-park.jpg" },
+        { name: "Campbell Green Park", lat: 32.9775, lng: -96.7872, address: "16600 Hillcrest Rd, Dallas, TX 75248", url: "", image: "REPLACE-WITH-PHOTO-URL-campbell-green-park.jpg" },
+        { name: "Marcus Park", lat: 32.90668, lng: -96.880304, address: "3000 Modella Ave, Dallas, TX 75229", url: "", image: "REPLACE-WITH-PHOTO-URL-marcus-park.jpg" },
+        { name: "Tietze Park", lat: 32.8234, lng: -96.7608, address: "2700 Skillman St, Dallas, TX 75214", url: "", image: "REPLACE-WITH-PHOTO-URL-tietze-park.jpg" },
+        { name: "Freedman’s Cemetery", lat: 32.803207, lng: -96.793853, address: "2521 N Central Expy, Dallas, TX 75204", url: "", image: "REPLACE-WITH-PHOTO-URL-freedmans-cemetery.jpg" },
+        { name: "Klyde Warren Park", lat: 32.789364, lng: -96.801781, address: "2012 Woodall Rodgers Fwy, Dallas, TX 75201", url: "", image: "REPLACE-WITH-PHOTO-URL-klyde-warren-park.jpg" }
+      ];
+
+      var map = L.map("dp-parks-map", { scrollWheelZoom: false });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      var markers = [];
+      DP_PARKS.forEach(function (park) {
+        var destination = encodeURIComponent(park.address || (park.lat + ',' + park.lng));
+        var googleUrl = 'https://www.google.com/maps/dir/?api=1&destination=' + destination;
+        var appleUrl = 'https://maps.apple.com/?daddr=' + destination;
+
+        var popupHtml = '';
+        if (park.image) {
+          popupHtml += '<img class="dp-parks-popup-image" src="' + park.image + '" alt="' + park.name + '">';
+        }
+        popupHtml += '<div class="dp-parks-popup-title">' + park.name + '</div>';
+        if (park.address) {
+          popupHtml += '<p class="dp-parks-popup-address">' + park.address + '</p>';
+        }
+        popupHtml += '<div class="dp-parks-popup-directions">' +
+          '<a class="dp-parks-popup-dir-btn" target="_blank" rel="noopener" href="' + googleUrl + '">Google Maps</a>' +
+          '<a class="dp-parks-popup-dir-btn" target="_blank" rel="noopener" href="' + appleUrl + '">Apple Maps</a>' +
+          '</div>';
+        if (park.url) {
+          popupHtml += '<a class="dp-parks-popup-link" href="' + park.url + '">View park page</a>';
+        }
+        var marker = L.marker([park.lat, park.lng]).bindPopup(popupHtml, { maxWidth: 220 });
+        marker.addTo(map);
+        markers.push(marker);
+      });
+
+      if (markers.length) {
+        var group = L.featureGroup(markers);
+        map.fitBounds(group.getBounds().pad(0.15));
+      } else {
+        map.setView([32.7767, -96.7970], 11);
+      }
+
+      map.on("focus", function () { map.scrollWheelZoom.enable(); });
+      map.on("blur", function () { map.scrollWheelZoom.disable(); });
+
+      // Park search
+      var searchInput = document.getElementById("dp-parks-search-input");
+      var resultsList = document.getElementById("dp-parks-search-results");
+      var currentMatches = [];
+
+      function closeResults() {
+        resultsList.hidden = true;
+        resultsList.innerHTML = "";
+        searchInput.setAttribute("aria-expanded", "false");
+      }
+
+      function selectPark(park) {
+        var idx = DP_PARKS.indexOf(park);
+        var marker = markers[idx];
+        map.flyTo([park.lat, park.lng], 15);
+        marker.openPopup();
+        searchInput.value = park.name;
+        closeResults();
+      }
+
+      function renderResults(matches) {
+        resultsList.innerHTML = "";
+        if (!matches.length) {
+          var empty = document.createElement("li");
+          empty.className = "dp-parks-search-empty";
+          empty.textContent = "No parks found";
+          resultsList.appendChild(empty);
+          resultsList.hidden = false;
+          searchInput.setAttribute("aria-expanded", "true");
+          return;
+        }
+        matches.forEach(function (park) {
+          var li = document.createElement("li");
+          li.textContent = park.name;
+          li.setAttribute("role", "option");
+          li.tabIndex = 0;
+          li.addEventListener("click", function () { selectPark(park); });
+          li.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectPark(park);
+            }
+          });
+          resultsList.appendChild(li);
+        });
+        resultsList.hidden = false;
+        searchInput.setAttribute("aria-expanded", "true");
+      }
+
+      searchInput.addEventListener("input", function () {
+        var q = searchInput.value.trim().toLowerCase();
+        if (!q) {
+          currentMatches = [];
+          closeResults();
+          return;
+        }
+        currentMatches = DP_PARKS.filter(function (park) {
+          return park.name.toLowerCase().indexOf(q) !== -1;
+        }).slice(0, 8);
+        renderResults(currentMatches);
+      });
+
+      searchInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && currentMatches.length) {
+          e.preventDefault();
+          selectPark(currentMatches[0]);
+        } else if (e.key === "Escape") {
+          closeResults();
+        } else if (e.key === "ArrowDown" && resultsList.children.length) {
+          e.preventDefault();
+          resultsList.children[0].focus();
+        }
+      });
+
+      resultsList.addEventListener("keydown", function (e) {
+        var items = Array.prototype.slice.call(resultsList.children);
+        var idx = items.indexOf(document.activeElement);
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          items[Math.min(idx + 1, items.length - 1)].focus();
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          if (idx <= 0) { searchInput.focus(); } else { items[idx - 1].focus(); }
+        } else if (e.key === "Escape") {
+          closeResults();
+          searchInput.focus();
+        }
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!e.target.closest("#dp-parks-map-wrap .dp-parks-search")) {
+          closeResults();
+        }
+      });
+    })();
+  </script>
+</div>
