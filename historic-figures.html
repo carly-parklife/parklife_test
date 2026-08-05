@@ -98,6 +98,20 @@
     #dhf-historic-figures:has(#dhf-figure-12:checked) .dhf-detail-12 {
       display: block;
     }
+    #dhf-historic-figures:has(#dhf-figure-1-lightbox:checked) .dhf-lightbox-1,
+    #dhf-historic-figures:has(#dhf-figure-2-lightbox:checked) .dhf-lightbox-2,
+    #dhf-historic-figures:has(#dhf-figure-3-lightbox:checked) .dhf-lightbox-3,
+    #dhf-historic-figures:has(#dhf-figure-4-lightbox:checked) .dhf-lightbox-4,
+    #dhf-historic-figures:has(#dhf-figure-5-lightbox:checked) .dhf-lightbox-5,
+    #dhf-historic-figures:has(#dhf-figure-6-lightbox:checked) .dhf-lightbox-6,
+    #dhf-historic-figures:has(#dhf-figure-7-lightbox:checked) .dhf-lightbox-7,
+    #dhf-historic-figures:has(#dhf-figure-8-lightbox:checked) .dhf-lightbox-8,
+    #dhf-historic-figures:has(#dhf-figure-9-lightbox:checked) .dhf-lightbox-9,
+    #dhf-historic-figures:has(#dhf-figure-10-lightbox:checked) .dhf-lightbox-10,
+    #dhf-historic-figures:has(#dhf-figure-11-lightbox:checked) .dhf-lightbox-11,
+    #dhf-historic-figures:has(#dhf-figure-12-lightbox:checked) .dhf-lightbox-12 {
+      display: flex;
+    }
     #dhf-historic-figures .dhf-close-btn {
       position: absolute;
       top: 16px;
@@ -139,6 +153,50 @@
       display: block;
       border-radius: 4px;
     }
+    #dhf-historic-figures .dhf-photo-hit {
+      display: block;
+      cursor: zoom-in;
+    }
+    #dhf-historic-figures .dhf-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 50px;
+      box-sizing: border-box;
+    }
+    #dhf-historic-figures .dhf-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 51, 87, 0.92);
+      cursor: zoom-out;
+    }
+    #dhf-historic-figures .dhf-lightbox-img {
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    #dhf-historic-figures .dhf-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      line-height: 1;
+      color: #ffffff;
+      cursor: pointer;
+    }
     #dhf-historic-figures .dhf-popup-text {
       flex: 1;
       min-width: 0;
@@ -173,6 +231,8 @@
       #dhf-historic-figures .dhf-grid { grid-template-columns: 1fr; gap: 12px; }
       #dhf-historic-figures .dhf-card-content { max-width: 75%; }
       #dhf-historic-figures .dhf-detail { padding: 24px; }
+      #dhf-historic-figures .dhf-lightbox { padding: 20px; }
+      #dhf-historic-figures .dhf-lightbox-close { top: 10px; right: 10px; }
     }
   </style>
 
@@ -194,7 +254,15 @@
       <h2 class="dhf-popup-name">Adella K. Turner</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20028" alt="Adella K. Turner" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-1-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-1-lightbox" class="dhf-photo-hit" aria-label="View larger image of Adella K. Turner">
+            <img src="/ImageRepository/Document?documentID=20028" alt="Adella K. Turner" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-1">
+          <label for="dhf-figure-1-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-1-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20028" alt="Adella K. Turner" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Leader in Dallas’ Women’s Civic Movement.</strong> Adella K. Turner was a prominent Dallas social activist whose civic involvement helped expand access to education, literature, and community resources during a transformative period in the city’s history. Born on January 13, 1856, Turner became part of a generation of women who used civic clubs and volunteer organizations to improve public life at a time when women had limited formal political power.</p>
@@ -222,7 +290,15 @@
       <h2 class="dhf-popup-name">Anderson Bonner</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20029" alt="Anderson Bonner" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-2-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-2-lightbox" class="dhf-photo-hit" aria-label="View larger image of Anderson Bonner">
+            <img src="/ImageRepository/Document?documentID=20029" alt="Anderson Bonner" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-2">
+          <label for="dhf-figure-2-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-2-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20029" alt="Anderson Bonner" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">From Enslavement to Freedom.</strong> Anderson Bonner’s life is a remarkable story of perseverance, independence, and achievement in the decades following slavery. Born into slavery in Alabama around 1839, Bonner likely came to Texas during the Civil War. When slavery ended in 1865, he began building a new life as a free man in Dallas County.</p>
@@ -252,7 +328,15 @@
       <h2 class="dhf-popup-name">Anita Martinez</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20030" alt="Anita Martinez" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-3-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-3-lightbox" class="dhf-photo-hit" aria-label="View larger image of Anita Martinez">
+            <img src="/ImageRepository/Document?documentID=20030" alt="Anita Martinez" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-3">
+          <label for="dhf-figure-3-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-3-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20030" alt="Anita Martinez" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">Breaking Barriers in Dallas Government.</strong> Anita N. Martinez was a pioneering Dallas civic leader whose work in government, culture, and youth development created a lasting legacy. Born on December 8, 1925, Martinez dedicated much of her life to expanding opportunities and representation for Dallas’s Mexican American and Hispanic communities.</p>
@@ -281,7 +365,15 @@
       <h2 class="dhf-popup-name">Edwin J. Kiest</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20033" alt="Edwin J. Kiest" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-4-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-4-lightbox" class="dhf-photo-hit" aria-label="View larger image of Edwin J. Kiest">
+            <img src="/ImageRepository/Document?documentID=20033" alt="Edwin J. Kiest" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-4">
+          <label for="dhf-figure-4-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-4-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20033" alt="Edwin J. Kiest" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Publisher Who Helped Shape Dallas.</strong> Edwin J. Kiest was a prominent Dallas publisher and civic leader whose influence extended across journalism, broadcasting, public events, and the city’s park system. Born in Illinois in 1861, Kiest moved to Dallas in 1890 and became deeply involved in the growth and development of his adopted city.</p>
@@ -310,7 +402,15 @@
       <h2 class="dhf-popup-name">George Kessler</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20032" alt="George Kessler" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-5-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-5-lightbox" class="dhf-photo-hit" aria-label="View larger image of George Kessler">
+            <img src="/ImageRepository/Document?documentID=20032" alt="George Kessler" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-5">
+          <label for="dhf-figure-5-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-5-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20032" alt="George Kessler" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Visionary in Landscape Architecture and City Planning.</strong> George E. Kessler was an internationally influential landscape architect and city planner whose ideas helped shape Dallas and communities across the United States. Born in Germany in 1862, Kessler immigrated to the United States with his family in 1865 and later returned to Germany to study landscape architecture.</p>
@@ -339,7 +439,15 @@
       <h2 class="dhf-popup-name">Juanita J. Craft</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20031" alt="Juanita J. Craft" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-6-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-6-lightbox" class="dhf-photo-hit" aria-label="View larger image of Juanita J. Craft">
+            <img src="/ImageRepository/Document?documentID=20031" alt="Juanita J. Craft" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-6">
+          <label for="dhf-figure-6-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-6-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20031" alt="Juanita J. Craft" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Champion for Civil Rights in Dallas.</strong> Juanita J. Craft was one of Dallas’s most influential civil rights leaders. Through decades of organizing, protest, voter engagement, and public service, she challenged segregation and worked to expand opportunities for Black Texans.</p>
@@ -369,7 +477,15 @@
       <h2 class="dhf-popup-name">Julien Reverchon</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20034" alt="Julien Reverchon" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-7-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-7-lightbox" class="dhf-photo-hit" aria-label="View larger image of Julien Reverchon">
+            <img src="/ImageRepository/Document?documentID=20034" alt="Julien Reverchon" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-7">
+          <label for="dhf-figure-7-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-7-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20034" alt="Julien Reverchon" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Pioneer in Texas Botany.</strong> Julien Reverchon was a French-born botanist whose exploration and documentation of Texas plant life made him an important figure in the scientific history of the state. Born in France in 1837, at 19 he emigrated to the United States and settled in the Dallas area in 1856.</p>
@@ -398,7 +514,15 @@
       <h2 class="dhf-popup-name">Mildred Louise Dunn</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="Mildred Louise Dunn" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-8-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-8-lightbox" class="dhf-photo-hit" aria-label="View larger image of Mildred Louise Dunn">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="Mildred Louise Dunn" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-8">
+          <label for="dhf-figure-8-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-8-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-8.jpg" alt="Mildred Louise Dunn" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Career Dedicated to Dallas Parks.</strong> Mildred Louise Dunn devoted approximately 30 years of her career to park development in Dallas, contributing to the public spaces and recreational resources that served residents throughout the city. Born in 1924, Dunn belonged to a generation of municipal employees whose sustained work helped Dallas’s park system expand and respond to the needs of a growing population.</p>
@@ -425,7 +549,15 @@
       <h2 class="dhf-popup-name">Park Board Members</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="Park Board Members" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-9-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-9-lightbox" class="dhf-photo-hit" aria-label="View larger image of Park Board Members">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="Park Board Members" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-9">
+          <label for="dhf-figure-9-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-9-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-9.jpg" alt="Park Board Members" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p>For 150 years, Dallas parks have grown alongside the city, evolving from a single 10-acre park into an expansive system of parks, recreation centers, trails, and other public spaces. The story of Dallas Park and Recreation is one of vision, community investment and generations of people who helped shape the city’s outdoor spaces.</p>
@@ -495,7 +627,15 @@
       <h2 class="dhf-popup-name">Department Directors</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="Department Directors" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-10-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-10-lightbox" class="dhf-photo-hit" aria-label="View larger image of Department Directors">
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="Department Directors" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-10">
+          <label for="dhf-figure-10-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-10-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="REPLACE-WITH-YOUR-IMAGE-URL-historic-10.jpg" alt="Department Directors" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p>Behind every park system are the people whose leadership, vision and dedication helped make its growth possible. Alongside the Park Board, generations of department directors and staff turned the board’s plans into the parks Dallas residents use every day:</p>
@@ -525,7 +665,15 @@
       <h2 class="dhf-popup-name">Dr. William Worthington “W. W.” Samuell</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20036" alt="Dr. William Worthington “W. W.” Samuell" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-11-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-11-lightbox" class="dhf-photo-hit" aria-label="View larger image of Dr. William Worthington “W. W.” Samuell">
+            <img src="/ImageRepository/Document?documentID=20036" alt="Dr. William Worthington “W. W.” Samuell" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-11">
+          <label for="dhf-figure-11-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-11-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20036" alt="Dr. William Worthington “W. W.” Samuell" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Surgeon with a Vision for Dallas.</strong> Dr. William Worthington “W. W.” Samuell was a Dallas surgeon, civic leader, and philanthropist whose generosity had a profound impact on the city’s park system. Often referred to as the “father of Dallas parks,” Samuell helped ensure that large areas of land would be preserved for public recreation and enjoyment.</p>
@@ -554,7 +702,15 @@
       <h2 class="dhf-popup-name">William R. Tietze</h2>
       <div class="dhf-popup-body">
         <div class="dhf-popup-photos">
-          <img src="/ImageRepository/Document?documentID=20035" alt="William R. Tietze" class="dhf-popup-photo">
+          <input type="checkbox" id="dhf-figure-12-lightbox" class="dhf-toggle">
+          <label for="dhf-figure-12-lightbox" class="dhf-photo-hit" aria-label="View larger image of William R. Tietze">
+            <img src="/ImageRepository/Document?documentID=20035" alt="William R. Tietze" class="dhf-popup-photo">
+          </label>
+        </div>
+        <div class="dhf-lightbox dhf-lightbox-12">
+          <label for="dhf-figure-12-lightbox" class="dhf-lightbox-backdrop" aria-hidden="true"></label>
+          <label for="dhf-figure-12-lightbox" class="dhf-lightbox-close" aria-label="Close larger image">&times;</label>
+          <img src="/ImageRepository/Document?documentID=20035" alt="William R. Tietze" class="dhf-lightbox-img">
         </div>
         <div class="dhf-popup-text">
           <p><strong class="dhf-popup-subhead">A Pioneer of Dallas Parks.</strong> William Robert Tietze played a foundational role in the development of the Dallas park system. Born in 1859, Tietze was a wholesale florist whose knowledge of plants and landscapes complemented a career that would become closely connected to the growth of public parks in Dallas.</p>
