@@ -1,0 +1,435 @@
+<div class="dch-community-hub" id="dch-community-hub">
+  <style>
+    #dch-community-hub { max-width: 1100px; margin: 0 auto; }
+    #dch-community-hub *, #dch-community-hub *::before, #dch-community-hub *::after { box-sizing: border-box; }
+
+    #dch-community-hub .dch-header {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    #dch-community-hub .dch-header-text { flex: 1; min-width: 0; }
+    #dch-community-hub .dch-header-aside { flex: 0 0 220px; padding-top: .3em; }
+    #dch-community-hub .dch-title {
+      margin: 0 0 16px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 700;
+      color: #3AA5B9;
+      font-size: 1.5em;
+    }
+    #dch-community-hub p {
+      margin: 0 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dch-community-hub p:last-child { margin-bottom: 0; }
+    #dch-community-hub .dch-list {
+      margin: 0 0 16px;
+      padding-left: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dch-community-hub .dch-list li { margin-bottom: 8px; }
+    #dch-community-hub .dch-list li:last-child { margin-bottom: 0; }
+
+    #dch-community-hub .dch-btn {
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      text-align: center;
+      text-decoration: none;
+      color: #ffffff;
+      cursor: pointer;
+      border: none;
+    }
+    #dch-community-hub .dch-btn-teal { background: #3AA5B9; }
+    #dch-community-hub .dch-btn-teal:hover { background: #328FA1; }
+
+    #dch-community-hub .dch-hashtag {
+      margin: 40px 0 20px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 1.2em;
+      color: #0F3357;
+    }
+
+    /* Video carousel */
+    #dch-community-hub .dch-carousel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    #dch-community-hub .dch-carousel-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 4px;
+      flex: 1;
+      min-width: 0;
+      scrollbar-width: none;
+    }
+    #dch-community-hub .dch-carousel-track::-webkit-scrollbar { display: none; }
+    #dch-community-hub .dch-video-card {
+      flex: 0 0 auto;
+      width: 190px;
+      scroll-snap-align: start;
+    }
+    #dch-community-hub .dch-video {
+      display: block;
+      width: 190px;
+      height: 260px;
+      background: #d9d9d9;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+    #dch-community-hub .dch-carousel-arrow {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #0F3357;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-carousel-arrow:hover { background: #0A2440; }
+    #dch-community-hub .dch-carousel-arrow svg { width: 18px; height: 18px; }
+
+    /* Image grid */
+    #dch-community-hub .dch-image-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    #dch-community-hub .dch-image-grid img {
+      display: block;
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #d9d9d9;
+      border-radius: 4px;
+    }
+
+    /* Submit Memories modal */
+    #dch-community-hub .dch-toggle {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+    #dch-community-hub .dch-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #dch-community-hub:has(#dch-submit-toggle:checked) .dch-modal { display: flex; }
+    #dch-community-hub .dch-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 51, 87, 0.75);
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-modal-panel {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #F7EFDE;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      padding: 40px;
+    }
+    #dch-community-hub .dch-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      color: #0F3357;
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-modal-grid {
+      display: flex;
+      gap: 40px;
+    }
+    #dch-community-hub .dch-modal-text { flex: 1; min-width: 0; }
+    #dch-community-hub .dch-modal-heading {
+      margin: 0 0 16px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 700;
+      color: #3AA5B9;
+      font-size: 1.6em;
+    }
+    #dch-community-hub .dch-modal-text p {
+      color: #0F3357;
+      font-size: 14px;
+      line-height: 22px;
+    }
+    #dch-community-hub .dch-modal-upload { flex: 0 0 300px; }
+    #dch-community-hub .dch-dropzone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      border: 2px dashed #0F3357;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
+    }
+    #dch-community-hub .dch-dropzone.dch-dropzone-drag { background: rgba(15, 51, 87, 0.06); }
+    #dch-community-hub .dch-dropzone svg { width: 40px; height: 40px; color: #0F3357; }
+    #dch-community-hub .dch-dropzone-label {
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 1.1em;
+      color: #0F3357;
+    }
+    #dch-community-hub .dch-dropzone-filename {
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #0F3357;
+      word-break: break-word;
+    }
+    #dch-community-hub .dch-file-input {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 800px) {
+      #dch-community-hub .dch-header { flex-direction: column; }
+      #dch-community-hub .dch-header-aside { flex: 0 0 auto; width: 100%; }
+      #dch-community-hub .dch-modal-grid { flex-direction: column; }
+      #dch-community-hub .dch-modal-upload { flex: 0 0 auto; }
+    }
+    @media (max-width: 700px) {
+      #dch-community-hub .dch-image-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      #dch-community-hub .dch-modal-panel { padding: 24px; }
+    }
+  </style>
+
+  <div class="dch-header">
+    <div class="dch-header-text">
+      <h1 class="dch-title">Share Your Story &amp; Celebrate 150 Years of Community</h1>
+      <p>For 150 years, DPARD&rsquo;s parks, people, and programs have helped shape the community we know today.</p>
+      <p>Now, we want to hear from you! Here&rsquo;s how you can join in on the celebration:</p>
+      <ul class="dch-list">
+        <li><strong>Use This Portal:</strong> Upload your favorite photos, videos, and memories from your adventures in DPARD&rsquo;s parks.</li>
+        <li><strong>Post on Social Media:</strong> Post your photos and/or videos on your social media, making sure to use the hashtag <em>#DPARD150</em>.</li>
+      </ul>
+      <p>Help us celebrate the special moments, meaningful memories, and unforgettable experiences that make these spaces so important to our community. Your submissions will become part of the DPARD 150 celebration and help preserve our community&rsquo;s story for generations to come.</p>
+    </div>
+    <div class="dch-header-aside">
+      <label for="dch-submit-toggle" class="dch-btn dch-btn-teal">Submit Memories</label>
+    </div>
+  </div>
+
+  <h2 class="dch-hashtag">#MyDallasParksMemories</h2>
+
+  <div class="dch-carousel">
+    <button type="button" class="dch-carousel-arrow dch-carousel-prev" aria-label="Scroll videos left">
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <div class="dch-carousel-track" id="dch-video-track">
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-1.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-1.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-2.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-2.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-3.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-3.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-4.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-4.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-5.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-5.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-6.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-6.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-7.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-7.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="dch-video-card">
+        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-8.jpg">
+          <source src="REPLACE-WITH-YOUR-VIDEO-URL-8.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <button type="button" class="dch-carousel-arrow dch-carousel-next" aria-label="Scroll videos right">
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+
+  <div class="dch-image-grid">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-1.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-2.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-3.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-4.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-5.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-6.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-7.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-8.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-9.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-10.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-11.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-12.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-13.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-14.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-15.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-16.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-17.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-18.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-19.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-20.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-21.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-22.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-23.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-24.jpg" alt="" loading="lazy">
+    <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-25.jpg" alt="" loading="lazy">
+  </div>
+
+  <input type="checkbox" id="dch-submit-toggle" class="dch-toggle">
+  <div class="dch-modal">
+    <label for="dch-submit-toggle" class="dch-modal-backdrop" aria-hidden="true"></label>
+    <div class="dch-modal-panel" role="dialog" aria-modal="true" aria-labelledby="dch-modal-heading">
+      <label for="dch-submit-toggle" class="dch-modal-close" aria-label="Close">&times;</label>
+      <div class="dch-modal-grid">
+        <div class="dch-modal-text">
+          <h2 class="dch-modal-heading" id="dch-modal-heading">Submit Memories</h2>
+          <p>All submissions are subject to review and may be published at DPARD&rsquo;s sole discretion. Please do not submit content that is offensive, inappropriate, discriminatory, explicit, unlawful, or otherwise unsuitable for a public audience. DPARD reserves the right to edit, decline, remove, or refrain from publishing any submission.</p>
+        </div>
+        <div class="dch-modal-upload">
+          <label for="dch-file-input" class="dch-dropzone" id="dch-dropzone">
+            <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 16V4"></path>
+              <path d="M6 10l6-6 6 6"></path>
+              <path d="M4 20h16"></path>
+            </svg>
+            <span class="dch-dropzone-label">Upload</span>
+            <span class="dch-dropzone-filename" id="dch-dropzone-filename"></span>
+          </label>
+          <input type="file" id="dch-file-input" class="dch-file-input" accept="image/*,video/*" multiple>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var root = document.getElementById('dch-community-hub');
+    if (!root) return;
+
+    var track = root.querySelector('#dch-video-track');
+    var prevBtn = root.querySelector('.dch-carousel-prev');
+    var nextBtn = root.querySelector('.dch-carousel-next');
+    if (track && prevBtn && nextBtn) {
+      var scrollAmount = function () {
+        var card = track.querySelector('.dch-video-card');
+        return card ? card.getBoundingClientRect().width + 16 : 200;
+      };
+      prevBtn.addEventListener('click', function () {
+        track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', function () {
+        track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+    var dropzone = root.querySelector('#dch-dropzone');
+    var fileInput = root.querySelector('#dch-file-input');
+    var filenameEl = root.querySelector('#dch-dropzone-filename');
+
+    if (dropzone && fileInput) {
+      ['dragenter', 'dragover'].forEach(function (evt) {
+        dropzone.addEventListener(evt, function (e) {
+          e.preventDefault();
+          dropzone.classList.add('dch-dropzone-drag');
+        });
+      });
+      ['dragleave', 'drop'].forEach(function (evt) {
+        dropzone.addEventListener(evt, function (e) {
+          e.preventDefault();
+          dropzone.classList.remove('dch-dropzone-drag');
+        });
+      });
+      dropzone.addEventListener('drop', function (e) {
+        var files = e.dataTransfer && e.dataTransfer.files;
+        if (files && files.length) {
+          fileInput.files = files;
+          updateFilename(files);
+        }
+      });
+      fileInput.addEventListener('change', function () {
+        updateFilename(fileInput.files);
+      });
+      function updateFilename(files) {
+        if (!filenameEl) return;
+        if (!files || !files.length) { filenameEl.textContent = ''; return; }
+        filenameEl.textContent = files.length === 1 ? files[0].name : files.length + ' files selected';
+      }
+    }
+  })();
+  </script>
+</div>
