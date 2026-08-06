@@ -85,11 +85,13 @@
     }
     #dch-community-hub .dch-carousel-track::-webkit-scrollbar { display: none; }
     #dch-community-hub .dch-video-card {
+      position: relative;
+      display: block;
       flex: 0 0 auto;
       width: 190px;
       scroll-snap-align: start;
     }
-    #dch-community-hub .dch-video {
+    #dch-community-hub .dch-video-thumb {
       display: block;
       width: 190px;
       height: 260px;
@@ -97,6 +99,20 @@
       border-radius: 4px;
       object-fit: cover;
     }
+    #dch-community-hub .dch-video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(15, 51, 87, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #dch-community-hub .dch-video-play svg { width: 22px; height: 22px; color: #ffffff; }
     #dch-community-hub .dch-carousel-arrow {
       flex: 0 0 auto;
       width: 36px;
@@ -245,46 +261,38 @@
       <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
     </button>
     <div class="dch-carousel-track" id="dch-video-track">
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-1.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-1.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-2.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-2.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-3.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-3.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-4.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-4.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-5.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-5.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-6.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-6.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-7.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-7.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="dch-video-card">
-        <video class="dch-video" controls preload="none" poster="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-8.jpg">
-          <source src="REPLACE-WITH-YOUR-VIDEO-URL-8.mp4" type="video/mp4">
-        </video>
-      </div>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-1.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 1">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-1.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-2.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 2">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-2.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-3.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 3">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-3.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-4.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 4">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-4.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-5.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 5">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-5.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-6.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 6">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-6.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-7.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 7">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-7.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-8.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 8">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-8.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
     </div>
     <button type="button" class="dch-carousel-arrow dch-carousel-next" aria-label="Scroll videos right">
       <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
