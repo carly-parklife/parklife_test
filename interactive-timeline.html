@@ -181,21 +181,70 @@
       gap: 30px;
     }
     #dit-interactive-timeline .dit-popup-photos {
-      flex: 0 0 193px;
+      flex: 0 0 320px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 20px;
     }
+    #dit-interactive-timeline .dit-photo-hit {
+      display: block;
+      width: 100%;
+      cursor: zoom-in;
+    }
+    #dit-interactive-timeline .dit-photo-hit-coin { width: auto; }
     #dit-interactive-timeline .dit-popup-photo {
-      width: 193px;
-      height: 193px;
+      width: 100%;
+      height: 320px;
       object-fit: cover;
       background: #d9d9d9;
       display: block;
       border-radius: 4px;
     }
-    #dit-interactive-timeline .dit-popup-photo-coin { border-radius: 50%; aspect-ratio: 1 / 1; }
+    #dit-interactive-timeline .dit-popup-photo-coin {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      aspect-ratio: 1 / 1;
+    }
+    #dit-interactive-timeline .dit-photo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #dit-interactive-timeline .dit-photo-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 51, 87, 0.92);
+      cursor: pointer;
+    }
+    #dit-interactive-timeline .dit-photo-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      line-height: 1;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    #dit-interactive-timeline .dit-photo-lightbox-img {
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 6px;
+    }
     #dit-interactive-timeline .dit-popup-text {
       flex: 1;
       min-width: 0;
@@ -210,6 +259,22 @@
       display: block;
       font-size: 19px;
       margin-bottom: 4px;
+    }
+    #dit-interactive-timeline:has(#dit-photo-lightbox-1-coin:checked) .dit-photo-lightbox-1-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-1-featured:checked) .dit-photo-lightbox-1-featured,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-2-coin:checked) .dit-photo-lightbox-2-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-2-featured:checked) .dit-photo-lightbox-2-featured,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-3-coin:checked) .dit-photo-lightbox-3-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-3-featured:checked) .dit-photo-lightbox-3-featured,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-4-coin:checked) .dit-photo-lightbox-4-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-4-featured:checked) .dit-photo-lightbox-4-featured,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-5-coin:checked) .dit-photo-lightbox-5-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-5-featured:checked) .dit-photo-lightbox-5-featured,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-6-coin:checked) .dit-photo-lightbox-6-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-6-featured:checked) .dit-photo-lightbox-6-featured,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-7-coin:checked) .dit-photo-lightbox-7-coin,
+    #dit-interactive-timeline:has(#dit-photo-lightbox-7-featured:checked) .dit-photo-lightbox-7-featured {
+      display: flex;
     }
     @media (max-width: 800px) {
       #dit-interactive-timeline .dit-timeline::before {
@@ -253,9 +318,9 @@
       #dit-interactive-timeline .dit-card-photo { width: 100%; height: 160px; }
       #dit-interactive-timeline .dit-detail { padding: 24px; }
       #dit-interactive-timeline .dit-popup-body { flex-direction: column; }
-      #dit-interactive-timeline .dit-popup-photos { flex-direction: row; }
-      #dit-interactive-timeline .dit-popup-photo { width: 45%; height: 140px; }
-      #dit-interactive-timeline .dit-popup-photo-coin { height: auto; }
+      #dit-interactive-timeline .dit-popup-photos { flex-direction: column; flex-basis: auto; }
+      #dit-interactive-timeline .dit-popup-photo { width: 100%; height: 220px; }
+      #dit-interactive-timeline .dit-popup-photo-coin { width: 100px; height: 100px; }
     }
   </style>
 
@@ -288,8 +353,21 @@
       <h2 class="dit-popup-name">Founding Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-1" id="dit-photo-lightbox-1-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-1" id="dit-photo-lightbox-1-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-1-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-1" id="dit-photo-lightbox-1-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-1-featured" class="dit-photo-hit"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1.jpg" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-1-coin">
+            <label for="dit-photo-lightbox-1-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-1-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-1-featured">
+            <label for="dit-photo-lightbox-1-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-1-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-1.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">The Birth of Dallas Parks.</strong> On July 4, 1876, the city purchased ten acres of land surrounding Browder Springs, creating City Park, Dallas’ first public park. The founding of City Park marked the beginning of a massive park system featuring hundreds of public parks spread amongst thousands of acres of land.</p>
@@ -332,8 +410,21 @@
       <h2 class="dit-popup-name">City Beautiful Movement Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-2" id="dit-photo-lightbox-2-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-2" id="dit-photo-lightbox-2-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-2-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-2" id="dit-photo-lightbox-2-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-2-featured" class="dit-photo-hit"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2.jpg" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-2-coin">
+            <label for="dit-photo-lightbox-2-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-2-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-2-featured">
+            <label for="dit-photo-lightbox-2-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-2-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-2.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">A Vision for a More Beautiful Dallas.</strong> As Dallas entered the early twentieth century, the city experienced rapid growth driven by industry, commerce, and a rising population. Civic leaders recognized that parks could serve a greater purpose than simply preserving open space. They could help shape a healthier, more beautiful, and more connected city. Inspired by the national City Beautiful Movement, the Dallas Park Board expanded the park system while embracing thoughtful urban planning, grand public spaces, and neighborhood recreation.</p>
@@ -374,8 +465,21 @@
       <h2 class="dit-popup-name">WPA Parks Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-3" id="dit-photo-lightbox-3-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-3" id="dit-photo-lightbox-3-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-3-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-3" id="dit-photo-lightbox-3-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-3-featured" class="dit-photo-hit"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3.jpg" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-3-coin">
+            <label for="dit-photo-lightbox-3-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-3-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-3-featured">
+            <label for="dit-photo-lightbox-3-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-3-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-3.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">A New Deal for Dallas Parks.</strong> Although Dallas weathered the Great Depression better than many American cities thanks in part to the East Texas oil boom, thousands of residents still faced unemployment and economic hardship. As part of President Franklin D. Roosevelt’s New Deal, federal relief programs transformed both the local economy and Dallas’ growing park system. Between 1933 and 1940, agencies such as the Works Progress Administration (WPA), Civilian Conservation Corps (CCC), Public Works Administration (PWA), and National Youth Administration (NYA) invested hundreds of thousands of dollars into parks across the city, creating jobs while leaving behind lasting public spaces.</p>
@@ -413,8 +517,21 @@
       <h2 class="dit-popup-name">Texas Centennial Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-4" id="dit-photo-lightbox-4-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-4" id="dit-photo-lightbox-4-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-4-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-4" id="dit-photo-lightbox-4-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-4-featured" class="dit-photo-hit"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4.jpg" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-4-coin">
+            <label for="dit-photo-lightbox-4-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-4-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-4-featured">
+            <label for="dit-photo-lightbox-4-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-4-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-4.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">A World’s Fair That Defined Texas.</strong> In 1936, Dallas hosted one of the most ambitious celebrations in Texas history: the Texas Centennial Exposition. Created to commemorate the 100th anniversary of Texas independence from Mexico, the event transformed Fair Park into the center of a statewide celebration that attracted more than six million visitors over 176 days. The exposition not only celebrated Texas history and culture, but also helped boost the economy during the Great Depression and established Dallas as a major city of the American Southwest.</p>
@@ -455,8 +572,21 @@
       <h2 class="dit-popup-name">WWII &amp; Post War Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-5" id="dit-photo-lightbox-5-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-5" id="dit-photo-lightbox-5-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-5-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-5" id="dit-photo-lightbox-5-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-5-featured" class="dit-photo-hit"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5.jpg" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-5-coin">
+            <label for="dit-photo-lightbox-5-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-5-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-5-featured">
+            <label for="dit-photo-lightbox-5-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-5-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-5.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">Parks on the Home Front.</strong> World War II reshaped Dallas in ways that extended far beyond its factories and neighborhoods. As the city’s population grew and industry shifted to support the war effort, Dallas parks took on entirely new roles. Spaces once designed for recreation became places of military service, training, housing, and national support.</p>
@@ -497,8 +627,21 @@
       <h2 class="dit-popup-name">Civil Rights Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-6" id="dit-photo-lightbox-6-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-6" id="dit-photo-lightbox-6-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-6-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-6" id="dit-photo-lightbox-6-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-6-featured" class="dit-photo-hit"><img src="/ImageRepository/Document?documentID=20063" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-6-coin">
+            <label for="dit-photo-lightbox-6-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-6-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-6-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-6-featured">
+            <label for="dit-photo-lightbox-6-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-6-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="/ImageRepository/Document?documentID=20063" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">A Fight for Equal Access.</strong> For much of the early 20th century, Dallas’ park system reflected the racial segregation that shaped daily life across the city. While parks were intended to provide recreation and gathering places for residents, access was not equal. People of color organized, advocated, and built vibrant community life within the limited spaces available to them, while simultaneously pushing for a more equitable park system. Their perseverance helped transform Dallas parks from symbols of exclusion into places intended for everyone.</p>
@@ -538,8 +681,21 @@
       <h2 class="dit-popup-name">Modern Era</h2>
       <div class="dit-popup-body">
         <div class="dit-popup-photos">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin">
-          <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7.jpg" alt="" class="dit-popup-photo">
+          <input type="radio" name="dit-photo-lightbox-group-7" id="dit-photo-lightbox-7-close" class="dit-toggle" checked>
+          <input type="radio" name="dit-photo-lightbox-group-7" id="dit-photo-lightbox-7-coin" class="dit-toggle">
+          <label for="dit-photo-lightbox-7-coin" class="dit-photo-hit dit-photo-hit-coin"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7-coin.jpg" alt="" class="dit-popup-photo dit-popup-photo-coin"></label>
+          <input type="radio" name="dit-photo-lightbox-group-7" id="dit-photo-lightbox-7-featured" class="dit-toggle">
+          <label for="dit-photo-lightbox-7-featured" class="dit-photo-hit"><img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7.jpg" alt="" class="dit-popup-photo"></label>
+          <div class="dit-photo-lightbox dit-photo-lightbox-7-coin">
+            <label for="dit-photo-lightbox-7-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-7-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7-coin.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
+          <div class="dit-photo-lightbox dit-photo-lightbox-7-featured">
+            <label for="dit-photo-lightbox-7-close" class="dit-photo-lightbox-backdrop" aria-hidden="true"></label>
+            <label for="dit-photo-lightbox-7-close" class="dit-photo-lightbox-close" aria-label="Close">&times;</label>
+            <img src="REPLACE-WITH-YOUR-IMAGE-URL-timeline-7.jpg" alt="" class="dit-photo-lightbox-img">
+          </div>
         </div>
         <div class="dit-popup-text">
           <p><strong class="dit-popup-subhead">Beautiful Parks for a Dynamic Dallas.</strong> As Dallas has grown into one of America’s fastest-growing metropolitan areas, its park system has evolved alongside it. Since the late twentieth century, the city’s population has expanded dramatically, bringing new neighborhoods, diverse communities, and changing recreational needs.</p>
