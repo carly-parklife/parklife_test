@@ -42,60 +42,22 @@
       line-height: 1.6;
     }
 
-    /* Before / after comparison slider */
-    #dp150-park .dp150-ba-slider {
-      position: relative;
-      overflow: hidden;
+    /* Featured photo */
+    #dp150-park .dp150-featured-photo {
       border-radius: 4px;
+      overflow: hidden;
       height: 480px;
-      touch-action: none;
-      cursor: ew-resize;
       margin: 0 0 32px;
     }
     @media (max-width: 700px) {
-      #dp150-park .dp150-ba-slider { height: 300px; }
+      #dp150-park .dp150-featured-photo { height: 300px; }
     }
-    #dp150-park .dp150-ba-slider img {
-      position: absolute;
-      inset: 0;
+    #dp150-park .dp150-featured-photo img {
+      display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      pointer-events: none;
-      -webkit-user-select: none;
-      user-select: none;
     }
-    #dp150-park .dp150-ba-after { z-index: 1; }
-    #dp150-park .dp150-ba-before { z-index: 2; clip-path: inset(0 50% 0 0); }
-    #dp150-park .dp150-ba-handle {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 3px;
-      background: #fff;
-      transform: translateX(-50%);
-      z-index: 4;
-      pointer-events: none;
-    }
-    #dp150-park .dp150-ba-handle-grip {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #fff;
-      border: 2px solid #0F3357;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #0F3357;
-    }
-    #dp150-park .dp150-ba-handle-grip svg { width: 18px; height: 18px; }
 
     /* Audio tour widget */
     #dp150-park .dp150-audio {
@@ -263,17 +225,8 @@
     #dp150-park .dp150-lightbox-close svg { width: 20px; height: 20px; }
   </style>
 
-  <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0" aria-label="Drag to compare a historical and present-day photo of Klyde Warren Park" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-    <img class="dp150-ba-after" src="/ImageRepository/Document?documentID=20277" alt="Klyde Warren Park today">
-    <img class="dp150-ba-before" src="/ImageRepository/Document?documentID=20277" alt="Klyde Warren Park historically">
-    <div class="dp150-ba-handle">
-      <span class="dp150-ba-handle-grip">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polyline points="9 6 3 12 9 18"></polyline>
-          <polyline points="15 6 21 12 15 18"></polyline>
-        </svg>
-      </span>
-    </div>
+  <div class="dp150-featured-photo">
+    <img src="/ImageRepository/Document?documentID=20277" alt="Klyde Warren Park">
   </div>
 
   <div class="dp150-park-layout">
@@ -376,41 +329,6 @@
 
   <script>
     (function () {
-      // Before/after slider
-      var slider = document.getElementById("dp150-ba-slider");
-      var beforeImg = slider.querySelector(".dp150-ba-before");
-      var handle = slider.querySelector(".dp150-ba-handle");
-      var dragging = false;
-
-      function setSliderPosition(pct) {
-        pct = Math.max(0, Math.min(100, pct));
-        beforeImg.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
-        handle.style.left = pct + "%";
-        slider.setAttribute("aria-valuenow", Math.round(pct));
-      }
-
-      function updateFromEvent(e) {
-        var rect = slider.getBoundingClientRect();
-        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-        setSliderPosition((x / rect.width) * 100);
-      }
-
-      slider.addEventListener("pointerdown", function (e) {
-        dragging = true;
-        slider.setPointerCapture(e.pointerId);
-        updateFromEvent(e);
-      });
-      slider.addEventListener("pointermove", function (e) {
-        if (dragging) { updateFromEvent(e); }
-      });
-      slider.addEventListener("pointerup", function () { dragging = false; });
-      slider.addEventListener("pointercancel", function () { dragging = false; });
-      slider.addEventListener("keydown", function (e) {
-        var current = parseFloat(slider.getAttribute("aria-valuenow")) || 50;
-        if (e.key === "ArrowLeft") { setSliderPosition(current - 5); e.preventDefault(); }
-        if (e.key === "ArrowRight") { setSliderPosition(current + 5); e.preventDefault(); }
-      });
-
       // Audio Tour player
       var audio = document.getElementById("dp150-audio-el");
       var playBtn = document.getElementById("dp150-audio-playpause");
