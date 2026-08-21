@@ -9,7 +9,13 @@
       align-items: flex-start;
     }
     #dch-community-hub .dch-header-text { flex: 1; min-width: 0; }
-    #dch-community-hub .dch-header-aside { flex: 0 0 220px; padding-top: .3em; }
+    #dch-community-hub .dch-header-aside {
+      flex: 0 0 220px;
+      padding-top: .3em;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
     #dch-community-hub .dch-title {
       margin: 0 0 16px;
       font-family: 'Open Sans', Arial, sans-serif;
@@ -55,6 +61,8 @@
     }
     #dch-community-hub .dch-btn-teal { background: #3AA5B9; }
     #dch-community-hub .dch-btn-teal:hover { background: #328FA1; }
+    #dch-community-hub .dch-btn-green { background: #7BB31E; }
+    #dch-community-hub .dch-btn-green:hover { background: #689A19; }
 
     #dch-community-hub .dch-hashtag {
       margin: 40px 0 20px;
@@ -320,6 +328,7 @@
     </div>
     <div class="dch-header-aside">
       <a href="#dch-storyprompt" class="dch-btn dch-btn-teal">Submit a Video</a>
+      <a href="/FormCenter/DPARD-150-24/DPARD-150-Memory-Submission-Form-344" class="dch-btn dch-btn-green">Submit Photos</a>
     </div>
   </div>
 
