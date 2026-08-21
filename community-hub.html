@@ -64,6 +64,18 @@
       color: #0F3357;
     }
 
+    /* StoryPrompt embed */
+    #dch-community-hub .dch-storyprompt-section {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #dch-community-hub .dch-storyprompt-section .dch-hashtag { text-align: left; }
+    #dch-community-hub .dch-storyprompt-embed {
+      display: flex;
+      justify-content: center;
+    }
+    #dch-community-hub .dch-storyprompt-embed iframe { max-width: 100%; }
+
     /* Video carousel */
     #dch-community-hub .dch-carousel {
       position: relative;
@@ -301,13 +313,20 @@
       <p>For 150 years, DPARD&rsquo;s parks, people, and programs have helped shape the community we know today.</p>
       <p>Now, we want to hear from you! Here&rsquo;s how you can join in on the celebration:</p>
       <ul class="dch-list">
-        <li><strong>Use This Portal:</strong> Upload your favorite photos, videos, and memories from your adventures in DPARD&rsquo;s parks.</li>
+        <li><strong>Upload a Video:</strong> Click the button to record a video (or multiple videos!) from your adventures in DPARD&rsquo;s parks. You&rsquo;ll be directed to a StoryPrompt link, where you can record your video. Once you&rsquo;re finished, your video will automatically be submitted to your team.</li>
         <li><strong>Post on Social Media:</strong> Post your photos and/or videos on your social media, making sure to use the hashtag <em>#DPARD150</em>.</li>
       </ul>
       <p>Help us celebrate the special moments, meaningful memories, and unforgettable experiences that make these spaces so important to our community. Your submissions will become part of the DPARD 150 celebration and help preserve our community&rsquo;s story for generations to come.</p>
     </div>
     <div class="dch-header-aside">
-      <a href="/FormCenter/DPARD-150-24/DPARD-150-Memory-Submission-Form-344" class="dch-btn dch-btn-teal">Submit Memories</a>
+      <a href="#dch-storyprompt" class="dch-btn dch-btn-teal">Submit a Video</a>
+    </div>
+  </div>
+
+  <div class="dch-storyprompt-section" id="dch-storyprompt">
+    <h2 class="dch-hashtag">Submit a Video</h2>
+    <div class="dch-storyprompt-embed">
+      <iframe src="https://storyprompt.com/reply/V15sfPPH14OIlF0bHn8u?oembed=1" allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" height="750px" width="400px" style="border: none; border-radius: 24px" title="Record your DPARD 150 memory video"></iframe>
     </div>
   </div>
 
