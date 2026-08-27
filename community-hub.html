@@ -1,0 +1,595 @@
+<div class="dch-community-hub" id="dch-community-hub">
+  <style>
+    #dch-community-hub { max-width: 1100px; margin: 0 auto; }
+    #dch-community-hub *, #dch-community-hub *::before, #dch-community-hub *::after { box-sizing: border-box; }
+
+    #dch-community-hub .dch-header {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    #dch-community-hub .dch-header-text { flex: 1; min-width: 0; }
+    #dch-community-hub .dch-header-aside {
+      flex: 0 0 220px;
+      padding-top: .3em;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #dch-community-hub .dch-title {
+      margin: 0 0 16px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 700;
+      color: #3AA5B9;
+      font-size: 1.5em;
+    }
+    #dch-community-hub p {
+      margin: 0 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dch-community-hub p:last-child { margin-bottom: 0; }
+    #dch-community-hub .dch-list {
+      margin: 0 0 16px;
+      padding-left: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dch-community-hub .dch-list li { margin-bottom: 8px; }
+    #dch-community-hub .dch-list li:last-child { margin-bottom: 0; }
+
+    #dch-community-hub .dch-btn {
+      display: inline-block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      text-align: center;
+      text-decoration: none;
+      color: #ffffff;
+      cursor: pointer;
+      border: none;
+    }
+    #dch-community-hub .dch-btn-teal { background: #3AA5B9; }
+    #dch-community-hub .dch-btn-teal:hover { background: #328FA1; }
+    #dch-community-hub .dch-btn-green { background: #7BB31E; }
+    #dch-community-hub .dch-btn-green:hover { background: #689A19; }
+
+    #dch-community-hub .dch-disclaimer {
+      margin: 40px 0 0;
+      padding-top: 24px;
+      border-top: 1px solid #d9d9d9;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+      color: #6b6b6b;
+    }
+
+    #dch-community-hub .dch-hashtag {
+      margin: 40px 0 20px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 1.2em;
+      color: #0F3357;
+    }
+
+    /* StoryPrompt embed */
+    #dch-community-hub .dch-storyprompt-section {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #dch-community-hub .dch-storyprompt-section .dch-hashtag { text-align: left; }
+    #dch-community-hub .dch-storyprompt-embed {
+      display: flex;
+      justify-content: center;
+    }
+    #dch-community-hub .dch-storyprompt-embed iframe { max-width: 100%; }
+
+    /* Video carousel */
+    #dch-community-hub .dch-carousel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    #dch-community-hub .dch-carousel-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      padding-bottom: 4px;
+      flex: 1;
+      min-width: 0;
+      scrollbar-width: none;
+    }
+    #dch-community-hub .dch-carousel-track::-webkit-scrollbar { display: none; }
+    #dch-community-hub .dch-video-card {
+      position: relative;
+      display: block;
+      flex: 0 0 auto;
+      width: 190px;
+      scroll-snap-align: start;
+    }
+    #dch-community-hub .dch-video-thumb {
+      display: block;
+      width: 190px;
+      height: 260px;
+      background: #d9d9d9;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+    #dch-community-hub .dch-video-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(15, 51, 87, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #dch-community-hub .dch-video-play svg { width: 22px; height: 22px; color: #ffffff; }
+    #dch-community-hub .dch-carousel-arrow {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #0F3357;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-carousel-arrow:hover { background: #0A2440; }
+    #dch-community-hub .dch-carousel-arrow svg { width: 18px; height: 18px; }
+
+    /* Gallery CTA */
+    #dch-community-hub .dch-gallery-cta { margin-bottom: 32px; }
+    #dch-community-hub .dch-gallery-cta-btn { display: inline-block; width: auto; }
+
+    /* Photo grid */
+    #dch-community-hub .dch-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    #dch-community-hub .dch-photo-grid-item {
+      display: block;
+      cursor: pointer;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+    #dch-community-hub .dch-photo-grid img {
+      display: block;
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #d9d9d9;
+      border-radius: 4px;
+    }
+    @media (max-width: 700px) {
+      #dch-community-hub .dch-photo-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Photo lightbox */
+    #dch-community-hub .dch-photo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    #dch-community-hub .dch-photo-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 51, 87, 0.92);
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-photo-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      line-height: 1;
+      color: #ffffff;
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-photo-lightbox-panel {
+      display: none;
+      position: relative;
+      z-index: 1;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    #dch-community-hub .dch-photo-lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      background: #d9d9d9;
+    }
+    #dch-community-hub .dch-photo-lightbox-nav {
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    #dch-community-hub .dch-photo-lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+    #dch-community-hub .dch-photo-lightbox-nav svg { width: 22px; height: 22px; }
+    #dch-community-hub .dch-photo-lightbox-counter {
+      position: absolute;
+      bottom: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #ffffff;
+    }
+    @media (max-width: 600px) {
+      #dch-community-hub .dch-photo-lightbox-panel { flex-direction: column; gap: 12px; }
+      #dch-community-hub .dch-photo-lightbox-img { max-height: 65vh; }
+    }
+
+
+    #dch-community-hub:has(#dch-photo-lightbox-1:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-2:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-3:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-4:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-5:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-6:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-7:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-8:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-9:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-10:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-11:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-12:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-13:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-14:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-15:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-16:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-17:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-18:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-19:checked) .dch-photo-lightbox,
+    #dch-community-hub:has(#dch-photo-lightbox-20:checked) .dch-photo-lightbox {
+      display: flex;
+    }
+    #dch-community-hub:has(#dch-photo-lightbox-1:checked) .dch-photo-lightbox-panel-1 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-2:checked) .dch-photo-lightbox-panel-2 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-3:checked) .dch-photo-lightbox-panel-3 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-4:checked) .dch-photo-lightbox-panel-4 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-5:checked) .dch-photo-lightbox-panel-5 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-6:checked) .dch-photo-lightbox-panel-6 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-7:checked) .dch-photo-lightbox-panel-7 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-8:checked) .dch-photo-lightbox-panel-8 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-9:checked) .dch-photo-lightbox-panel-9 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-10:checked) .dch-photo-lightbox-panel-10 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-11:checked) .dch-photo-lightbox-panel-11 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-12:checked) .dch-photo-lightbox-panel-12 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-13:checked) .dch-photo-lightbox-panel-13 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-14:checked) .dch-photo-lightbox-panel-14 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-15:checked) .dch-photo-lightbox-panel-15 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-16:checked) .dch-photo-lightbox-panel-16 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-17:checked) .dch-photo-lightbox-panel-17 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-18:checked) .dch-photo-lightbox-panel-18 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-19:checked) .dch-photo-lightbox-panel-19 { display: flex; }
+    #dch-community-hub:has(#dch-photo-lightbox-20:checked) .dch-photo-lightbox-panel-20 { display: flex; }
+    #dch-community-hub .dch-toggle {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 800px) {
+      #dch-community-hub .dch-header { flex-direction: column; }
+      #dch-community-hub .dch-header-aside { flex: 0 0 auto; width: 100%; }
+    }
+  </style>
+
+  <div class="dch-header">
+    <div class="dch-header-text">
+      <h1 class="dch-title">Share Your Story &amp; Celebrate 150 Years of Community</h1>
+      <p>For 150 years, DPARD&rsquo;s parks, people, and programs have helped shape the community we know today.</p>
+      <p>Now, we want to hear from you! Here&rsquo;s how you can join in on the celebration:</p>
+      <ul class="dch-list">
+        <li><strong>Upload a Video:</strong> Click the button to record a video (or multiple videos!) from your adventures in DPARD&rsquo;s parks. You&rsquo;ll be directed to a StoryPrompt link, where you can record your video. Once you&rsquo;re finished, your video will automatically be submitted to your team.</li>
+        <li><strong>Post on Social Media:</strong> Post your photos and/or videos on your social media, making sure to use the hashtag <em>#DPARD150</em>.</li>
+      </ul>
+      <p>Help us celebrate the special moments, meaningful memories, and unforgettable experiences that make these spaces so important to our community. Your submissions will become part of the DPARD 150 celebration and help preserve our community&rsquo;s story for generations to come.</p>
+    </div>
+    <div class="dch-header-aside">
+      <a href="https://storyprompt.com/reply/V15sfPPH14OIlF0bHn8u" class="dch-btn dch-btn-teal" target="_blank" rel="noopener">Submit a Video</a>
+      <a href="/FormCenter/DPARD-150-24/DPARD-150-Memory-Submission-Form-344" class="dch-btn dch-btn-green">Submit Photos</a>
+    </div>
+  </div>
+
+  <div class="dch-storyprompt-section" id="dch-storyprompt">
+    <h2 class="dch-hashtag">Submit a Video</h2>
+    <div class="dch-storyprompt-embed">
+      <iframe src="https://storyprompt.com/reply/V15sfPPH14OIlF0bHn8u?oembed=1" allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" height="750px" width="400px" style="border: none; border-radius: 24px"></iframe>
+    </div>
+  </div>
+
+  <h2 class="dch-hashtag">#MyDallasParksMemories</h2>
+
+  <div class="dch-carousel">
+    <button type="button" class="dch-carousel-arrow dch-carousel-prev" aria-label="Scroll videos left">
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <div class="dch-carousel-track" id="dch-video-track">
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-1.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 1">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-1.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-2.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 2">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-2.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-3.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 3">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-3.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-4.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 4">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-4.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-5.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 5">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-5.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-6.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 6">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-6.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-7.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 7">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-7.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+      <a class="dch-video-card" href="REPLACE-WITH-YOUR-VIDEO-URL-8.mp4" target="_blank" rel="noopener" aria-label="Watch community memory video 8">
+        <img class="dch-video-thumb" src="REPLACE-WITH-YOUR-VIDEO-THUMBNAIL-URL-8.jpg" alt="" loading="lazy">
+        <span class="dch-video-play" aria-hidden="true"><svg viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,4 20,12 6,20"></polygon></svg></span>
+      </a>
+    </div>
+    <button type="button" class="dch-carousel-arrow dch-carousel-next" aria-label="Scroll videos right">
+      <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    </button>
+  </div>
+
+  <div class="dch-gallery-cta">
+    <a href="/gallery.aspx?AID=15" class="dch-btn dch-btn-teal dch-gallery-cta-btn">View the Photo Gallery</a>
+  </div>
+
+  <div class="dch-photo-grid">
+    <label for="dch-photo-lightbox-1" class="dch-photo-grid-item" aria-label="View photo 1 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-1.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-2" class="dch-photo-grid-item" aria-label="View photo 2 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-2.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-3" class="dch-photo-grid-item" aria-label="View photo 3 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-3.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-4" class="dch-photo-grid-item" aria-label="View photo 4 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-4.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-5" class="dch-photo-grid-item" aria-label="View photo 5 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-5.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-6" class="dch-photo-grid-item" aria-label="View photo 6 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-6.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-7" class="dch-photo-grid-item" aria-label="View photo 7 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-7.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-8" class="dch-photo-grid-item" aria-label="View photo 8 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-8.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-9" class="dch-photo-grid-item" aria-label="View photo 9 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-9.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-10" class="dch-photo-grid-item" aria-label="View photo 10 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-10.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-11" class="dch-photo-grid-item" aria-label="View photo 11 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-11.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-12" class="dch-photo-grid-item" aria-label="View photo 12 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-12.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-13" class="dch-photo-grid-item" aria-label="View photo 13 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-13.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-14" class="dch-photo-grid-item" aria-label="View photo 14 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-14.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-15" class="dch-photo-grid-item" aria-label="View photo 15 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-15.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-16" class="dch-photo-grid-item" aria-label="View photo 16 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-16.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-17" class="dch-photo-grid-item" aria-label="View photo 17 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-17.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-18" class="dch-photo-grid-item" aria-label="View photo 18 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-18.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-19" class="dch-photo-grid-item" aria-label="View photo 19 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-19.jpg" alt="" loading="lazy"></label>
+    <label for="dch-photo-lightbox-20" class="dch-photo-grid-item" aria-label="View photo 20 larger"><img src="REPLACE-WITH-YOUR-IMAGE-URL-community-20.jpg" alt="" loading="lazy"></label>
+  </div>
+
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-close" class="dch-toggle" checked>
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-1" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-2" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-3" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-4" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-5" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-6" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-7" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-8" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-9" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-10" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-11" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-12" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-13" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-14" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-15" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-16" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-17" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-18" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-19" class="dch-toggle">
+      <input type="radio" name="dch-photo-lightbox-group" id="dch-photo-lightbox-20" class="dch-toggle">
+  <div class="dch-photo-lightbox">
+    <label for="dch-photo-lightbox-close" class="dch-photo-lightbox-backdrop" aria-hidden="true"></label>
+    <label for="dch-photo-lightbox-close" class="dch-photo-lightbox-close" aria-label="Close">&times;</label>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-1">
+        <label for="dch-photo-lightbox-20" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-1.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-2" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">1 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-2">
+        <label for="dch-photo-lightbox-1" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-2.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-3" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">2 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-3">
+        <label for="dch-photo-lightbox-2" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-3.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-4" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">3 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-4">
+        <label for="dch-photo-lightbox-3" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-4.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-5" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">4 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-5">
+        <label for="dch-photo-lightbox-4" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-5.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-6" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">5 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-6">
+        <label for="dch-photo-lightbox-5" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-6.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-7" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">6 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-7">
+        <label for="dch-photo-lightbox-6" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-7.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-8" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">7 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-8">
+        <label for="dch-photo-lightbox-7" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-8.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-9" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">8 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-9">
+        <label for="dch-photo-lightbox-8" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-9.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-10" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">9 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-10">
+        <label for="dch-photo-lightbox-9" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-10.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-11" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">10 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-11">
+        <label for="dch-photo-lightbox-10" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-11.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-12" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">11 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-12">
+        <label for="dch-photo-lightbox-11" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-12.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-13" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">12 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-13">
+        <label for="dch-photo-lightbox-12" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-13.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-14" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">13 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-14">
+        <label for="dch-photo-lightbox-13" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-14.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-15" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">14 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-15">
+        <label for="dch-photo-lightbox-14" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-15.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-16" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">15 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-16">
+        <label for="dch-photo-lightbox-15" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-16.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-17" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">16 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-17">
+        <label for="dch-photo-lightbox-16" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-17.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-18" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">17 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-18">
+        <label for="dch-photo-lightbox-17" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-18.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-19" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">18 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-19">
+        <label for="dch-photo-lightbox-18" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-19.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-20" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">19 of 20</span>
+      </div>
+      <div class="dch-photo-lightbox-panel dch-photo-lightbox-panel-20">
+        <label for="dch-photo-lightbox-19" class="dch-photo-lightbox-nav" aria-label="Previous photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></label>
+        <img src="REPLACE-WITH-YOUR-IMAGE-URL-community-20.jpg" alt="" class="dch-photo-lightbox-img">
+        <label for="dch-photo-lightbox-1" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
+        <span class="dch-photo-lightbox-counter">20 of 20</span>
+      </div>
+  </div>
+
+  <p class="dch-disclaimer">All submissions are subject to review and may be published at DPARD&rsquo;s sole discretion. Please do not submit content that is offensive, inappropriate, discriminatory, explicit, unlawful, or otherwise unsuitable for a public audience. DPARD reserves the right to edit, decline, remove, or refrain from publishing any submission.</p>
+
+  <script>
+  (function () {
+    var root = document.getElementById('dch-community-hub');
+    if (!root) return;
+
+    var track = root.querySelector('#dch-video-track');
+    var prevBtn = root.querySelector('.dch-carousel-prev');
+    var nextBtn = root.querySelector('.dch-carousel-next');
+    if (track && prevBtn && nextBtn) {
+      var scrollAmount = function () {
+        var card = track.querySelector('.dch-video-card');
+        return card ? card.getBoundingClientRect().width + 16 : 200;
+      };
+      prevBtn.addEventListener('click', function () {
+        track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', function () {
+        track.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+  })();
+  </script>
+</div>
