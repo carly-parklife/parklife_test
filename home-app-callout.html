@@ -1,0 +1,126 @@
+<div class="dp150-app" id="dp150-app">
+  <style>
+    #dp150-app { max-width: 1100px; margin: 0 auto; box-sizing: border-box; }
+    #dp150-app *, #dp150-app *::before, #dp150-app *::after { box-sizing: inherit; }
+    #dp150-app .dp150-app-box {
+      background: #0F3357;
+      border-radius: 6px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1.1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    #dp150-app .dp150-app-heading {
+      margin: 0 0 20px;
+      font-family: 'Open Sans';
+      font-style: normal;
+      font-weight: 700;
+      color: #B7D854;
+      font-size: 1.6em;
+      line-height: 1.25;
+    }
+    #dp150-app .dp150-app-text p {
+      margin: 0 0 16px;
+      color: #F7EFDE;
+      line-height: 1.6;
+    }
+    #dp150-app .dp150-app-text p:last-child { margin-bottom: 0; }
+    #dp150-app .dp150-app-features {
+      list-style: none;
+      margin: 0 0 24px;
+      padding: 0;
+    }
+    #dp150-app .dp150-app-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 16px;
+      color: #F7EFDE;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    #dp150-app .dp150-app-features li:last-child { margin-bottom: 0; }
+    #dp150-app .dp150-app-icon {
+      flex: none;
+      width: 20px;
+      height: 20px;
+      color: #45D3CD;
+    }
+    #dp150-app .dp150-app-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #dp150-app .dp150-app-badges img {
+      display: block;
+      height: 44px;
+      width: auto;
+    }
+    #dp150-app .dp150-app-photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    @media (max-width: 900px) {
+      #dp150-app .dp150-app-box { grid-template-columns: 1fr 1fr; }
+      #dp150-app .dp150-app-text { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
+      #dp150-app .dp150-app-box { grid-template-columns: 1fr; padding: 28px; }
+      #dp150-app .dp150-app-text { grid-column: auto; }
+      #dp150-app .dp150-app-photo { order: -1; }
+    }
+  </style>
+
+  <div class="dp150-app-box">
+    <div class="dp150-app-text">
+      <h2 class="dp150-app-heading">Download Our App to Take DPARD 150 With You</h2>
+      <p>Get even more out of your parks experience with the DPARD 150 app. Download the app today to access interactive resources, explore maps, uncover local history, and discover more ways to connect with DPARD&rsquo;s parks.</p>
+      <p>Whether you are planning your next visit or exploring while on the go, the DPARD 150 app puts 150 years of stories and experiences right at your fingertips.</p>
+    </div>
+
+    <div class="dp150-app-links">
+      <ul class="dp150-app-features">
+        <li>
+          <svg class="dp150-app-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          EXPLORE THE PARKS
+        </li>
+        <li>
+          <svg class="dp150-app-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          LEARN THE HISTORY
+        </li>
+        <li>
+          <svg class="dp150-app-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          BUILD COMMUNITY
+        </li>
+      </ul>
+
+      <div class="dp150-app-badges">
+        <a href="REPLACE-WITH-APP-STORE-URL" aria-label="Download on the App Store">
+          <img src="REPLACE-WITH-APP-STORE-BADGE-IMAGE-URL.png" alt="Download on the App Store">
+        </a>
+        <a href="REPLACE-WITH-GOOGLE-PLAY-URL" aria-label="Get it on Google Play">
+          <img src="REPLACE-WITH-GOOGLE-PLAY-BADGE-IMAGE-URL.png" alt="Get it on Google Play">
+        </a>
+      </div>
+    </div>
+
+    <div class="dp150-app-photo">
+      <img src="REPLACE-WITH-APP-PHONE-PHOTO-IMAGE-URL.jpg" alt="Hand holding a phone displaying the DPARD 150 app">
+    </div>
+  </div>
+</div>
