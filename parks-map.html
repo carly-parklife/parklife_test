@@ -135,38 +135,36 @@
   <script>
     (function () {
       // Featured Dallas 150 Parks.
-      // NOTE: lat/lng below are ESTIMATED from street/neighborhood knowledge,
-      // not run through a geocoding service — verify pin placement (e.g. via
-      // Google My Maps CSV import) before publishing, especially for the
-      // less prominent parks lower in this list.
+      // NOTE: lat/lng below have been re-geocoded against each park's real
+      // street address (verified against Google Maps / OpenStreetMap data).
       // url and image are optional — the popup only shows a "View park page"
       // link or a photo once a real URL is set for that park.
       var DP_PARKS = [
-        { name: "Lake Cliff Park", lat: 32.757380, lng: -96.821577, address: "1200 N. Zang Blvd., Dallas, TX, 75203", url: "/737/Lake-Cliff-Park", image: "REPLACE-WITH-PHOTO-URL-lake-cliff-park.jpg" },
-        { name: "Samuell Grand Park", lat: 32.7889, lng: -96.7461, address: "6200 E Grand Ave, Dallas, TX 75223", url: "/745/Samuell-Grand-Park", image: "REPLACE-WITH-PHOTO-URL-samuell-grand-park.jpg" },
-        { name: "Reverchon Park", lat: 32.8058, lng: -96.8114, address: "3505 Maple Ave, Dallas, TX 75219", url: "/746/Reverchon-Park", image: "REPLACE-WITH-PHOTO-URL-reverchon-park.jpg" },
-        { name: "City Park", lat: 32.7684, lng: -96.7889, address: "1515 S. Harwood St., Dallas, TX 75215", url: "/747/City-Park", image: "REPLACE-WITH-PHOTO-URL-city-park.jpg" },
-        { name: "Pike Park", lat: 32.7942, lng: -96.8206, address: "2807 Harry Hines Blvd, Dallas, TX 75201", url: "/748/Pike-Park", image: "REPLACE-WITH-PHOTO-URL-pike-park.jpg" },
-        { name: "Thurgood Marshall Park", lat: 32.6789, lng: -96.8264, address: "5150 Mark Trail Way, Dallas, TX 75232", url: "/749/Thurgood-Marshall-Park", image: "REPLACE-WITH-PHOTO-URL-thurgood-marshall-park.jpg" },
-        { name: "Dallas Zoo", lat: 32.7411, lng: -96.8153, address: "650 S. R.L. Thornton Fwy (I-35), Dallas, TX  75203", url: "/750/Dallas-Zoo", image: "REPLACE-WITH-PHOTO-URL-dallas-zoo.jpg" },
-        { name: "Cedar Crest Golf Course", lat: 32.7423, lng: -96.7856, address: "1800 Southerland Ave, Dallas, TX 75203", url: "/751/Cedar-Crest-Golf-Course", image: "REPLACE-WITH-PHOTO-URL-cedar-crest-golf-course.jpg" },
-        { name: "Eloise Lundy Park", lat: 32.7723, lng: -96.8283, address: "1200 Sabine St, Dallas, TX 75203", url: "/752/Eloise-Lundy-Park", image: "REPLACE-WITH-PHOTO-URL-eloise-lundy-park.jpg" },
-        { name: "Crawford Park", lat: 32.7398, lng: -96.6822, address: "8700 Elam Rd, Dallas, TX 75217", url: "/753/Crawford-Park", image: "REPLACE-WITH-PHOTO-URL-crawford-park.jpg" },
-        { name: "Bachman Lake Park", lat: 32.8496, lng: -96.8613, address: "3500 W Northwest Hwy, Dallas, TX 75220", url: "/754/Bachman-Lake-Park", image: "REPLACE-WITH-PHOTO-URL-bachman-lake-park.jpg" },
-        { name: "Hattie R. Moore Park", lat: 32.7684, lng: -96.8556, address: "3122 N Winnetka Ave, Dallas, TX 75212", url: "/755/Hattie-R-Moore-Park", image: "REPLACE-WITH-PHOTO-URL-hattie-r-moore-park.jpg" },
-        { name: "Fair Park", lat: 32.7815, lng: -96.7649, address: "3809 Grand Ave, Dallas, TX 75210", url: "/744/Fair-Park", image: "REPLACE-WITH-PHOTO-URL-fair-park.jpg" },
-        { name: "Juanita J. Craft Park", lat: 32.7614, lng: -96.7719, address: "4352 Spring Ave, Dallas, TX 75210", url: "/756/Juanita-J-Craft-Park", image: "REPLACE-WITH-PHOTO-URL-juanita-j-craft-park.jpg" },
-        { name: "Singing Hills Park", lat: 32.6934, lng: -96.7997, address: "6805 Patrol Way, Dallas, TX 75241", url: "/757/Singing-Hills-Park", image: "REPLACE-WITH-PHOTO-URL-singing-hills-park.jpg" },
-        { name: "Kleberg Park", lat: 32.6858, lng: -96.6386, address: "1575 Edd Rd, Dallas, TX 75253", url: "/758/Kleberg-Park", image: "REPLACE-WITH-PHOTO-URL-kleberg-park.jpg" },
-        { name: "Miller Family Park", lat: 32.6975, lng: -96.7930, address: "2814 Persimmon Rd, Dallas, TX 75241", url: "/759/Miller-Family-Park", image: "REPLACE-WITH-PHOTO-URL-miller-family-park.jpg" },
-        { name: "White Rock Lake Park", lat: 32.8343, lng: -96.7208, address: "E Lawther Dr, Dallas, TX 75218", url: "/760/White-Rock-Lake-Park", image: "REPLACE-WITH-PHOTO-URL-white-rock-lake-park.jpg" },
-        { name: "Hamilton Park", lat: 32.9013, lng: -96.7683, address: "12225 Willowdell Dr, Dallas, TX 75243", url: "/761/Hamilton-Park", image: "REPLACE-WITH-PHOTO-URL-hamilton-park.jpg" },
-        { name: "Fretz Park", lat: 32.9394, lng: -96.7994, address: "6994 Belt Line Rd, Dallas, TX 75254", url: "/762/Fretz-Park", image: "REPLACE-WITH-PHOTO-URL-fretz-park.jpg" },
-        { name: "Campbell Green Park", lat: 32.9884, lng: -96.8022, address: "16600 Hillcrest Rd, Dallas, TX 75248", url: "/763/Campbell-Green-Park", image: "REPLACE-WITH-PHOTO-URL-campbell-green-park.jpg" },
-        { name: "Marcus Park", lat: 32.8664, lng: -96.8697, address: "3000 Modella Ave, Dallas, TX 75229", url: "/764/Marcus-Park", image: "REPLACE-WITH-PHOTO-URL-marcus-park.jpg" },
-        { name: "Tietze Park", lat: 32.8078, lng: -96.7625, address: "2700 Skillman St, Dallas, TX 75214", url: "/765/Tietze-Park", image: "REPLACE-WITH-PHOTO-URL-tietze-park.jpg" },
-        { name: "Freedman’s Cemetery", lat: 32.8028, lng: -96.7961, address: "2521 N Central Expy, Dallas, TX 75204", url: "/766/Freedmans-Cemetery", image: "REPLACE-WITH-PHOTO-URL-freedmans-cemetery.jpg" },
-        { name: "Klyde Warren Park", lat: 32.7889, lng: -96.8025, address: "2012 Woodall Rodgers Fwy, Dallas, TX 75201", url: "/767/Klyde-Warren-Park", image: "REPLACE-WITH-PHOTO-URL-klyde-warren-park.jpg" },
+        { name: "Lake Cliff Park", lat: 32.757380, lng: -96.821577, address: "1200 N. Zang Blvd., Dallas, TX, 75203", url: "/737/Lake-Cliff-Park", image: "/ImageRepository/Document?documentID=20196" },
+        { name: "Samuell Grand Park", lat: 32.797365, lng: -96.741688, address: "6200 E Grand Ave, Dallas, TX 75223", url: "/745/Samuell-Grand-Park", image: "/ImageRepository/Document?documentID=20224" },
+        { name: "Reverchon Park", lat: 32.800884, lng: -96.815849, address: "3505 Maple Ave, Dallas, TX 75219", url: "/746/Reverchon-Park", image: "/ImageRepository/Document?documentID=20213" },
+        { name: "City Park", lat: 32.773611, lng: -96.787778, address: "1515 S. Harwood St., Dallas, TX 75215", url: "/747/City-Park", image: "/ImageRepository/Document?documentID=20093" },
+        { name: "Pike Park", lat: 32.7933, lng: -96.8097, address: "2807 Harry Hines Blvd, Dallas, TX 75201", url: "/748/Pike-Park", image: "/ImageRepository/Document?documentID=20210" },
+        { name: "Thurgood Marshall Park", lat: 32.683314, lng: -96.854784, address: "5150 Mark Trail Way, Dallas, TX 75232", url: "/749/Thurgood-Marshall-Park", image: "/ImageRepository/Document?documentID=20229" },
+        { name: "Dallas Zoo", lat: 32.740970, lng: -96.815320, address: "650 S. R.L. Thornton Fwy (I-35), Dallas, TX  75203", url: "/750/Dallas-Zoo", image: "/ImageRepository/Document?documentID=20263" },
+        { name: "Cedar Crest Golf Course", lat: 32.7219, lng: -96.7969, address: "1800 Southerland Ave, Dallas, TX 75203", url: "/751/Cedar-Crest-Golf-Course", image: "/ImageRepository/Document?documentID=20087" },
+        { name: "Eloise Lundy Park", lat: 32.75649, lng: -96.80609, address: "1200 Sabine St, Dallas, TX 75203", url: "/752/Eloise-Lundy-Park", image: "/ImageRepository/Document?documentID=20110" },
+        { name: "Crawford Park", lat: 32.7134, lng: -96.6697, address: "8700 Elam Rd, Dallas, TX 75217", url: "/753/Crawford-Park", image: "/ImageRepository/Document?documentID=20102" },
+        { name: "Bachman Lake Park", lat: 32.858386, lng: -96.86136, address: "3500 W Northwest Hwy, Dallas, TX 75220", url: "/754/Bachman-Lake-Park", image: "/ImageRepository/Document?documentID=20071" },
+        { name: "Hattie R. Moore Park", lat: 32.780586, lng: -96.838718, address: "3122 N Winnetka Ave, Dallas, TX 75212", url: "/755/Hattie-R-Moore-Park", image: "/ImageRepository/Document?documentID=20162" },
+        { name: "Fair Park", lat: 32.778218, lng: -96.759271, address: "3809 Grand Ave, Dallas, TX 75210", url: "/744/Fair-Park", image: "/ImageRepository/Document?documentID=20268" },
+        { name: "Juanita J. Craft Park", lat: 32.772907, lng: -96.740833, address: "4352 Spring Ave, Dallas, TX 75210", url: "/756/Juanita-J-Craft-Park", image: "/ImageRepository/Document?documentID=20166" },
+        { name: "Singing Hills Park", lat: 32.667424, lng: -96.789604, address: "6805 Patrol Way, Dallas, TX 75241", url: "/757/Singing-Hills-Park", image: "/ImageRepository/Document?documentID=20282" },
+        { name: "Kleberg Park", lat: 32.684369, lng: -96.602774, address: "1575 Edd Rd, Dallas, TX 75253", url: "/758/Kleberg-Park", image: "/ImageRepository/Document?documentID=20178" },
+        { name: "Miller Family Park", lat: 32.673504, lng: -96.775064, address: "2814 Persimmon Rd, Dallas, TX 75241", url: "/759/Miller-Family-Park", image: "/ImageRepository/Document?documentID=20206" },
+        { name: "White Rock Lake Park", lat: 32.853182, lng: -96.728888, address: "E Lawther Dr, Dallas, TX 75218", url: "/760/White-Rock-Lake-Park", image: "/ImageRepository/Document?documentID=20258" },
+        { name: "Hamilton Park", lat: 32.9171, lng: -96.7637, address: "12225 Willowdell Dr, Dallas, TX 75243", url: "/761/Hamilton-Park", image: "/ImageRepository/Document?documentID=20156" },
+        { name: "Fretz Park", lat: 32.9489, lng: -96.7818, address: "6994 Belt Line Rd, Dallas, TX 75254", url: "/762/Fretz-Park", image: "/ImageRepository/Document?documentID=20148" },
+        { name: "Campbell Green Park", lat: 32.9775, lng: -96.7872, address: "16600 Hillcrest Rd, Dallas, TX 75248", url: "/763/Campbell-Green-Park", image: "/ImageRepository/Document?documentID=20081" },
+        { name: "Marcus Park", lat: 32.90668, lng: -96.880304, address: "3000 Modella Ave, Dallas, TX 75229", url: "/764/Marcus-Park", image: "/ImageRepository/Document?documentID=20199" },
+        { name: "Tietze Park", lat: 32.8234, lng: -96.7608, address: "2700 Skillman St, Dallas, TX 75214", url: "/765/Tietze-Park", image: "/ImageRepository/Document?documentID=20234" },
+        { name: "Freedman’s Cemetery", lat: 32.803207, lng: -96.793853, address: "2521 N Central Expy, Dallas, TX 75204", url: "/766/Freedmans-Cemetery", image: "/ImageRepository/Document?documentID=20144" },
+        { name: "Klyde Warren Park", lat: 32.789364, lng: -96.801781, address: "2012 Woodall Rodgers Fwy, Dallas, TX 75201", url: "/767/Klyde-Warren-Park", image: "/ImageRepository/Document?documentID=20277" },
         { name: "Samuell East Farm", lat: 32.788811, lng: -96.587311, address: "100 US-80, Mesquite, TX 75149", url: "https://www.dallasparks.org/Facilities/Facility/Details/SamuellEastFarm-648", image: "" },
         { name: "Lewisville Lake", lat: 33.076594, lng: -97.006642, address: "600 Sandy Beach Road, Lewisville, TX 75057", url: "https://www.visitlewisville.com/things-to-do/lake-and-outdoors/lewisville-lake", image: "" }
       ];
