@@ -1,0 +1,58 @@
+<div class="tct-two-column-text" id="tct-two-column-text">
+  <style>
+    #tct-two-column-text { max-width: 1100px; margin: 0 auto; }
+    #tct-two-column-text .tct-main-heading {
+      margin-top: .167em;
+      margin-bottom: 0;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      color: #347743;
+      font-size: 1.3em;
+    }
+    #tct-two-column-text .tct-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 24px;
+    }
+    #tct-two-column-text .tct-heading {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      color: #a04439;
+      font-size: 1.1em;
+      text-decoration: none;
+    }
+    #tct-two-column-text .tct-body {
+      margin-top: 12px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #tct-two-column-text .tct-body p { margin: 0 0 16px; }
+    #tct-two-column-text .tct-body p:last-child { margin-bottom: 0; }
+    @media (max-width: 700px) {
+      #tct-two-column-text .tct-columns { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+
+  <h2 class="tct-main-heading">Section Heading</h2>
+  <div class="tct-columns">
+    <div class="tct-column">
+      <h2 class="tct-heading">Column One Heading</h2>
+      <div class="tct-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus risus, auctor a metus nec, faucibus blandit ex. Nullam laoreet lorem quam, vitae vulputate neque egestas in.</p>
+      </div>
+    </div>
+    <div class="tct-column">
+      <h2 class="tct-heading">Column Two Heading</h2>
+      <div class="tct-body">
+        <p>Integer dapibus tincidunt libero id lobortis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nunc ac placerat velit. Fusce pretium feugiat sagittis.</p>
+      </div>
+    </div>
+  </div>
+</div>
