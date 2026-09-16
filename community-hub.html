@@ -95,12 +95,38 @@
     #dch-community-hub .dch-storyprompt-embed iframe { max-width: 100%; }
 
     /* Video carousel */
+    #dch-community-hub .dch-carousel-wrap {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    #dch-community-hub .dch-carousel-soon-ribbon {
+      position: absolute;
+      top: -14px;
+      left: -8px;
+      z-index: 2;
+      background: #B7D854;
+      color: #0F3357;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+    }
     #dch-community-hub .dch-carousel {
       position: relative;
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 32px;
+      filter: grayscale(1);
+      opacity: 0.75;
+    }
+    #dch-community-hub .dch-carousel-arrow,
+    #dch-community-hub .dch-video-card {
+      pointer-events: none;
+      cursor: not-allowed;
     }
     #dch-community-hub .dch-carousel-track {
       display: flex;
@@ -351,7 +377,9 @@
 
   <h2 class="dch-hashtag">#MyDallasParksMemories</h2>
 
-  <div class="dch-carousel">
+  <div class="dch-carousel-wrap">
+    <span class="dch-carousel-soon-ribbon">Coming Soon</span>
+    <div class="dch-carousel">
     <button type="button" class="dch-carousel-arrow dch-carousel-prev" aria-label="Scroll videos left">
       <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
     </button>
@@ -392,8 +420,11 @@
     <button type="button" class="dch-carousel-arrow dch-carousel-next" aria-label="Scroll videos right">
       <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
+    </div>
   </div>
 
+  <!-- Photo gallery temporarily hidden; remove this wrapper (and its closing tag below) to restore -->
+  <div class="dch-hidden-temp" style="display:none;">
   <div class="dch-gallery-cta">
     <a href="/gallery.aspx?AID=15" class="dch-btn dch-btn-teal dch-gallery-cta-btn">View the Photo Gallery</a>
   </div>
@@ -565,6 +596,7 @@
         <label for="dch-photo-lightbox-1" class="dch-photo-lightbox-nav" aria-label="Next photo"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></label>
         <span class="dch-photo-lightbox-counter">20 of 20</span>
       </div>
+  </div>
   </div>
 
   <p class="dch-disclaimer">All submissions are subject to review and may be published at DPARD&rsquo;s sole discretion. Please do not submit content that is offensive, inappropriate, discriminatory, explicit, unlawful, or otherwise unsuitable for a public audience. DPARD reserves the right to edit, decline, remove, or refrain from publishing any submission.</p>
