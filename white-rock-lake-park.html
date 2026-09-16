@@ -98,6 +98,25 @@
     #dp150-park .dp150-ba-handle-grip svg { width: 18px; height: 18px; }
 
     /* Audio tour widget */
+    #dp150-park .dp150-audio-wrap {
+      position: relative;
+    }
+    #dp150-park .dp150-audio-soon-ribbon {
+      position: absolute;
+      top: -10px;
+      left: -6px;
+      z-index: 2;
+      background: #B7D854;
+      color: #0F3357;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+    }
     #dp150-park .dp150-audio {
       display: flex;
       gap: 16px;
@@ -105,6 +124,10 @@
       border-radius: 6px;
       padding: 16px;
       margin: 0 0 20px;
+      filter: grayscale(1);
+      opacity: 0.75;
+      pointer-events: none;
+      cursor: not-allowed;
     }
     #dp150-park .dp150-audio-cover {
       flex: none;
@@ -309,7 +332,9 @@
         <a class="dp150-info-btn" href="https://www.dallasparks.org/235/White-Rock-Lake">View Park Page</a>
       </div>
 
-      <div class="dp150-audio">
+      <div class="dp150-audio-wrap">
+        <span class="dp150-audio-soon-ribbon">Coming Soon</span>
+        <div class="dp150-audio">
         <div class="dp150-audio-cover">
           <img src="REPLACE-WITH-AUDIO-COVER-IMAGE-URL-white-rock-lake-park.jpg" alt="">
         </div>
@@ -346,6 +371,7 @@
           </div>
           <audio class="dp150-audio-el" id="dp150-audio-el" preload="metadata" src="REPLACE-WITH-AUDIO-TOUR-URL-white-rock-lake-park.mp3"></audio>
         </div>
+      </div>
       </div>
 
       <div class="dp150-historical-item">
