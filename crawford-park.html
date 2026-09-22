@@ -97,102 +97,31 @@
     }
     #dp150-park .dp150-ba-handle-grip svg { width: 18px; height: 18px; }
 
-    /* Audio tour widget */
-    #dp150-park .dp150-audio-wrap {
-      position: relative;
-    }
-    #dp150-park .dp150-audio-soon-ribbon {
-      position: absolute;
-      top: -10px;
-      left: -6px;
-      z-index: 2;
-      background: #B7D854;
-      color: #0F3357;
-      font-family: 'Open Sans', Arial, sans-serif;
-      font-weight: 800;
-      font-size: 11px;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
-    }
-    #dp150-park .dp150-audio {
-      display: flex;
-      gap: 16px;
+    /* Audio Library callout */
+    #dp150-park .dp150-audio-library {
       background: #F7EFDE;
       border-radius: 6px;
       padding: 16px;
       margin: 0 0 20px;
-      filter: grayscale(1);
-      opacity: 0.75;
-      pointer-events: none;
-      cursor: not-allowed;
     }
-    #dp150-park .dp150-audio-cover {
-      flex: none;
-      width: 110px;
-      height: 110px;
-      border-radius: 4px;
-      overflow: hidden;
-      background: #3AA5B9;
-    }
-    #dp150-park .dp150-audio-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    #dp150-park .dp150-audio-info { flex: 1; min-width: 0; }
-    #dp150-park .dp150-audio-title {
-      color: #0F3357;
-      font-weight: 700;
-      font-size: 1.15em;
-      margin: 0 0 2px;
-    }
-    #dp150-park .dp150-audio-subtitle {
+    #dp150-park .dp150-audio-library-text {
+      margin: 0 0 12px;
       color: #0F3357;
       font-size: 0.95em;
-      margin: 0 0 12px;
+      line-height: 1.5;
     }
-    #dp150-park .dp150-audio-times {
-      display: flex;
-      justify-content: space-between;
-      color: #999;
-      font-size: 0.8em;
-      margin: 0 0 4px;
+    #dp150-park .dp150-audio-library-btn {
+      display: block;
+      text-align: center;
+      padding: 10px;
+      background: #3AA5B9;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95em;
+      text-decoration: none;
     }
-    #dp150-park .dp150-audio-progress {
-      position: relative;
-      height: 6px;
-      border-radius: 3px;
-      background: #ccc;
-      cursor: pointer;
-    }
-    #dp150-park .dp150-audio-progress-fill {
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 0%;
-      background: #7BB31E;
-      border-radius: 3px;
-    }
-    #dp150-park .dp150-audio-controls {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 10px;
-    }
-    #dp150-park .dp150-audio-controls-end {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-    }
-    #dp150-park .dp150-audio-btn {
-      background: none;
-      border: none;
-      padding: 4px;
-      color: #0F3357;
-      cursor: pointer;
-    }
-    #dp150-park .dp150-audio-btn svg { width: 20px; height: 20px; }
-    #dp150-park .dp150-audio-playpause svg { width: 24px; height: 24px; }
-    #dp150-park .dp150-audio-btn-end svg { width: 17px; height: 17px; }
+    #dp150-park .dp150-audio-library-btn:hover { background: #2E8598; }
 
     /* Park info card */
     #dp150-park .dp150-info {
@@ -334,46 +263,9 @@
         <a class="dp150-info-btn" href="https://www.dallasparks.org/facilities/facility/details/crawfordmemorialpark-454">View Park Page</a>
       </div>
 
-      <div class="dp150-audio-wrap">
-        <span class="dp150-audio-soon-ribbon">Coming Soon</span>
-        <div class="dp150-audio">
-        <div class="dp150-audio-cover">
-          <img src="REPLACE-WITH-AUDIO-COVER-IMAGE-URL-crawford-park.jpg" alt="">
-        </div>
-        <div class="dp150-audio-info">
-          <div class="dp150-audio-title">Crawford Park</div>
-          <div class="dp150-audio-subtitle">Audio Tour</div>
-          <div class="dp150-audio-times">
-            <span class="dp150-audio-current">0:00</span>
-            <span class="dp150-audio-duration">0:00</span>
-          </div>
-          <div class="dp150-audio-progress" id="dp150-audio-progress" role="slider" tabindex="0" aria-label="Audio Tour progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div class="dp150-audio-progress-fill" id="dp150-audio-progress-fill"></div>
-          </div>
-          <div class="dp150-audio-controls">
-            <button type="button" class="dp150-audio-btn" data-action="back" aria-label="Rewind 10 seconds">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 6V2L5 8l6 6v-4c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H3c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg>
-            </button>
-            <button type="button" class="dp150-audio-btn dp150-audio-playpause" id="dp150-audio-playpause" data-action="playpause" aria-label="Play">
-              <svg class="dp150-audio-icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
-              <svg class="dp150-audio-icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"></path></svg>
-            </button>
-            <button type="button" class="dp150-audio-btn" data-action="forward" aria-label="Forward 10 seconds">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 6V2l6 6-6 6v-4c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"></path></svg>
-            </button>
-            <span class="dp150-audio-controls-end">
-              <button type="button" class="dp150-audio-btn dp150-audio-btn-end" id="dp150-audio-mute" data-action="mute" aria-label="Mute">
-                <svg class="dp150-audio-icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>
-                <svg class="dp150-audio-icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path><line x1="17" y1="9" x2="23" y2="15"></line><line x1="23" y1="9" x2="17" y2="15"></line></svg>
-              </button>
-              <button type="button" class="dp150-audio-btn dp150-audio-btn-end" id="dp150-audio-share" data-action="share" aria-label="Copy link to this audio tour">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-              </button>
-            </span>
-          </div>
-          <audio class="dp150-audio-el" id="dp150-audio-el" preload="metadata" src="REPLACE-WITH-AUDIO-TOUR-URL-crawford-park.mp3"></audio>
-        </div>
-      </div>
+      <div class="dp150-audio-library">
+        <p class="dp150-audio-library-text">This park&rsquo;s walking tour is coming soon. In the meantime, explore the full DPARD 150 Audio Library for tours of other featured parks.</p>
+        <a class="dp150-audio-library-btn" href="REPLACE-WITH-AUDIO-LIBRARY-URL">Explore the Audio Library</a>
       </div>
 
       <div class="dp150-historical-item">
@@ -436,95 +328,6 @@
         var current = parseFloat(slider.getAttribute("aria-valuenow")) || 50;
         if (e.key === "ArrowLeft") { setSliderPosition(current - 5); e.preventDefault(); }
         if (e.key === "ArrowRight") { setSliderPosition(current + 5); e.preventDefault(); }
-      });
-
-      // Audio Tour player
-      var audio = document.getElementById("dp150-audio-el");
-      var playBtn = document.getElementById("dp150-audio-playpause");
-      var iconPlay = playBtn.querySelector(".dp150-audio-icon-play");
-      var iconPause = playBtn.querySelector(".dp150-audio-icon-pause");
-      var progress = document.getElementById("dp150-audio-progress");
-      var progressFill = document.getElementById("dp150-audio-progress-fill");
-      var currentEl = document.querySelector("#dp150-park .dp150-audio-current");
-      var durationEl = document.querySelector("#dp150-park .dp150-audio-duration");
-
-      function formatTime(seconds) {
-        if (!isFinite(seconds) || isNaN(seconds)) { return "0:00"; }
-        var m = Math.floor(seconds / 60);
-        var s = Math.floor(seconds % 60);
-        return m + ":" + (s < 10 ? "0" : "") + s;
-      }
-
-      function updateProgressUI() {
-        var pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-        progressFill.style.width = pct + "%";
-        progress.setAttribute("aria-valuenow", Math.round(pct));
-        currentEl.textContent = formatTime(audio.currentTime);
-        durationEl.textContent = formatTime(audio.duration);
-      }
-
-      playBtn.addEventListener("click", function () {
-        if (audio.paused) {
-          var playPromise = audio.play();
-          if (playPromise && playPromise.catch) { playPromise.catch(function () {}); }
-        } else {
-          audio.pause();
-        }
-      });
-      audio.addEventListener("play", function () {
-        iconPlay.style.display = "none";
-        iconPause.style.display = "";
-        playBtn.setAttribute("aria-label", "Pause");
-      });
-      audio.addEventListener("pause", function () {
-        iconPlay.style.display = "";
-        iconPause.style.display = "none";
-        playBtn.setAttribute("aria-label", "Play");
-      });
-      audio.addEventListener("timeupdate", updateProgressUI);
-      audio.addEventListener("loadedmetadata", updateProgressUI);
-
-      document.querySelectorAll('.dp150-audio-btn[data-action="back"]').forEach(function (btn) {
-        btn.addEventListener("click", function () { audio.currentTime = Math.max(0, audio.currentTime - 10); });
-      });
-      document.querySelectorAll('.dp150-audio-btn[data-action="forward"]').forEach(function (btn) {
-        btn.addEventListener("click", function () { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10); });
-      });
-
-      function seekFromEvent(e) {
-        if (!audio.duration) { return; }
-        var rect = progress.getBoundingClientRect();
-        var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-        var pct = Math.max(0, Math.min(1, x / rect.width));
-        audio.currentTime = pct * audio.duration;
-      }
-      progress.addEventListener("click", seekFromEvent);
-      progress.addEventListener("keydown", function (e) {
-        if (!audio.duration) { return; }
-        if (e.key === "ArrowLeft") { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
-        if (e.key === "ArrowRight") { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
-      });
-
-      // Mute toggle
-      var muteBtn = document.getElementById("dp150-audio-mute");
-      var iconSoundOn = muteBtn.querySelector(".dp150-audio-icon-sound-on");
-      var iconSoundOff = muteBtn.querySelector(".dp150-audio-icon-sound-off");
-      muteBtn.addEventListener("click", function () {
-        audio.muted = !audio.muted;
-        iconSoundOn.style.display = audio.muted ? "none" : "";
-        iconSoundOff.style.display = audio.muted ? "" : "none";
-        muteBtn.setAttribute("aria-label", audio.muted ? "Unmute" : "Mute");
-      });
-
-      // Share (copy link)
-      var shareBtn = document.getElementById("dp150-audio-share");
-      shareBtn.addEventListener("click", function () {
-        if (!navigator.clipboard) { return; }
-        navigator.clipboard.writeText(window.location.href).then(function () {
-          var original = shareBtn.getAttribute("aria-label");
-          shareBtn.setAttribute("aria-label", "Link copied");
-          setTimeout(function () { shareBtn.setAttribute("aria-label", original); }, 2000);
-        }).catch(function () {});
       });
 
       // Historical image lightbox
