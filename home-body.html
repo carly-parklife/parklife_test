@@ -69,6 +69,21 @@
     #dhb-home-body .dhb-media-row .dhb-media-text { flex: 1; min-width: 0; }
     #dhb-home-body .dhb-media-row-reverse { flex-direction: row-reverse; }
 
+    /* Archivist message callout */
+    #dhb-home-body .dhb-callout {
+      background: #F7EFDE;
+      border-left: 6px solid #3AA5B9;
+      border-radius: 8px;
+      padding: 32px 40px;
+    }
+    #dhb-home-body .dhb-image-credit {
+      margin: 16px 0 0;
+      font-family: Arial, sans-serif;
+      font-style: italic;
+      font-size: 12px;
+      color: #666666;
+    }
+
     /* Section 3: stats grid */
     #dhb-home-body .dhb-stats {
       display: flex;
@@ -102,6 +117,7 @@
     @media (max-width: 500px) {
       #dhb-home-body .dhb-stats { gap: 24px 0; }
       #dhb-home-body .dhb-stat { flex-basis: 100%; }
+      #dhb-home-body .dhb-callout { padding: 24px; }
     }
   </style>
 
@@ -124,12 +140,15 @@
   </div>
 
   <div class="dhb-section">
-    <div class="dhb-media-row">
-      <img src="/ImageRepository/Document?documentID=20310" alt="John H. Slate, City Archivist" class="dhb-placeholder-img">
-      <div class="dhb-media-text">
-        <h2 class="dhb-heading">A Message From John H. Slate, City Archivist</h2>
-        <p>The Dallas Park and Recreation Department (DPARD) celebrates its sesquicentennial in 2026, commemorating the acquisition of the first public park in Dallas in 1876, City Park. In its 150-year history, DPARD has grown from humble origins to become one of the most respected and admired metropolitan park systems in the United States. It has won awards over many years for both its leadership and its 1,600+ dedicated, hard-working staff members. Like many things, DPARD is much more than the sum of its parts.</p>
+    <div class="dhb-callout">
+      <div class="dhb-media-row">
+        <img src="/ImageRepository/Document?documentID=20310" alt="John H. Slate, City Archivist" class="dhb-placeholder-img">
+        <div class="dhb-media-text">
+          <h2 class="dhb-heading">A Message From John H. Slate, City Archivist</h2>
+          <p>The Dallas Park and Recreation Department (DPARD) celebrates its sesquicentennial in 2026, commemorating the acquisition of the first public park in Dallas in 1876, City Park. In its 150-year history, DPARD has grown from humble origins to become one of the most respected and admired metropolitan park systems in the United States. It has won awards over many years for both its leadership and its 1,600+ dedicated, hard-working staff members. Like many things, DPARD is much more than the sum of its parts.</p>
+        </div>
       </div>
+      <p class="dhb-image-credit">Images, with exceptions, courtesy Dallas Municipal Archives</p>
     </div>
   </div>
 
