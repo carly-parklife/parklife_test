@@ -42,12 +42,26 @@
       line-height: 1.6;
     }
 
-    #dp150-park .dp150-park-nav {
+    #dp150-park .dp150-park-back-link {
+      display: inline-block;
+      color: #fff;
+      background: #3AA5B9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85em;
+      text-decoration: none;
+      margin: 0 0 20px;
+    }
+    #dp150-park .dp150-park-back-link:hover { background: #2E8598; text-decoration: none; }
+    #dp150-park .dp150-park-nav-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin: 0 0 20px;
+      margin: 24px 0 0;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
       flex-wrap: wrap;
     }
     #dp150-park .dp150-park-nav-link {
@@ -57,20 +71,8 @@
       text-decoration: none;
     }
     #dp150-park .dp150-park-nav-link:hover { text-decoration: underline; }
-    #dp150-park .dp150-park-nav-all {
-      color: #fff;
-      background: #3AA5B9;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.85em;
-      text-decoration: none;
-      text-align: center;
-      white-space: nowrap;
-    }
-    #dp150-park .dp150-park-nav-all:hover { background: #2E8598; text-decoration: none; }
     @media (max-width: 600px) {
-      #dp150-park .dp150-park-nav { justify-content: center; text-align: center; }
+      #dp150-park .dp150-park-nav-bottom { justify-content: center; text-align: center; }
       #dp150-park .dp150-park-nav-prev, #dp150-park .dp150-park-nav-next { flex: 1 1 100%; }
     }
 
@@ -90,32 +92,6 @@
       height: 100%;
       object-fit: cover;
     }
-
-    /* Audio Library callout */
-    #dp150-park .dp150-audio-library {
-      background: #F7EFDE;
-      border-radius: 6px;
-      padding: 16px;
-      margin: 0 0 20px;
-    }
-    #dp150-park .dp150-audio-library-text {
-      margin: 0 0 12px;
-      color: #0F3357;
-      font-size: 0.95em;
-      line-height: 1.5;
-    }
-    #dp150-park .dp150-audio-library-btn {
-      display: block;
-      text-align: center;
-      padding: 10px;
-      background: #3AA5B9;
-      border-radius: 4px;
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.95em;
-      text-decoration: none;
-    }
-    #dp150-park .dp150-audio-library-btn:hover { background: #2E8598; }
 
     /* Park info card */
     #dp150-park .dp150-info {
@@ -209,11 +185,7 @@
     #dp150-park .dp150-lightbox-close svg { width: 20px; height: 20px; }
   </style>
 
-  <nav class="dp150-park-nav" aria-label="Park page navigation">
-    <a class="dp150-park-nav-link dp150-park-nav-prev" href="/758/Kleberg-Park">&larr; Kleberg Park</a>
-    <a class="dp150-park-nav-link dp150-park-nav-all" href="/736/Featured-Locations">All Featured Locations</a>
-    <a class="dp150-park-nav-link dp150-park-nav-next" href="/737/Lake-Cliff-Park">Lake Cliff Park &rarr;</a>
-  </nav>
+  <a class="dp150-park-back-link" href="/736/Featured-Locations">&larr; Back to Featured Locations</a>
 
   <div class="dp150-featured-photo">
     <img src="/ImageRepository/Document?documentID=20277" alt="Klyde Warren Park">
@@ -256,11 +228,6 @@
         <a class="dp150-info-btn" href="https://www.dallasparks.org/244/Klyde-Warren">View Park Page</a>
       </div>
 
-      <div class="dp150-audio-library">
-        <p class="dp150-audio-library-text">This park&rsquo;s walking tour is coming soon. In the meantime, explore the full DPARD 150 Audio Library for tours of other featured parks.</p>
-        <a class="dp150-audio-library-btn" href="REPLACE-WITH-AUDIO-LIBRARY-URL">Explore the Audio Library</a>
-      </div>
-
       <div class="dp150-historical-item">
         <button type="button" class="dp150-historical-trigger" aria-label="View larger image">
           <img src="/ImageRepository/Document?documentID=20180" alt="Historical photo of Klyde Warren Park">
@@ -278,6 +245,11 @@
       </div>
     </div>
   </div>
+
+  <nav class="dp150-park-nav-bottom" aria-label="Park page navigation">
+    <a class="dp150-park-nav-link dp150-park-nav-prev" href="/758/Kleberg-Park">&larr; Kleberg Park</a>
+    <a class="dp150-park-nav-link dp150-park-nav-next" href="/737/Lake-Cliff-Park">Lake Cliff Park &rarr;</a>
+  </nav>
 
   <div class="dp150-lightbox" id="dp150-lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo">
     <button type="button" class="dp150-lightbox-close" id="dp150-lightbox-close" aria-label="Close">
