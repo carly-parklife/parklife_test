@@ -42,6 +42,38 @@
       line-height: 1.6;
     }
 
+    #dp150-park .dp150-park-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 20px;
+      flex-wrap: wrap;
+    }
+    #dp150-park .dp150-park-nav-link {
+      color: #0F3357;
+      font-weight: 600;
+      font-size: 0.9em;
+      text-decoration: none;
+    }
+    #dp150-park .dp150-park-nav-link:hover { text-decoration: underline; }
+    #dp150-park .dp150-park-nav-all {
+      color: #fff;
+      background: #3AA5B9;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85em;
+      text-decoration: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+    #dp150-park .dp150-park-nav-all:hover { background: #2E8598; text-decoration: none; }
+    @media (max-width: 600px) {
+      #dp150-park .dp150-park-nav { justify-content: center; text-align: center; }
+      #dp150-park .dp150-park-nav-prev, #dp150-park .dp150-park-nav-next { flex: 1 1 100%; }
+    }
+
     /* Before / after comparison slider */
     #dp150-park .dp150-ba-slider {
       position: relative;
@@ -214,6 +246,12 @@
     }
     #dp150-park .dp150-lightbox-close svg { width: 20px; height: 20px; }
   </style>
+
+  <nav class="dp150-park-nav" aria-label="Park page navigation">
+    <a class="dp150-park-nav-link dp150-park-nav-prev" href="/766/Freedmans-Cemetery">&larr; Freedman&rsquo;s Cemetery</a>
+    <a class="dp150-park-nav-link dp150-park-nav-all" href="REPLACE-WITH-FEATURED-LOCATIONS-URL">All Featured Locations</a>
+    <a class="dp150-park-nav-link dp150-park-nav-next" href="/761/Hamilton-Park">Hamilton Park &rarr;</a>
+  </nav>
 
   <div class="dp150-ba-slider" id="dp150-ba-slider" role="slider" tabindex="0" aria-label="Drag to compare a historical and present-day photo of Fretz Park" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
     <img class="dp150-ba-after" src="/ImageRepository/Document?documentID=20147" alt="Fretz Park today">
