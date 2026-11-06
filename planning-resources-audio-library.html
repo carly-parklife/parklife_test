@@ -24,37 +24,11 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 16px;
       margin: 32px 0 24px;
       padding-bottom: 16px;
       border-bottom: 1px solid #d9d9d9;
-    }
-    #dal-audio-library .dal-filters {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 6px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      color: #333333;
-    }
-    #dal-audio-library .dal-filters-label { color: #666666; margin-right: 4px; }
-    #dal-audio-library .dal-filter-btn {
-      background: none;
-      border: none;
-      padding: 4px 8px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      color: #0F3357;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-    #dal-audio-library .dal-filter-btn:hover { background: #F7EFDE; }
-    #dal-audio-library .dal-filter-btn[aria-pressed="true"] {
-      font-weight: bold;
-      color: #3AA5B9;
-      text-decoration: underline;
     }
     #dal-audio-library .dal-search-wrap {
       position: relative;
@@ -196,11 +170,6 @@
   </div>
 
   <div class="dal-toolbar">
-    <div class="dal-filters" role="group" aria-label="Sort audio tours">
-      <span class="dal-filters-label">Filter:</span>
-      <button type="button" class="dal-filter-btn" data-sort="az" aria-pressed="false">A-Z</button>
-      <button type="button" class="dal-filter-btn" data-sort="year" aria-pressed="false">Founding Year</button>
-    </div>
     <div class="dal-search-wrap">
       <svg class="dal-search-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <circle cx="11" cy="11" r="7"></circle>
@@ -391,11 +360,9 @@
     var root = document.getElementById('dal-audio-library');
     if (!root) return;
 
-    var grid = root.querySelector('#dal-grid');
     var emptyMsg = root.querySelector('#dal-empty');
     var tracks = Array.prototype.slice.call(root.querySelectorAll('.dal-track'));
     var searchInput = root.querySelector('#dal-search');
-    var sortBtns = Array.prototype.slice.call(root.querySelectorAll('.dal-filter-btn'));
 
     tracks.forEach(function (track) {
       var linkBtn = track.querySelector('.dal-link-btn');
@@ -483,24 +450,6 @@
         if (emptyMsg) emptyMsg.style.display = anyVisible ? 'none' : 'block';
       });
     }
-
-    sortBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var mode = btn.getAttribute('data-sort');
-        var sorted = tracks.slice();
-        if (mode === 'az') {
-          sorted.sort(function (a, b) {
-            return (a.getAttribute('data-title') || '').localeCompare(b.getAttribute('data-title') || '');
-          });
-        } else if (mode === 'year') {
-          sorted.sort(function (a, b) {
-            return (parseInt(a.getAttribute('data-year'), 10) || 0) - (parseInt(b.getAttribute('data-year'), 10) || 0);
-          });
-        }
-        sorted.forEach(function (t) { grid.insertBefore(t, emptyMsg); });
-        sortBtns.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-      });
-    });
   })();
   </script>
 </div>
