@@ -205,6 +205,24 @@
     #dp150-park .dp150-audio-btn svg { width: 20px; height: 20px; }
     #dp150-park .dp150-audio-playpause svg { width: 24px; height: 24px; }
     #dp150-park .dp150-audio-btn-end svg { width: 17px; height: 17px; }
+    #dp150-park .dp150-audio-share-wrap { position: relative; display: inline-flex; }
+    #dp150-park .dp150-audio-share-tooltip {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      margin-bottom: 8px;
+      background: #0F3357;
+      color: #fff;
+      font-size: 0.75em;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+    }
+    #dp150-park .dp150-audio-share-tooltip.dp150-audio-share-tooltip-visible { opacity: 1; }
 
     /* Park info card */
     #dp150-park .dp150-info {
@@ -398,9 +416,12 @@
                 <svg class="dp150-audio-icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path><path d="M16 8a5 5 0 0 1 0 8"></path><path d="M19 5a9 9 0 0 1 0 14"></path></svg>
                 <svg class="dp150-audio-icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path><line x1="17" y1="9" x2="23" y2="15"></line><line x1="23" y1="9" x2="17" y2="15"></line></svg>
               </button>
-              <button type="button" class="dp150-audio-btn dp150-audio-btn-end" id="dp150-audio-share" data-action="share" aria-label="Copy link to this audio tour">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-              </button>
+              <span class="dp150-audio-share-wrap">
+                <button type="button" class="dp150-audio-btn dp150-audio-btn-end" id="dp150-audio-share" data-action="share" aria-label="Copy link to this audio tour">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                </button>
+                <span class="dp150-audio-share-tooltip" id="dp150-audio-share-tooltip" role="status" aria-live="polite"></span>
+              </span>
             </span>
           </div>
           <iframe id="dp150-audio-sc-frame" title="White Rock Lake Park Audio Tour player" style="position:absolute; width:1px; height:1px; left:-9999px; opacity:0; pointer-events:none;" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fwhite-rock-lake-audio-guide&color=%233AA5B9&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
@@ -591,13 +612,43 @@
 
       // Share (copy link)
       var shareBtn = document.getElementById("dp150-audio-share");
+      var shareTooltip = document.getElementById("dp150-audio-share-tooltip");
+      var shareTooltipTimer = null;
+      function showShareTooltip(message) {
+        shareTooltip.textContent = message;
+        shareTooltip.classList.add("dp150-audio-share-tooltip-visible");
+        if (shareTooltipTimer) { clearTimeout(shareTooltipTimer); }
+        shareTooltipTimer = setTimeout(function () {
+          shareTooltip.classList.remove("dp150-audio-share-tooltip-visible");
+        }, 2000);
+      }
       shareBtn.addEventListener("click", function () {
-        if (!navigator.clipboard) { return; }
-        navigator.clipboard.writeText(window.location.href).then(function () {
-          var original = shareBtn.getAttribute("aria-label");
+        var original = shareBtn.getAttribute("aria-label");
+        function onCopied() {
           shareBtn.setAttribute("aria-label", "Link copied");
+          showShareTooltip("Link copied!");
           setTimeout(function () { shareBtn.setAttribute("aria-label", original); }, 2000);
-        }).catch(function () {});
+        }
+        function onFailed() {
+          showShareTooltip("Couldn\u2019t copy link");
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(window.location.href).then(onCopied).catch(onFailed);
+        } else {
+          try {
+            var tempInput = document.createElement("textarea");
+            tempInput.value = window.location.href;
+            tempInput.style.position = "fixed";
+            tempInput.style.opacity = "0";
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            var succeeded = document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            if (succeeded) { onCopied(); } else { onFailed(); }
+          } catch (err) {
+            onFailed();
+          }
+        }
       });
 
       // Historical image lightbox
