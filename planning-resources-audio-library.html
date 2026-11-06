@@ -1,0 +1,486 @@
+<div class="dal-audio-library" id="dal-audio-library">
+  <style>
+    #dal-audio-library { max-width: 1100px; margin: 0 auto; }
+    #dal-audio-library * , #dal-audio-library *::before, #dal-audio-library *::after { box-sizing: border-box; }
+    #dal-audio-library .dal-title {
+      margin-top: .167em;
+      margin-bottom: 16px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-style: normal;
+      font-weight: 700;
+      color: #3AA5B9;
+      font-size: 1.5em;
+    }
+    #dal-audio-library .dal-intro p {
+      margin: 0 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 24px;
+      color: #333333;
+    }
+    #dal-audio-library .dal-intro p:last-child { margin-bottom: 0; }
+
+    #dal-audio-library .dal-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      margin: 32px 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #d9d9d9;
+    }
+    #dal-audio-library .dal-search-wrap {
+      position: relative;
+      flex: 0 0 auto;
+    }
+    #dal-audio-library .dal-search-input {
+      width: 220px;
+      max-width: 100%;
+      padding: 8px 12px 8px 36px;
+      border: 1px solid #999999;
+      border-radius: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333333;
+    }
+    #dal-audio-library .dal-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: #666666;
+      pointer-events: none;
+    }
+
+    #dal-audio-library .dal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    #dal-audio-library .dal-empty {
+      display: none;
+      grid-column: 1 / -1;
+      padding: 24px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #666666;
+    }
+    #dal-audio-library .dal-track {
+      position: relative;
+      background: #F7EFDE;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #dal-audio-library .dal-track[hidden] { display: none; }
+    #dal-audio-library .dal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    #dal-audio-library .dal-thumb {
+      flex: 0 0 56px;
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #d9d9d9;
+    }
+    #dal-audio-library .dal-info { min-width: 0; }
+    #dal-audio-library .dal-track-title {
+      margin: 0 0 4px;
+      font-family: 'Open Sans', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #0F3357;
+    }
+    #dal-audio-library .dal-track-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      color: #666666;
+    }
+    #dal-audio-library .dal-track-meta .dal-icon { width: 14px; height: 14px; flex: none; }
+    #dal-audio-library .dal-track-desc {
+      margin: 8px 0 0;
+      font-family: Arial, sans-serif;
+      font-size: 13px;
+      line-height: 19px;
+      color: #333333;
+    }
+    #dal-audio-library .dal-link-btn {
+      background: none;
+      border: none;
+      padding: 2px;
+      margin: 0 0 0 2px;
+      cursor: pointer;
+      color: #666666;
+      display: inline-flex;
+    }
+    #dal-audio-library .dal-link-btn .dal-icon { width: 14px; height: 14px; }
+    #dal-audio-library .dal-link-btn:hover { color: #0F3357; }
+    #dal-audio-library .dal-embed { line-height: 0; }
+    #dal-audio-library .dal-embed iframe { display: block; border-radius: 4px; }
+
+    #dal-audio-library .dal-share-menu {
+      position: fixed;
+      z-index: 9999;
+      background: #ffffff;
+      border: 1px solid #d9d9d9;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      padding: 6px;
+      min-width: 190px;
+      font-family: Arial, sans-serif;
+    }
+    #dal-audio-library .dal-share-menu[hidden] { display: none; }
+    #dal-audio-library .dal-share-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 8px 10px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #0F3357;
+      text-align: left;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+    #dal-audio-library .dal-share-menu-item:hover { background: #F7EFDE; }
+    #dal-audio-library .dal-share-menu-item .dal-icon { width: 16px; height: 16px; flex: none; color: #3AA5B9; }
+    #dal-audio-library .dal-share-menu-title {
+      padding: 6px 10px 4px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #999999;
+    }
+
+    @media (max-width: 700px) {
+      #dal-audio-library .dal-grid { grid-template-columns: 1fr; }
+      #dal-audio-library .dal-toolbar { flex-direction: column; align-items: stretch; }
+      #dal-audio-library .dal-search-input { width: 100%; }
+    }
+  </style>
+
+  <h1 class="dal-title">Explore the Stories Behind DPARD&rsquo;s Key People, Places, and Eras</h1>
+  <div class="dal-intro">
+    <p>Step into 150 years of history with the DPARD 150 Audio Library. Browse our collection of free audio walking tours designed to guide you through featured parks while sharing the stories of the people, places, and moments that helped shape our community.</p>
+    <p>Listen as you explore in person or enjoy the tours from wherever you are. Choose a tour, press play, and experience DPARD&rsquo;s parks from a new perspective&mdash;one story, one stop, and one step at a time.</p>
+  </div>
+
+  <div class="dal-toolbar">
+    <div class="dal-search-wrap">
+      <svg class="dal-search-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="dal-search-input" id="dal-search" placeholder="Search..." aria-label="Search audio tours">
+    </div>
+  </div>
+
+  <div class="dal-grid" id="dal-grid">
+    <div class="dal-track" id="dal-track-1" data-title="White Rock Lake Audio Guide" data-year="1911" data-url="https://soundcloud.com/dpard150-parklife/white-rock-lake-audio-guide">
+      <div class="dal-header">
+        <img class="dal-thumb" src="/ImageRepository/Document?documentID=20439" alt="" loading="lazy">
+        <div class="dal-info">
+        <h3 class="dal-track-title">White Rock Lake Audio Guide</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn dal-share-btn" data-copy-target="dal-track-1" aria-label="Share this audio tour">
+            <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </div>
+        <p class="dal-track-desc">An audio history of White Rock Lake Park, from its creation in 1910 to the CCC, WWII, prairie restoration, and the bald eagles nesting there today. Best enjoyed on the trail.</p>
+      <div class="dal-embed">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" title="White Rock Lake Audio Guide on SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fwhite-rock-lake-audio-guide&amp;color=%233AA5B9&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false"></iframe>
+      </div>
+    </div>
+    <div class="dal-track" id="dal-track-2" data-title="The History of Pike Park Audio Guide" data-year="1913" data-url="https://soundcloud.com/dpard150-parklife/history-of-pike-park-audio-guide">
+      <div class="dal-header">
+        <img class="dal-thumb" src="/ImageRepository/Document?documentID=20438" alt="" loading="lazy">
+        <div class="dal-info">
+        <h3 class="dal-track-title">The History of Pike Park Audio Guide</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn dal-share-btn" data-copy-target="dal-track-2" aria-label="Share this audio tour">
+            <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </div>
+        <p class="dal-track-desc">An audio history of Pike Park, from Goose Valley and Little Mexico to the Dallas landmark and community gathering place it is today.</p>
+      <div class="dal-embed">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" title="The History of Pike Park Audio Guide on SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fhistory-of-pike-park-audio-guide&amp;color=%233AA5B9&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false"></iframe>
+      </div>
+    </div>
+    <div class="dal-track" id="dal-track-3" data-title="Freedman’s Memorial Cemetery Audio Guide" data-year="1869" data-url="https://soundcloud.com/dpard150-parklife/freedmans-memorial-cemetery-audio-guide">
+      <div class="dal-header">
+        <img class="dal-thumb" src="/ImageRepository/Document?documentID=20435" alt="" loading="lazy">
+        <div class="dal-info">
+        <h3 class="dal-track-title">Freedman’s Memorial Cemetery Audio Guide</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn dal-share-btn" data-copy-target="dal-track-3" aria-label="Share this audio tour">
+            <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </div>
+        <p class="dal-track-desc">An audio guide to Freedman’s Memorial Cemetery, the earliest burial ground for Dallas’s African American community, established in 1869.</p>
+      <div class="dal-embed">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" title="Freedman’s Memorial Cemetery Audio Guide on SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Ffreedmans-memorial-cemetery-audio-guide&amp;color=%233AA5B9&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false"></iframe>
+      </div>
+    </div>
+    <div class="dal-track" id="dal-track-4" data-title="Intro to Early Parks Audio Guide" data-year="1876" data-url="https://soundcloud.com/dpard150-parklife/intro-to-early-parks-audio-guide">
+      <div class="dal-header">
+        <img class="dal-thumb" src="/ImageRepository/Document?documentID=20436" alt="" loading="lazy">
+        <div class="dal-info">
+        <h3 class="dal-track-title">Intro to Early Parks Audio Guide</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn dal-share-btn" data-copy-target="dal-track-4" aria-label="Share this audio tour">
+            <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </div>
+        <p class="dal-track-desc">The first half of the audio edition of Images of America: Historic Dallas Parks by John H. Slate and the Dallas Municipal Archives. Hear how Dallas built its early park system, from City Park and Fair Park to neighborhood play parks, pools, and golf courses.</p>
+      <div class="dal-embed">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" title="Intro to Early Parks Audio Guide on SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fintro-to-early-parks-audio-guide&amp;color=%233AA5B9&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false"></iframe>
+      </div>
+    </div>
+    <div class="dal-track" id="dal-track-5" data-title="Dealey Plaza Audio Guide" data-year="1841" data-url="https://soundcloud.com/dpard150-parklife/dealey-plaza-audio-guide">
+      <div class="dal-header">
+        <img class="dal-thumb" src="/ImageRepository/Document?documentID=20434" alt="" loading="lazy">
+        <div class="dal-info">
+        <h3 class="dal-track-title">Dealey Plaza Audio Guide</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn dal-share-btn" data-copy-target="dal-track-5" aria-label="Share this audio tour">
+            <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </div>
+        <p class="dal-track-desc">An audio guide to Dealey Plaza, from John Neely Bryan’s cabin and the Triple Underpass to the assassination of President Kennedy and the plaza’s restoration.</p>
+      <div class="dal-embed">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" title="Dealey Plaza Audio Guide on SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fdealey-plaza-audio-guide&amp;color=%233AA5B9&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false"></iframe>
+      </div>
+    </div>
+    <div class="dal-track" id="dal-track-6" data-title="Intro to Dallas Parks in the Mid-Twentieth Century to Now Audio Guide" data-year="1933" data-url="https://soundcloud.com/dpard150-parklife/intro-to-dallas-parks-mid-twentieth-century-to-now-audio-guide">
+      <div class="dal-header">
+        <img class="dal-thumb" src="/ImageRepository/Document?documentID=20437" alt="" loading="lazy">
+        <div class="dal-info">
+        <h3 class="dal-track-title">Intro to Dallas Parks in the Mid-Twentieth Century to Now Audio Guide</h3>
+        <div class="dal-track-meta">
+          <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"></path>
+            <path d="M16 8a5 5 0 0 1 0 8"></path>
+            <path d="M19 5a9 9 0 0 1 0 14"></path>
+          </svg>
+          <span>Audio Tour</span>
+          <button type="button" class="dal-link-btn dal-share-btn" data-copy-target="dal-track-6" aria-label="Share this audio tour">
+            <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </button>
+        </div>
+        </div>
+      </div>
+        <p class="dal-track-desc">The second half of the audio edition of Historic Dallas Parks. From the New Deal and the postwar boom to the people behind park names like Samuell, Craft, Martinez, and Reverchon.</p>
+      <div class="dal-embed">
+        <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" title="Intro to Dallas Parks in the Mid-Twentieth Century to Now Audio Guide on SoundCloud" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fintro-to-dallas-parks-mid-twentieth-century-to-now-audio-guide&amp;color=%233AA5B9&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=false&amp;visual=false"></iframe>
+      </div>
+    </div>
+
+    <div class="dal-empty" id="dal-empty">No audio tours match your search.</div>
+  </div>
+
+  <div class="dal-share-menu" id="dal-share-menu" hidden="">
+    <div class="dal-share-menu-title" id="dal-share-menu-title">Share</div>
+    <button type="button" class="dal-share-menu-item" data-action="copy">
+      <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+      </svg>
+      <span class="dal-share-menu-item-label" data-copy-label="">Copy Link</span>
+    </button>
+    <a class="dal-share-menu-item" data-action="app" href="REPLACE-WITH-YOUR-DPARD150-APP-LINK">
+      <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="6" y="2" width="12" height="20" rx="2"></rect>
+        <line x1="11" y1="18" x2="13" y2="18"></line>
+      </svg>
+      <span>Open in DPARD150 App</span>
+    </a>
+    <a class="dal-share-menu-item" data-action="facebook" href="#" target="_blank" rel="noopener noreferrer">
+      <svg class="dal-icon" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94z"></path></svg>
+      <span>Share on Facebook</span>
+    </a>
+    <a class="dal-share-menu-item" data-action="twitter" href="#" target="_blank" rel="noopener noreferrer">
+      <svg class="dal-icon" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.24 2.75h3.06l-6.69 7.65 7.87 10.85h-6.16l-4.83-6.32-5.52 6.32H2.9l7.16-8.19L2.5 2.75h6.32l4.37 5.78 5.05-5.78zm-1.07 16.66h1.7L7.9 4.5H6.08l11.09 14.91z"></path></svg>
+      <span>Share on X</span>
+    </a>
+    <a class="dal-share-menu-item" data-action="email" href="#">
+      <svg class="dal-icon" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+        <path d="m22 6-10 7L2 6"></path>
+      </svg>
+      <span>Share via Email</span>
+    </a>
+  </div>
+
+  <script>
+  (function () {
+    var root = document.getElementById('dal-audio-library');
+    if (!root) return;
+
+    var emptyMsg = root.querySelector('#dal-empty');
+    var tracks = Array.prototype.slice.call(root.querySelectorAll('.dal-track'));
+    var searchInput = root.querySelector('#dal-search');
+
+    tracks.forEach(function (track) {
+      var linkBtn = track.querySelector('.dal-link-btn');
+      if (linkBtn) {
+        linkBtn.addEventListener('click', function () {
+          var title = track.getAttribute('data-title') || 'Audio Tour';
+          var url = track.getAttribute('data-url') || window.location.href;
+          if (navigator.share) {
+            navigator.share({ title: title, url: url }).catch(function () { /* user cancelled */ });
+          } else {
+            openShareMenu(linkBtn, title, url);
+          }
+        });
+      }
+    });
+
+    var shareMenu = root.querySelector('#dal-share-menu');
+    var shareMenuTitle = root.querySelector('#dal-share-menu-title');
+    var copyLabel = shareMenu ? shareMenu.querySelector('[data-copy-label]') : null;
+    var copyBtn = shareMenu ? shareMenu.querySelector('[data-action="copy"]') : null;
+    var fbLink = shareMenu ? shareMenu.querySelector('[data-action="facebook"]') : null;
+    var twitterLink = shareMenu ? shareMenu.querySelector('[data-action="twitter"]') : null;
+    var emailLink = shareMenu ? shareMenu.querySelector('[data-action="email"]') : null;
+    var shareMenuOpenerBtn = null;
+
+    function closeShareMenu() {
+      if (!shareMenu) return;
+      shareMenu.setAttribute('hidden', '');
+      shareMenuOpenerBtn = null;
+    }
+
+    function openShareMenu(triggerBtn, title, url) {
+      if (!shareMenu) return;
+      shareMenuTitle.textContent = 'Share “' + title + '”';
+      if (copyLabel) copyLabel.textContent = 'Copy Link';
+      if (fbLink) fbLink.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url);
+      if (twitterLink) twitterLink.href = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(title);
+      if (emailLink) emailLink.href = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(url);
+      if (copyBtn) {
+        copyBtn.onclick = function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () {
+              if (copyLabel) copyLabel.textContent = 'Copied!';
+            }).catch(function () {});
+          }
+          window.setTimeout(closeShareMenu, 900);
+        };
+      }
+
+      shareMenu.removeAttribute('hidden');
+      var btnRect = triggerBtn.getBoundingClientRect();
+      var menuRect = shareMenu.getBoundingClientRect();
+      var left = btnRect.left;
+      if (left + menuRect.width > window.innerWidth - 8) {
+        left = window.innerWidth - menuRect.width - 8;
+      }
+      var top = btnRect.bottom + 6;
+      if (top + menuRect.height > window.innerHeight - 8) {
+        top = btnRect.top - menuRect.height - 6;
+      }
+      shareMenu.style.left = Math.max(8, left) + 'px';
+      shareMenu.style.top = Math.max(8, top) + 'px';
+      shareMenuOpenerBtn = triggerBtn;
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!shareMenu || shareMenu.hasAttribute('hidden')) return;
+      if (shareMenu.contains(e.target) || e.target === shareMenuOpenerBtn || (shareMenuOpenerBtn && shareMenuOpenerBtn.contains(e.target))) return;
+      closeShareMenu();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeShareMenu();
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function () {
+        var query = searchInput.value.trim().toLowerCase();
+        var anyVisible = false;
+        tracks.forEach(function (t) {
+          var title = (t.getAttribute('data-title') || '').toLowerCase();
+          var match = query === '' || title.indexOf(query) !== -1;
+          if (match) { t.removeAttribute('hidden'); anyVisible = true; }
+          else { t.setAttribute('hidden', ''); }
+        });
+        if (emptyMsg) emptyMsg.style.display = anyVisible ? 'none' : 'block';
+      });
+    }
+  })();
+  </script>
+</div>

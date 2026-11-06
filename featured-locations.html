@@ -1,0 +1,428 @@
+<div class="dp150-featured" id="dp150-featured">
+  <style>
+    #dp150-featured { max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+    #dp150-featured *, #dp150-featured *::before, #dp150-featured *::after { box-sizing: inherit; }
+
+    #dp150-featured .dp150-featured-intro {
+      margin: 0 0 24px;
+      line-height: 1.6;
+    }
+
+    #dp150-featured .dp150-featured-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 20px;
+    }
+    #dp150-featured .dp150-featured-filter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #666;
+      font-size: 0.95em;
+    }
+    #dp150-featured .dp150-featured-az-btn {
+      border: 1px solid #999;
+      background: #fff;
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #2B6892;
+      cursor: pointer;
+    }
+    #dp150-featured .dp150-featured-az-btn:hover { background: #eef5f9; }
+    #dp150-featured .dp150-featured-az-btn[aria-pressed="true"] { background: #2B6892; color: #fff; border-color: #2B6892; }
+
+    #dp150-featured .dp150-featured-search {
+      position: relative;
+      flex: 0 1 280px;
+    }
+    #dp150-featured .dp150-featured-search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: #999;
+      pointer-events: none;
+    }
+    #dp150-featured .dp150-featured-search-input {
+      width: 100%;
+      padding: 8px 14px 8px 34px;
+      border: 1px solid #999;
+      border-radius: 20px;
+      font-size: 0.95em;
+    }
+    #dp150-featured .dp150-featured-search-input:focus {
+      outline: 2px solid #2B6892;
+      outline-offset: 1px;
+    }
+
+    #dp150-featured .dp150-featured-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+    #dp150-featured .dp150-featured-card {
+      display: block;
+      border: 2px solid #49A5D4;
+      border-radius: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      background: #F7EFDE;
+    }
+    #dp150-featured .dp150-featured-card[hidden] { display: none; }
+    #dp150-featured .dp150-featured-card-media {
+      position: relative;
+      height: 140px;
+    }
+    #dp150-featured .dp150-featured-card-media img.dp150-featured-photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #dp150-featured .dp150-featured-coin {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    }
+    #dp150-featured .dp150-featured-card-body {
+      padding: 16px 12px 20px;
+      text-align: center;
+    }
+    #dp150-featured .dp150-featured-card-title {
+      color: #0F3357;
+      font-family: 'Open Sans';
+      font-weight: 700;
+      font-size: 1.05em;
+      line-height: 1.3;
+      margin: 0 0 10px;
+    }
+    #dp150-featured .dp150-featured-card-link {
+      display: inline-block;
+      color: #0F3357;
+      font-size: 0.9em;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+    #dp150-featured .dp150-featured-no-results {
+      text-align: center;
+      color: #666;
+      padding: 40px 0;
+      margin: 0;
+    }
+
+    @media (max-width: 1000px) {
+      #dp150-featured .dp150-featured-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      #dp150-featured .dp150-featured-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      #dp150-featured .dp150-featured-controls { flex-direction: column; align-items: stretch; }
+      #dp150-featured .dp150-featured-search { flex: none; }
+    }
+    @media (max-width: 380px) {
+      #dp150-featured .dp150-featured-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <p class="dp150-featured-intro">Discover a selection of remarkable locations across the DPARD system, each with a unique connection to the history of Dallas and its parks. While countless other places have shaped DPARD&rsquo;s legacy, these featured locations were carefully selected for the stories they tell, the history they represent, and the lasting contributions of the people for whom many of them are named.</p>
+
+  <div class="dp150-featured-controls">
+    <div class="dp150-featured-filter">
+      <span>Filter:</span>
+      <button type="button" class="dp150-featured-az-btn" id="dp150-featured-az-btn" aria-pressed="false">A-Z</button>
+    </div>
+    <div class="dp150-featured-search">
+      <svg class="dp150-featured-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" class="dp150-featured-search-input" id="dp150-featured-search-input" placeholder="Search" aria-label="Search featured locations">
+    </div>
+  </div>
+
+  <div class="dp150-featured-grid" id="dp150-featured-grid">
+    <a class="dp150-featured-card" data-name="Lake Cliff Park" href="REPLACE-WITH-URL-lake-cliff-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20196" alt="Lake Cliff Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20196" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Lake Cliff Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Samuell Grand Park" href="REPLACE-WITH-URL-samuell-grand-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20224" alt="Samuell Grand Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Samuell Grand Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Reverchon Park" href="REPLACE-WITH-URL-reverchon-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20213" alt="Reverchon Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20213" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Reverchon Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="City Park" href="REPLACE-WITH-URL-city-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20093" alt="City Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20093" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">City Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Pike Park" href="REPLACE-WITH-URL-pike-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20210" alt="Pike Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Pike Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Thurgood Marshall Park" href="REPLACE-WITH-URL-thurgood-marshall-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20229" alt="Thurgood Marshall Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Thurgood Marshall Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Dallas Zoo" href="REPLACE-WITH-URL-dallas-zoo">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20263" alt="Dallas Zoo">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Dallas Zoo</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Cedar Crest Golf Course" href="REPLACE-WITH-URL-cedar-crest-golf-course">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20087" alt="Cedar Crest Golf Course">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Cedar Crest Golf Course</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Eloise Lundy Park" href="REPLACE-WITH-URL-eloise-lundy-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20110" alt="Eloise Lundy Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Eloise Lundy Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Crawford Park" href="REPLACE-WITH-URL-crawford-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20102" alt="Crawford Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Crawford Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Bachman Lake Park" href="REPLACE-WITH-URL-bachman-lake-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20071" alt="Bachman Lake Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Bachman Lake Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Hattie R. Moore Park" href="REPLACE-WITH-URL-hattie-r-moore-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20162" alt="Hattie R. Moore Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20162" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Hattie R. Moore Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Fair Park" href="REPLACE-WITH-URL-fair-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20268" alt="Fair Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20268" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Fair Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Juanita J. Craft Park" href="REPLACE-WITH-URL-juanita-j-craft-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20166" alt="Juanita J. Craft Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Juanita J. Craft Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Singing Hills Park" href="REPLACE-WITH-URL-singing-hills-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20282" alt="Singing Hills Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Singing Hills Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Kleberg Park" href="REPLACE-WITH-URL-kleberg-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20178" alt="Kleberg Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Kleberg Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Miller Family Park" href="REPLACE-WITH-URL-miller-family-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20206" alt="Miller Family Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Miller Family Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="White Rock Lake Park" href="REPLACE-WITH-URL-white-rock-lake-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20258" alt="White Rock Lake Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20258" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">White Rock Lake Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Hamilton Park" href="REPLACE-WITH-URL-hamilton-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20156" alt="Hamilton Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Hamilton Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Fretz Park" href="REPLACE-WITH-URL-fretz-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20148" alt="Fretz Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Fretz Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Campbell Green Park" href="REPLACE-WITH-URL-campbell-green-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20081" alt="Campbell Green Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Campbell Green Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Marcus Park" href="REPLACE-WITH-URL-marcus-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20199" alt="Marcus Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Marcus Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Tietze Park" href="REPLACE-WITH-URL-tietze-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20234" alt="Tietze Park">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Tietze Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Freedman's Cemetery" href="REPLACE-WITH-URL-freedmans-cemetery">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20144" alt="Freedman&rsquo;s Cemetery">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Freedman&rsquo;s Cemetery</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+    <a class="dp150-featured-card" data-name="Klyde Warren Park" href="REPLACE-WITH-URL-klyde-warren-park">
+      <div class="dp150-featured-card-media">
+        <img class="dp150-featured-photo" src="/ImageRepository/Document?documentID=20277" alt="Klyde Warren Park">
+        <img class="dp150-featured-coin" src="/ImageRepository/Document?documentID=20277" alt="">
+      </div>
+      <div class="dp150-featured-card-body">
+        <div class="dp150-featured-card-title">Klyde Warren Park</div>
+        <span class="dp150-featured-card-link">Learn More</span>
+      </div>
+    </a>
+  </div>
+
+  <p class="dp150-featured-no-results" id="dp150-featured-no-results" hidden>No locations match your search.</p>
+
+  <script>
+    (function () {
+      var grid = document.getElementById("dp150-featured-grid");
+      var searchInput = document.getElementById("dp150-featured-search-input");
+      var noResults = document.getElementById("dp150-featured-no-results");
+      var azBtn = document.getElementById("dp150-featured-az-btn");
+      var sortAscending = true;
+
+      searchInput.addEventListener("input", function () {
+        var q = searchInput.value.trim().toLowerCase();
+        var cards = grid.querySelectorAll(".dp150-featured-card");
+        var anyVisible = false;
+        cards.forEach(function (card) {
+          var match = q === "" || card.dataset.name.toLowerCase().indexOf(q) !== -1;
+          card.hidden = !match;
+          if (match) { anyVisible = true; }
+        });
+        noResults.hidden = anyVisible;
+      });
+
+      azBtn.addEventListener("click", function () {
+        var cards = Array.prototype.slice.call(grid.querySelectorAll(".dp150-featured-card"));
+        cards.sort(function (a, b) {
+          var an = a.dataset.name.toLowerCase();
+          var bn = b.dataset.name.toLowerCase();
+          if (an < bn) { return sortAscending ? -1 : 1; }
+          if (an > bn) { return sortAscending ? 1 : -1; }
+          return 0;
+        });
+        cards.forEach(function (card) { grid.appendChild(card); });
+        azBtn.textContent = sortAscending ? "Z-A" : "A-Z";
+        azBtn.setAttribute("aria-pressed", "true");
+        sortAscending = !sortAscending;
+      });
+    })();
+  </script>
+</div>
