@@ -132,36 +132,14 @@
     #dp150-park .dp150-ba-handle-grip svg { width: 18px; height: 18px; }
 
     /* Audio tour widget */
-    #dp150-park .dp150-audio-wrap {
-      position: relative;
-    }
-    #dp150-park .dp150-audio-soon-ribbon {
-      position: absolute;
-      top: -10px;
-      left: -6px;
-      z-index: 2;
-      background: #B7D854;
-      color: #0F3357;
-      font-family: 'Open Sans', Arial, sans-serif;
-      font-weight: 800;
-      font-size: 11px;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 0 4px 4px 0;
-      box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
-    }
     #dp150-park .dp150-audio {
+      position: relative;
       display: flex;
       gap: 16px;
       background: #F7EFDE;
       border-radius: 6px;
       padding: 16px;
       margin: 0 0 20px;
-      filter: grayscale(1);
-      opacity: 0.75;
-      pointer-events: none;
-      cursor: not-allowed;
     }
     #dp150-park .dp150-audio-cover {
       flex: none;
@@ -390,9 +368,7 @@
         <img src="/ImageRepository/Document?documentID=20417" alt="White Rock Lake Park commemorative coin">
       </div>
 
-      <div class="dp150-audio-wrap">
-        <span class="dp150-audio-soon-ribbon">Coming Soon</span>
-        <div class="dp150-audio">
+      <div class="dp150-audio">
         <div class="dp150-audio-cover">
           <img src="REPLACE-WITH-AUDIO-COVER-IMAGE-URL-white-rock-lake-park.jpg" alt="">
         </div>
@@ -427,9 +403,8 @@
               </button>
             </span>
           </div>
-          <audio class="dp150-audio-el" id="dp150-audio-el" preload="metadata" src="REPLACE-WITH-AUDIO-TOUR-URL-white-rock-lake-park.mp3"></audio>
+          <iframe id="dp150-audio-sc-frame" title="White Rock Lake Park Audio Tour player" style="position:absolute; width:1px; height:1px; left:-9999px; opacity:0; pointer-events:none;" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fsoundcloud.com%2Fdpard150-parklife%2Fwhite-rock-lake-audio-guide&color=%233AA5B9&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"></iframe>
         </div>
-      </div>
       </div>
 
       <div class="dp150-historical-item">
@@ -477,6 +452,7 @@
     <img id="dp150-lightbox-img" src="" alt="">
   </div>
 
+  <script src="https://w.soundcloud.com/player/api.js"></script>
   <script>
     (function () {
       // Before/after slider
@@ -514,8 +490,9 @@
         if (e.key === "ArrowRight") { setSliderPosition(current + 5); e.preventDefault(); }
       });
 
-      // Audio Tour player
-      var audio = document.getElementById("dp150-audio-el");
+      // Audio Tour player (SoundCloud)
+      var scFrame = document.getElementById("dp150-audio-sc-frame");
+      var widget = SC.Widget(scFrame);
       var playBtn = document.getElementById("dp150-audio-playpause");
       var iconPlay = playBtn.querySelector(".dp150-audio-icon-play");
       var iconPause = playBtn.querySelector(".dp150-audio-icon-pause");
@@ -523,6 +500,9 @@
       var progressFill = document.getElementById("dp150-audio-progress-fill");
       var currentEl = document.querySelector("#dp150-park .dp150-audio-current");
       var durationEl = document.querySelector("#dp150-park .dp150-audio-duration");
+      var durationMs = 0;
+      var isPaused = true;
+      var isMuted = false;
 
       function formatTime(seconds) {
         if (!isFinite(seconds) || isNaN(seconds)) { return "0:00"; }
@@ -531,54 +511,70 @@
         return m + ":" + (s < 10 ? "0" : "") + s;
       }
 
-      function updateProgressUI() {
-        var pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
-        progressFill.style.width = pct + "%";
-        progress.setAttribute("aria-valuenow", Math.round(pct));
-        currentEl.textContent = formatTime(audio.currentTime);
-        durationEl.textContent = formatTime(audio.duration);
-      }
-
-      playBtn.addEventListener("click", function () {
-        if (audio.paused) {
-          var playPromise = audio.play();
-          if (playPromise && playPromise.catch) { playPromise.catch(function () {}); }
-        } else {
-          audio.pause();
-        }
+      widget.bind(SC.Widget.Events.READY, function () {
+        widget.getDuration(function (ms) {
+          durationMs = ms;
+          durationEl.textContent = formatTime(ms / 1000);
+        });
       });
-      audio.addEventListener("play", function () {
+      widget.bind(SC.Widget.Events.PLAY, function () {
+        isPaused = false;
         iconPlay.style.display = "none";
         iconPause.style.display = "";
         playBtn.setAttribute("aria-label", "Pause");
       });
-      audio.addEventListener("pause", function () {
+      widget.bind(SC.Widget.Events.PAUSE, function () {
+        isPaused = true;
         iconPlay.style.display = "";
         iconPause.style.display = "none";
         playBtn.setAttribute("aria-label", "Play");
       });
-      audio.addEventListener("timeupdate", updateProgressUI);
-      audio.addEventListener("loadedmetadata", updateProgressUI);
+      widget.bind(SC.Widget.Events.FINISH, function () {
+        isPaused = true;
+        iconPlay.style.display = "";
+        iconPause.style.display = "none";
+        playBtn.setAttribute("aria-label", "Play");
+      });
+      widget.bind(SC.Widget.Events.PLAY_PROGRESS, function (data) {
+        var pct = durationMs ? (data.currentPosition / durationMs) * 100 : 0;
+        progressFill.style.width = pct + "%";
+        progress.setAttribute("aria-valuenow", Math.round(pct));
+        currentEl.textContent = formatTime(data.currentPosition / 1000);
+      });
+
+      playBtn.addEventListener("click", function () {
+        if (isPaused) { widget.play(); } else { widget.pause(); }
+      });
 
       document.querySelectorAll('.dp150-audio-btn[data-action="back"]').forEach(function (btn) {
-        btn.addEventListener("click", function () { audio.currentTime = Math.max(0, audio.currentTime - 10); });
+        btn.addEventListener("click", function () {
+          widget.getPosition(function (ms) { widget.seekTo(Math.max(0, ms - 10000)); });
+        });
       });
       document.querySelectorAll('.dp150-audio-btn[data-action="forward"]').forEach(function (btn) {
-        btn.addEventListener("click", function () { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 10); });
+        btn.addEventListener("click", function () {
+          widget.getPosition(function (ms) { widget.seekTo(Math.min(durationMs, ms + 10000)); });
+        });
       });
 
       function seekFromEvent(e) {
-        if (!audio.duration) { return; }
+        if (!durationMs) { return; }
         var rect = progress.getBoundingClientRect();
         var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
         var pct = Math.max(0, Math.min(1, x / rect.width));
-        audio.currentTime = pct * audio.duration;
+        widget.seekTo(pct * durationMs);
       }
       progress.addEventListener("click", seekFromEvent);
       progress.addEventListener("keydown", function (e) {
-        if (!audio.duration) { return; }
-        if (e.key === "ArrowLeft") { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
-        if (e.key === "ArrowRight") { audio.currentTime = Math.min(audio.duration, audio.currentTime + 5); e.preventDefault(); }
+        if (!durationMs) { return; }
+        if (e.key === "ArrowLeft") {
+          widget.getPosition(function (ms) { widget.seekTo(Math.max(0, ms - 5000)); });
+          e.preventDefault();
+        }
+        if (e.key === "ArrowRight") {
+          widget.getPosition(function (ms) { widget.seekTo(Math.min(durationMs, ms + 5000)); });
+          e.preventDefault();
+        }
       });
 
       // Mute toggle
@@ -586,10 +582,11 @@
       var iconSoundOn = muteBtn.querySelector(".dp150-audio-icon-sound-on");
       var iconSoundOff = muteBtn.querySelector(".dp150-audio-icon-sound-off");
       muteBtn.addEventListener("click", function () {
-        audio.muted = !audio.muted;
-        iconSoundOn.style.display = audio.muted ? "none" : "";
-        iconSoundOff.style.display = audio.muted ? "" : "none";
-        muteBtn.setAttribute("aria-label", audio.muted ? "Unmute" : "Mute");
+        isMuted = !isMuted;
+        widget.setVolume(isMuted ? 0 : 100);
+        iconSoundOn.style.display = isMuted ? "none" : "";
+        iconSoundOff.style.display = isMuted ? "" : "none";
+        muteBtn.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
       });
 
       // Share (copy link)
